@@ -57,3 +57,9 @@ def test_nombres_y_conocimiento():
     for n, (_, _, sev) in c.CONOCIMIENTO.items():
         assert sev in {"Crítica", "Alta", "Media", "Baja"}, n
         assert c.cwe_a_owasp2025(n) is not None, f"CWE-{n} sin categoría Top 10"
+
+
+def test_descripciones_completas():
+    from vulnminer.caracteristicas import NOMBRES_DERIVADAS
+    assert set(c.DESCRIPCION_CATEGORIA) == set(c.CATEGORIAS)
+    assert set(c.DESCRIPCION_PATRON) <= set(NOMBRES_DERIVADAS)

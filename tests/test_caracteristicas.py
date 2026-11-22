@@ -101,3 +101,22 @@ def test_evidencias_con_linea():
 def test_valores_finitos():
     v = C.vector(unidad("x" * 5000))
     assert np.all(np.isfinite(v))
+
+
+@pytest.mark.parametrize("codigo,lenguaje", [
+    ("@Get(':id')\nfindOne(@Param('id') id: string) { return this.orders.findById(id); }", "typescript"),
+    ("@GetMapping(\"/{id}\")\npublic Order get(@PathVariable Long id) { return orderRepository.findById(id); }", "java"),
+    ("def get(self, request, order_id=None):\n    order = Order.objects.get(id=order_id)\n    return Response(order)", "python"),
+])
+def test_bola_en_nest_spring_y_django(codigo, lenguaje):
+    a = activos(codigo, lenguaje=lenguaje)
+    assert "parametro_ruta_id" in a and "x_recurso_propio_sin_propiedad" in a
+
+
+def test_cors_de_la_clase_no_es_contexto():
+    assert "cors_permisivo" not in C.CONTEXTO
+
+
+def test_aleatorio_debil_solo_es_sensible_con_secretos():
+    assert "x_aleatorio_sensible" in activos("token = str(random.randint(0, 999999))")
+    assert "x_aleatorio_sensible" not in activos("producto = random.choice(productos)")

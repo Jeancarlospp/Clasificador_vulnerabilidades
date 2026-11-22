@@ -67,6 +67,61 @@ RECOMENDACION_CATEGORIA = {
     "API10:2023": "Tratar las respuestas de otras APIs como no confiables: validar su contenido, exigir TLS con verificación de certificados y fijar tiempos de espera.",
 }
 
+# Descripción breve del problema por categoría (cuando no se determina el CWE).
+DESCRIPCION_CATEGORIA = {
+    "A01:2025": "Posible falla de control de acceso: la operación no verifica suficientemente quién puede realizarla.",
+    "A02:2025": "Posible configuración de seguridad incorrecta o insegura por defecto.",
+    "A03:2025": "Posible riesgo en la cadena de suministro: componentes o imágenes sin versión fijada o de origen no verificado.",
+    "A04:2025": "Posible falla criptográfica: algoritmo débil, secreto expuesto o comunicación sin cifrar.",
+    "A05:2025": "Posible inyección: datos variables llegan a un intérprete (SQL, comandos, plantillas, consultas).",
+    "A06:2025": "Posible diseño inseguro: faltan límites o controles de negocio en la operación.",
+    "A07:2025": "Posible falla de autenticación: credenciales, tokens o intentos de acceso sin la protección adecuada.",
+    "A08:2025": "Posible falla de integridad: datos u objetos no confiables se deserializan o asignan sin control.",
+    "A09:2025": "Posible falla de registro: eventos sensibles se registran de forma insegura o no se registran.",
+    "A10:2025": "Posible manejo inadecuado de excepciones: errores silenciados, expuestos al cliente o que fallan de forma abierta.",
+    "API1:2023": "Posible autorización incorrecta a nivel de objeto (BOLA): se accede a un objeto por su identificador sin comprobar su propietario.",
+    "API2:2023": "Posible autenticación incorrecta en la API (tokens, credenciales o intentos sin protección).",
+    "API3:2023": "Posible autorización incorrecta a nivel de propiedades: se exponen o aceptan propiedades del objeto sin filtrar.",
+    "API4:2023": "Posible consumo ilimitado de recursos: faltan límites de frecuencia, tamaño o paginación.",
+    "API5:2023": "Posible autorización incorrecta a nivel de función: una operación privilegiada no comprueba el rol.",
+    "API6:2023": "Posible acceso ilimitado a un flujo de negocio sensible.",
+    "API7:2023": "Posible SSRF: el servidor realiza peticiones a una URL influida por el cliente.",
+    "API8:2023": "Posible configuración de seguridad incorrecta de la API (CORS, depuración, errores, cabeceras).",
+    "API9:2023": "Posible gestión inadecuada del inventario de la API (versiones antiguas, entornos o documentación expuestos).",
+    "API10:2023": "Posible consumo inseguro de otra API: se confía en sus respuestas o en el canal sin validarlos.",
+}
+
+# Patrones combinados del análisis estático, redactados para el reporte.
+DESCRIPCION_PATRON = {
+    "x_id_ruta_sin_propiedad": "el endpoint obtiene un objeto por el identificador de la ruta sin verificar que pertenezca al usuario",
+    "x_usuario_sin_propiedad": "se busca un objeto por id sin compararlo con el usuario autenticado",
+    "x_ruta_sin_autenticacion": "el endpoint no muestra un mecanismo de autenticación",
+    "x_ruta_privilegiada_sin_rol": "una operación de modificación o administración no comprueba el rol",
+    "x_ruta_admin_sin_control": "una ruta administrativa no tiene autenticación ni control de rol",
+    "x_asignacion_sin_filtro": "se copian al objeto todas las propiedades recibidas",
+    "x_objeto_sensible_sin_filtro": "se devuelve un objeto con datos sensibles sin seleccionar propiedades",
+    "x_coleccion_sin_paginacion": "se devuelve una colección completa sin paginación",
+    "x_login_sin_limite": "el endpoint de autenticación no limita los intentos",
+    "x_subida_sin_limite": "se aceptan archivos sin límite de tamaño",
+    "x_entrada_sql": "datos de la petición llegan a una consulta SQL construida dinámicamente",
+    "x_entrada_comando": "datos de la petición llegan a la ejecución de un comando",
+    "x_entrada_eval": "datos de la petición llegan a una evaluación dinámica de código",
+    "x_entrada_archivo_sin_normalizar": "datos de la petición forman una ruta de archivo sin normalizarla",
+    "x_entrada_peticion_sin_lista": "datos de la petición determinan el destino de una petición saliente",
+    "x_entrada_html_sin_escape": "datos de la petición se escriben en HTML sin codificar",
+    "x_entrada_deserializacion": "datos de la petición se deserializan",
+    "x_entrada_redireccion": "datos de la petición determinan una redirección",
+    "x_entrada_xml": "datos de la petición se procesan con un analizador XML sin protección",
+    "x_entrada_nosql": "datos de la petición se usan directamente en una consulta NoSQL",
+    "x_jwt_inseguro": "el token se acepta sin verificar su firma o expiración",
+    "x_secreto_sin_gestor": "hay un secreto escrito literalmente",
+    "x_error_expuesto": "el detalle del error se devuelve al cliente",
+    "x_peticion_sin_timeout": "la petición a otro servicio no define tiempo de espera",
+    "x_respuesta_externa_sin_validar": "la respuesta de otra API se usa sin validarla",
+    "x_recurso_propio_sin_propiedad": "se accede a un recurso del usuario por su id sin verificar el propietario",
+    "x_aleatorio_sensible": "se usa un generador aleatorio no criptográfico para un valor sensible",
+}
+
 # Categorías que requieren validación dinámica o revisión manual por naturaleza (PDF, sección 8.3.2).
 REQUIEREN_REVISION_MANUAL = {"A01:2025", "A06:2025", "A09:2025", "API1:2023", "API5:2023", "API6:2023", "API9:2023"}
 

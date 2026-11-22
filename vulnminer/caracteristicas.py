@@ -59,9 +59,12 @@ INDICADORES = [
     Indicador("ruta_definida", "rutas",
               r"@(Get|Post|Put|Patch|Delete|Request|All)(Mapping)?\s*\(|@(Get|Post|Put|Patch|Delete)\b|@(app|router|api|bp|blueprint|\w+_router)\."
               r"(get|post|put|patch|delete|route|api_route)\s*\(|\b(app|router|api|route|server)\.(get|post|put|patch|delete|all|route)\s*\(\s*['\"`]|"
-              r"@(api_view|action)\s*\(|\bpath\s*\(\s*['\"]|@Path\s*\(|methods\s*=\s*\[",
+              r"@(api_view|action)\s*\(|\bpath\s*\(\s*['\"]|@Path\s*\(|methods\s*=\s*\[|"
+              r"\bdef\s+(get|post|put|patch|delete|list|retrieve|update|destroy|create)\s*\(\s*self\s*,\s*request\b",
               "Define un endpoint HTTP"),
-    Indicador("parametro_ruta_id", "rutas", r"['\"`][^'\"`\n]*" + ID_RUTA + r"[^'\"`\n]*['\"`]",
+    Indicador("parametro_ruta_id", "rutas",
+              r"['\"`][^'\"`\n]*" + ID_RUTA + r"[^'\"`\n]*['\"`]|['\"`]:\w+['\"`]|@PathVariable\b|@Param\s*\(\s*['\"]\w*[iI]d['\"]|"
+              r"\bdef\s+\w+\s*\([^)]*\b\w+_id\b|\breq\.params\.\w*[iI]d\b|\brequest\.(args|GET)\.get\(\s*['\"]\w*_?id['\"]",
               "El endpoint recibe un identificador de objeto en la ruta"),
     Indicador("metodo_modificacion", "rutas",
               r"@(Put|Patch|Delete)(Mapping)?\b|\.(put|patch|delete)\s*\(\s*['\"`]|methods\s*=\s*\[[^\]]*(PUT|PATCH|DELETE)|"
@@ -72,6 +75,11 @@ INDICADORES = [
               r"debug|actuator|config|settings|system)\b[^'\"`\n]*['\"`]|def\s+\w*(admin|delete_user|promote|set_role)\w*|"
               r"\b(deleteUser|delete_user|promoteUser|setRole|set_role|makeAdmin|grantRole|updateRole|change_role|disableUser|ban\w*)\s*\(",
               "Ruta o función administrativa / privilegiada"),
+    Indicador("recurso_de_usuario", "rutas",
+              r"\b(orders?|invoices?|payments?|accounts?|cards?|documents?|messages?|address(es)?|bookings?|tickets?|reports?|"
+              r"receipts?|contracts?|wallets?|transactions?|appointments?|shipments?|notes?|carts?|profiles?|statements?|"
+              r"subscriptions?|files?|uploads?|records?|vehicles?)\b",
+              "Opera sobre un recurso que normalmente pertenece a un usuario"),
     Indicador("ruta_version", "rutas", r"['\"`]/?(api/)?v\d+/|/api/v\d+\b|basePath\s*:\s*/?v\d", "Ruta con versión explícita de la API"),
     Indicador("ruta_autenticacion", "rutas",
               r"['\"`][^'\"`\n]*/(login|signin|sign-in|auth|token|authenticate|otp|reset|forgot|forget|verify|password|register|signup)\b"
@@ -437,8 +445,7 @@ INDICE = {n: k for k, n in enumerate(NOMBRES_INDICADORES)}
 DESCRIPCION = {i.nombre: i.descripcion for i in INDICADORES}
 
 # Indicadores que se evalúan también sobre el contexto (clase / archivo)
-CONTEXTO = ["guard_autenticacion", "verificacion_rol", "acceso_publico", "limite_frecuencia", "validacion_entrada",
-            "cors_permisivo", "csrf_desactivado", "cabeceras_seguridad", "usuario_actual", "ruta_version"]
+CONTEXTO = ["guard_autenticacion", "verificacion_rol", "acceso_publico", "limite_frecuencia", "validacion_entrada"]
 
 SUBTIPOS = ["codigo", "dockerfile", "compose", "yaml", "properties", "env", "openapi", "manifiesto"]
 LENGUAJES = ["java", "python", "javascript", "typescript", "config"]
@@ -509,6 +516,8 @@ def _derivadas(c, ctx, subtipo):
         g("manejo_excepciones") and g("error_expuesto"),
         ruta and entrada and not g("validacion_entrada"),
         es_config and subtipo == "openapi" and c[INDICE["openapi_sin_limites"]] > 0 and not g("limite_tamano"),
+        g("recurso_de_usuario") and g("parametro_ruta_id") and g("busqueda_por_id") and not g("verificacion_propiedad"),
+        g("aleatorio_debil") and g("datos_sensibles"),
     ]
     return np.array(v, dtype=float)
 
@@ -520,6 +529,7 @@ NOMBRES_DERIVADAS = [
     "x_ruta_admin_sin_control", "x_asignacion_sin_filtro", "x_objeto_sensible_sin_filtro", "x_coleccion_sin_paginacion",
     "x_login_sin_limite", "x_subida_sin_limite", "x_peticion_sin_timeout", "x_respuesta_externa_sin_validar", "x_jwt_inseguro",
     "x_secreto_sin_gestor", "x_error_expuesto", "x_entrada_sin_validar", "x_openapi_sin_limites",
+    "x_recurso_propio_sin_propiedad", "x_aleatorio_sensible",
 ]
 
 
