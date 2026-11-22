@@ -1,0 +1,85 @@
+{
+ "_descripcion": "Vulnerabilidades documentadas de proyectos NO usados en el entrenamiento. Cada entrada indica el archivo y una línea dentro de la función vulnerable; la evaluación toma la unidad (función/handler) que contiene esa línea. Fuentes: README de VAmPI, retos de crAPI, CHALLENGES.md de dvws-node y niveles del juego de Damn Vulnerable RESTaurant.",
+ "proyectos": {
+  "VAmPI": {
+   "ruta": "evaluacion/proyectos/VAmPI",
+   "tipo": "vulnerable",
+   "documentacion": "https://github.com/erev0s/VAmPI#list-of-vulnerabilities",
+   "vulnerabilidades": [
+    {"id": "VAMPI-01", "nombre": "Inyección SQL en la búsqueda de usuario", "archivo": "models/user_model.py", "linea": 74, "cwe": "CWE-89", "owasp2025": ["A05:2025"], "api2023": []},
+    {"id": "VAMPI-02", "nombre": "Cambio de contraseña de otro usuario", "archivo": "api_views/users.py", "linea": 187, "cwe": "CWE-639", "owasp2025": ["A01:2025"], "api2023": ["API1:2023"]},
+    {"id": "VAMPI-03", "nombre": "BOLA en la consulta de libros", "archivo": "api_views/books.py", "linea": 51, "cwe": "CWE-639", "owasp2025": ["A01:2025"], "api2023": ["API1:2023"]},
+    {"id": "VAMPI-04", "nombre": "Asignación masiva del atributo admin en el registro", "archivo": "api_views/users.py", "linea": 60, "cwe": "CWE-915", "owasp2025": ["A08:2025"], "api2023": ["API3:2023"]},
+    {"id": "VAMPI-05", "nombre": "Exposición excesiva de datos en el endpoint de depuración", "archivo": "models/user_model.py", "linea": 59, "cwe": "CWE-213", "owasp2025": ["A01:2025"], "api2023": ["API3:2023"]},
+    {"id": "VAMPI-06", "nombre": "Enumeración de usuarios y contraseñas en el login", "archivo": "api_views/users.py", "linea": 102, "cwe": "CWE-204", "owasp2025": ["A07:2025"], "api2023": ["API2:2023"]},
+    {"id": "VAMPI-07", "nombre": "ReDoS en la actualización del correo", "archivo": "api_views/users.py", "linea": 144, "cwe": "CWE-1333", "owasp2025": ["A06:2025"], "api2023": ["API4:2023"]},
+    {"id": "VAMPI-08", "nombre": "Login sin limitación de intentos", "archivo": "api_views/users.py", "linea": 92, "cwe": "CWE-307", "owasp2025": ["A07:2025"], "api2023": ["API2:2023", "API4:2023"]},
+    {"id": "VAMPI-09", "nombre": "Clave de firma JWT débil escrita en el código", "archivo": "config.py", "linea": 13, "cwe": "CWE-798", "owasp2025": ["A07:2025"], "api2023": ["API2:2023"]}
+   ]
+  },
+  "crAPI": {
+   "ruta": "evaluacion/proyectos/crAPI",
+   "tipo": "vulnerable",
+   "documentacion": "https://github.com/OWASP/crAPI/blob/develop/docs/challenges.md",
+   "vulnerabilidades": [
+    {"id": "CRAPI-01", "nombre": "Pedido consultable sin autenticación ni verificación de propietario", "archivo": "services/workshop/crapi/shop/views.py", "linea": 122, "cwe": "CWE-639", "owasp2025": ["A01:2025"], "api2023": ["API1:2023"]},
+    {"id": "CRAPI-02", "nombre": "Asignación masiva del estado del pedido (reembolso)", "archivo": "services/workshop/crapi/shop/views.py", "linea": 250, "cwe": "CWE-915", "owasp2025": ["A08:2025"], "api2023": ["API3:2023"]},
+    {"id": "CRAPI-03", "nombre": "Inyección SQL al aplicar un cupón", "archivo": "services/workshop/crapi/shop/views.py", "linea": 389, "cwe": "CWE-89", "owasp2025": ["A05:2025"], "api2023": []},
+    {"id": "CRAPI-04", "nombre": "SSRF y repeticiones ilimitadas en contactar mecánico", "archivo": "services/workshop/crapi/merchant/views.py", "linea": 84, "cwe": "CWE-918", "owasp2025": ["A01:2025"], "api2023": ["API7:2023", "API4:2023"]},
+    {"id": "CRAPI-05", "nombre": "BOLA en el reporte del mecánico", "archivo": "services/workshop/crapi/mechanic/views.py", "linea": 235, "cwe": "CWE-639", "owasp2025": ["A01:2025"], "api2023": ["API1:2023"]},
+    {"id": "CRAPI-06", "nombre": "Vista administrativa de usuarios sin verificación de rol", "archivo": "services/workshop/crapi/user/views.py", "linea": 53, "cwe": "CWE-862", "owasp2025": ["A01:2025"], "api2023": ["API5:2023"]},
+    {"id": "CRAPI-07", "nombre": "BOLA en la ubicación del vehículo", "archivo": "services/identity/src/main/java/com/crapi/controller/VehicleController.java", "linea": 122, "cwe": "CWE-639", "owasp2025": ["A01:2025"], "api2023": ["API1:2023"]},
+    {"id": "CRAPI-08", "nombre": "Verificación de OTP (v2) sin límite de intentos", "archivo": "services/identity/src/main/java/com/crapi/controller/AuthController.java", "linea": 127, "cwe": "CWE-307", "owasp2025": ["A07:2025"], "api2023": ["API2:2023"]},
+    {"id": "CRAPI-09", "nombre": "Eliminación de videos por endpoint administrativo accesible a usuarios", "archivo": "services/identity/src/main/java/com/crapi/controller/ProfileController.java", "linea": 130, "cwe": "CWE-862", "owasp2025": ["A01:2025"], "api2023": ["API5:2023"]},
+    {"id": "CRAPI-10", "nombre": "Asignación masiva de parámetros de conversión del video", "archivo": "services/identity/src/main/java/com/crapi/controller/ProfileController.java", "linea": 96, "cwe": "CWE-915", "owasp2025": ["A08:2025"], "api2023": ["API3:2023"]},
+    {"id": "CRAPI-11", "nombre": "Validación del JWT acepta algoritmos inseguros", "archivo": "services/identity/src/main/java/com/crapi/config/JwtProvider.java", "linea": 172, "cwe": "CWE-347", "owasp2025": ["A04:2025"], "api2023": ["API2:2023"]},
+    {"id": "CRAPI-12", "nombre": "Clave del JWT obtenida de la URL jku del propio token", "archivo": "services/identity/src/main/java/com/crapi/config/JwtProvider.java", "linea": 132, "cwe": "CWE-347", "owasp2025": ["A04:2025"], "api2023": ["API2:2023"]},
+    {"id": "CRAPI-13", "nombre": "Lectura del usuario del JWT sin verificar la firma", "archivo": "services/identity/src/main/java/com/crapi/config/JwtProvider.java", "linea": 126, "cwe": "CWE-347", "owasp2025": ["A04:2025"], "api2023": ["API2:2023"]},
+    {"id": "CRAPI-14", "nombre": "Secretos y contraseñas en el docker-compose", "archivo": "deploy/docker/docker-compose.yml", "linea": 31, "cwe": "CWE-798", "owasp2025": ["A07:2025"], "api2023": ["API2:2023"]}
+   ]
+  },
+  "dvws-node": {
+   "ruta": "evaluacion/proyectos/dvws-node",
+   "tipo": "vulnerable",
+   "documentacion": "https://github.com/snoopysecurity/dvws-node/blob/master/CHALLENGES.md",
+   "vulnerabilidades": [
+    {"id": "DVWS-01", "nombre": "Inyección SQL al guardar la passphrase", "archivo": "src/controllers/passphrase.js", "linea": 41, "cwe": "CWE-89", "owasp2025": ["A05:2025"], "api2023": []},
+    {"id": "DVWS-02", "nombre": "Inyección SQL al consultar la passphrase", "archivo": "src/controllers/passphrase.js", "linea": 58, "cwe": "CWE-89", "owasp2025": ["A05:2025"], "api2023": []},
+    {"id": "DVWS-03", "nombre": "Deserialización insegura (node-serialize)", "archivo": "src/controllers/passphrase.js", "linea": 96, "cwe": "CWE-502", "owasp2025": ["A08:2025"], "api2023": []},
+    {"id": "DVWS-04", "nombre": "Inyección de comandos en sysinfo", "archivo": "src/controllers/notes.js", "linea": 69, "cwe": "CWE-78", "owasp2025": ["A05:2025"], "api2023": []},
+    {"id": "DVWS-05", "nombre": "Inyección XPath", "archivo": "src/controllers/notes.js", "linea": 81, "cwe": "CWE-643", "owasp2025": ["A05:2025"], "api2023": []},
+    {"id": "DVWS-06", "nombre": "Inyección NoSQL en la búsqueda de notas", "archivo": "src/controllers/notes.js", "linea": 166, "cwe": "CWE-943", "owasp2025": ["A05:2025"], "api2023": []},
+    {"id": "DVWS-07", "nombre": "IDOR al leer una nota", "archivo": "src/controllers/notes.js", "linea": 121, "cwe": "CWE-639", "owasp2025": ["A01:2025"], "api2023": ["API1:2023"]},
+    {"id": "DVWS-08", "nombre": "XML bomb / XXE al importar notas", "archivo": "src/controllers/notes.js", "linea": 219, "cwe": "CWE-776", "owasp2025": ["A02:2025"], "api2023": ["API4:2023"]},
+    {"id": "DVWS-09", "nombre": "JWT con algoritmo 'none' aceptado", "archivo": "src/middleware/auth.js", "linea": 43, "cwe": "CWE-347", "owasp2025": ["A04:2025"], "api2023": ["API2:2023"]},
+    {"id": "DVWS-10", "nombre": "CORS que refleja el origen con credenciales", "archivo": "src/controllers/passphrase.js", "linea": 14, "cwe": "CWE-942", "owasp2025": ["A02:2025"], "api2023": ["API8:2023"]},
+    {"id": "DVWS-11", "nombre": "Contaminación de prototipo en merge", "archivo": "src/controllers/files.js", "linea": 17, "cwe": "CWE-1321", "owasp2025": ["A08:2025"], "api2023": []},
+    {"id": "DVWS-12", "nombre": "Subida de archivos sin restricción", "archivo": "src/controllers/files.js", "linea": 50, "cwe": "CWE-434", "owasp2025": ["A06:2025"], "api2023": []},
+    {"id": "DVWS-13", "nombre": "Path traversal en la descarga de archivos", "archivo": "src/controllers/files.js", "linea": 100, "cwe": "CWE-22", "owasp2025": ["A01:2025"], "api2023": []},
+    {"id": "DVWS-14", "nombre": "Carga de YAML que ejecuta funciones", "archivo": "src/controllers/integrations.js", "linea": 76, "cwe": "CWE-502", "owasp2025": ["A08:2025"], "api2023": ["API10:2023"]},
+    {"id": "DVWS-15", "nombre": "Path traversal en el reporte mensual", "archivo": "src/controllers/integrations.js", "linea": 139, "cwe": "CWE-22", "owasp2025": ["A01:2025"], "api2023": []},
+    {"id": "DVWS-16", "nombre": "Redirección abierta en el logout", "archivo": "src/controllers/users.js", "linea": 136, "cwe": "CWE-601", "owasp2025": ["A01:2025"], "api2023": []},
+    {"id": "DVWS-17", "nombre": "Asignación masiva en el registro de usuarios", "archivo": "src/controllers/users.js", "linea": 80, "cwe": "CWE-915", "owasp2025": ["A08:2025"], "api2023": ["API3:2023"]},
+    {"id": "DVWS-18", "nombre": "Enumeración de usuarios y registro sin neutralizar en el login", "archivo": "src/controllers/users.js", "linea": 150, "cwe": "CWE-204", "owasp2025": ["A07:2025"], "api2023": ["API2:2023"]},
+    {"id": "DVWS-19", "nombre": "Inyección LDAP", "archivo": "src/controllers/users.js", "linea": 655, "cwe": "CWE-90", "owasp2025": ["A05:2025"], "api2023": []},
+    {"id": "DVWS-20", "nombre": "Exposición de datos del perfil según rol", "archivo": "src/controllers/users.js", "linea": 450, "cwe": "CWE-213", "owasp2025": ["A01:2025"], "api2023": ["API3:2023"]},
+    {"id": "DVWS-21", "nombre": "Listado de usuarios con hashes de contraseña", "archivo": "src/controllers/users.js", "linea": 265, "cwe": "CWE-200", "owasp2025": ["A01:2025"], "api2023": ["API3:2023"]}
+   ]
+  },
+  "restaurant-api": {
+   "ruta": "evaluacion/proyectos/restaurant-api",
+   "tipo": "vulnerable",
+   "documentacion": "https://github.com/theowni/Damn-Vulnerable-RESTaurant-API-Game (app/tests/vulns/level_*.py)",
+   "vulnerabilidades": [
+    {"id": "REST-00", "nombre": "Detalles de la tecnología expuestos en cabeceras HTTP", "archivo": "app/apis/healthcheck/service.py", "linea": 8, "cwe": "CWE-200", "owasp2025": ["A02:2025"], "api2023": ["API8:2023"]},
+    {"id": "REST-01", "nombre": "Eliminación de elementos del menú sin control de rol", "archivo": "app/apis/menu/services/delete_menu_item_service.py", "linea": 19, "cwe": "CWE-862", "owasp2025": ["A01:2025"], "api2023": ["API5:2023"]},
+    {"id": "REST-02", "nombre": "IDOR en la actualización del perfil", "archivo": "app/apis/auth/services/update_profile_service.py", "linea": 27, "cwe": "CWE-639", "owasp2025": ["A01:2025"], "api2023": ["API1:2023", "API3:2023"]},
+    {"id": "REST-03", "nombre": "Escalada de privilegios al actualizar roles", "archivo": "app/apis/users/services/update_user_role_service.py", "linea": 26, "cwe": "CWE-862", "owasp2025": ["A01:2025"], "api2023": ["API5:2023"]},
+    {"id": "REST-04", "nombre": "SSRF al descargar la imagen del menú", "archivo": "app/apis/menu/utils.py", "linea": 10, "cwe": "CWE-918", "owasp2025": ["A01:2025"], "api2023": ["API7:2023"]},
+    {"id": "REST-05", "nombre": "Ejecución remota de comandos en estadísticas de disco", "archivo": "app/apis/admin/utils.py", "linea": 9, "cwe": "CWE-78", "owasp2025": ["A05:2025"], "api2023": []}
+   ]
+  },
+  "petclinic-microservices": {"ruta": "evaluacion/proyectos/petclinic-microservices", "tipo": "referencia", "vulnerabilidades": []},
+  "microservices-demo": {"ruta": "evaluacion/proyectos/microservices-demo", "tipo": "referencia", "vulnerabilidades": []}
+ }
+}

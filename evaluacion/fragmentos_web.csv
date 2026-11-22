@@ -1,0 +1,150 @@
+id,tipo,lenguaje,label,cwe,owasp,fuente,url,codigo
+W02,Command Injection (Java),java,1,CWE-78,A05:2025,OWASP Top 10:2025 - A05 Injection (escenario de ataque #3),https://owasp.org/Top10/2025/A05_2025-Injection/,"String cmd = ""nslookup "" + request.getParameter(""domain"");
+Runtime.getRuntime().exec(cmd);"
+W03,Eval / inyección de código (Node.js),javascript,1,CWE-95,A05:2025,OWASP NodeGoat (repositorio) - app/routes/contributions.js,https://github.com/OWASP/NodeGoat/blob/master/app/routes/contributions.js,"this.handleContributionsUpdate = (req, res, next) => {
+
+    /*jslint evil: true */
+    // Insecure use of eval() to parse inputs
+    const preTax = eval(req.body.preTax);
+    const afterTax = eval(req.body.afterTax);
+    const roth = eval(req.body.roth);"
+W04,Deserialización insegura (Python),python,1,CWE-502,A08:2025,OWASP PyGoat (repositorio) - insec_des_lab/main.py,https://github.com/adeyosemanputra/pygoat/blob/master/dockerized_labs/insec_des_lab/main.py,"@app.route(""/deserialize"", methods=[""POST""])
+def deserialize_data():
+    try:
+        serialized_data = request.form.get(""serialized_data"", """")
+        decoded_data = base64.b64decode(serialized_data)
+        # Intentionally vulnerable deserialization, matching PyGoat
+        user = pickle.loads(decoded_data)"
+W05,Cross-Site Scripting (JavaScript),javascript,1,CWE-79,A05:2025,Stack Overflow (foro) - pregunta 31737305,https://stackoverflow.com/questions/31737305,"var userName = ""Jeremy\x3Cscript\x3Ealert('boom')\x3C/script\x3E"";
+document.getElementById('test').innerHTML = ""<span>""+userName+""</span>"";"
+W08,PreparedStatement (Java),java,0,,,Stack Overflow (foro) - respuesta 9516672,https://stackoverflow.com/questions/9516625#9516672,"String insert = ""INSERT INTO customer(name,address,email) VALUES(?, ?, ?);"";
+PreparedStatement ps = connection.prepareStatement(insert);
+ps.setString(1, name);
+ps.setString(2, addre);
+ps.setString(3, email);
+
+ResultSet rs = ps.executeQuery();"
+W09,Ejecución sin shell (Python),python,0,,,Stack Overflow (foro) - respuesta 9365995,https://stackoverflow.com/questions/9365956#9365995,"import subprocess
+p = subprocess.Popen([""/usr/bin/passwd"", username])"
+W10,Escape HTML en Flask (Python),python,0,,,"Documentación oficial de Flask - Quickstart, HTML Escaping",https://flask.palletsprojects.com/en/stable/quickstart/#html-escaping,"from flask import request
+from markupsafe import escape
+
+@app.route(""/hello"")
+def hello():
+    name = request.args.get(""name"", ""Flask"")
+    return f""Hello, {escape(name)}!"""
+W11,Defensa de Path Traversal (Java),java,0,,,Stack Overflow (foro) - pregunta 2375903,https://stackoverflow.com/questions/2375903,"public String sanitize(final File dir, final String entry) throws IOException {
+    if (entry.length() == 0) {
+        throw new PathTraversalException(entry);
+    }
+
+    if (new File(entry).isAbsolute()) {
+        throw new PathTraversalException(entry);
+    }
+
+    final String canonicalDirPath = dir.getCanonicalPath() + File.separator;
+    final String canonicalEntryPath = new File(dir, entry).getCanonicalPath();
+
+    if (!canonicalEntryPath.startsWith(canonicalDirPath)) {
+        throw new PathTraversalException(entry);
+    }
+
+    return canonicalEntryPath.substring(canonicalDirPath.length());
+}"
+W12,Corrección de eval con parseInt (Node.js),javascript,0,,,OWASP NodeGoat (repositorio) - corrección documentada en contributions.js,https://github.com/OWASP/NodeGoat/blob/master/app/routes/contributions.js,"const preTax = parseInt(req.body.preTax);
+const afterTax = parseInt(req.body.afterTax);
+const roth = parseInt(req.body.roth);"
+W13,SQL Injection (Java),java,1,CWE-89,A05:2025,Stack Overflow - pregunta 9516625,https://stackoverflow.com/questions/9516625,"String insert =
+    ""INSERT INTO customer(name,address,email) VALUES('"" + name + ""','"" + addre + ""','"" + email + ""');"";"
+W16,XSS innerHTML (JSP/JS),javascript,1,CWE-79,A05:2025,Stack Overflow - respuesta 30707806,https://stackoverflow.com/questions/30661497#30707806,"var userProdividedData = ""<%=serverVariableSetByUser %>"";
+element.innerHTML = userProdividedData;"
+W17,textContent (JavaScript),javascript,0,,,Stack Overflow - respuesta 30677323,https://stackoverflow.com/questions/30661497#30677323,"element.textContent = ""User provided variable with <img src=a>"";"
+W18,Command Injection os.popen (Python),python,1,CWE-78,A05:2025,Stack Overflow - pregunta 9365956,https://stackoverflow.com/questions/9365956,"p = os.popen(""/usr/bin/passwd "" + username, ""w"")"
+W19,execFile sin shell (Node.js),javascript,0,,,Stack Overflow - respuesta 64190364,https://stackoverflow.com/questions/63574482#64190364,"var cp = require('child_process');      
+var browser = cp.execFile('iexplore', ['-private', args.url]);"
+W22,SQL Injection Java (OWASP 2025),java,1,CWE-89,A05:2025,OWASP Top 10:2025 - A05 (escenario #1),https://owasp.org/Top10/2025/A05_2025-Injection/,"String query = ""SELECT * FROM accounts WHERE custID='"" + request.getParameter(""id"") + ""'"";"
+W23,HQL Injection (OWASP 2025),java,1,CWE-89,A05:2025,OWASP Top 10:2025 - A05 (escenario #2),https://owasp.org/Top10/2025/A05_2025-Injection/,"Query HQLQuery = session.createQuery(""FROM accounts WHERE custID='"" + request.getParameter(""id"") + ""'"");"
+W24,IDOR (OWASP 2025 A01),java,1,CWE-639,A01:2025,OWASP Top 10:2025 - A01 (escenario #1),https://owasp.org/Top10/2025/A01_2025-Broken_Access_Control/,"pstmt.setString(1, request.getParameter(""acct""));
+ResultSet results = pstmt.executeQuery( );"
+W25,NoSQL $where (NodeGoat),javascript,1,CWE-943,A05:2025,OWASP NodeGoat - app/data/allocations-dao.js,https://github.com/OWASP/NodeGoat/blob/master/app/data/allocations-dao.js,"this.getByUserIdAndThreshold = (userId, threshold, callback) => {
+    const parsedUserId = parseInt(userId);
+
+    const searchCriteria = () => {
+        if (threshold) {
+            return {
+                $where: `this.userId == ${parsedUserId} && this.stocks > '${threshold}'`
+            };
+        }"
+W26,Open redirect (NodeGoat),javascript,1,CWE-601,A01:2025,OWASP NodeGoat - app/routes/index.js,https://github.com/OWASP/NodeGoat/blob/master/app/routes/index.js,"app.get(""/learn"", isLoggedIn, (req, res) => {
+    // Insecure way to handle redirects by taking redirect url from query string
+    return res.redirect(req.query.url);
+});"
+W27,Log injection (NodeGoat),javascript,1,CWE-117,A09:2025,OWASP NodeGoat - app/routes/session.js,https://github.com/OWASP/NodeGoat/blob/master/app/routes/session.js,"console.log(""Error: attempt to login with invalid user: "", userName);"
+W28,Log sin CRLF (NodeGoat fix),javascript,0,,,OWASP NodeGoat - corrección documentada en session.js,https://github.com/OWASP/NodeGoat/blob/master/app/routes/session.js,"console.log('Error: attempt to login with invalid user: %s',
+    userName.replace(/(\r\n|\r|\n)/g, '_'));"
+W29,SQL Injection f-string (PyGoat),python,1,CWE-89,A05:2025,OWASP PyGoat - sql_injection_lab/app.py,https://github.com/adeyosemanputra/pygoat/blob/master/dockerized_labs/sql_injection_lab/app.py,"@app.route('/lab', methods=['GET', 'POST'])
+def lab():
+    """"""Lab page with the vulnerable login form""""""
+    if request.method == ""POST"":
+        username = request.form.get(""username"", """")
+        password = request.form.get(""password"", """")
+
+        # Vulnerable SQL query construction (intentional)
+        sql_query = (
+            f""SELECT * FROM users WHERE username='{username}' AND password='{password}'""
+        )
+
+        try:
+            conn = sqlite3.connect(""database.db"")
+            c = conn.cursor()
+            result = c.execute(sql_query).fetchone()"
+W30,Command Injection shell=True (PyGoat),python,1,CWE-78,A05:2025,OWASP PyGoat - command_injection_lab/app.py,https://github.com/adeyosemanputra/pygoat/blob/master/dockerized_labs/command_injection_lab/app.py,"@app.route(""/lab1"", methods=[""GET"", ""POST""])
+def lab1():
+    """"""Lab 1: Name Server Lookup with Command Injection""""""
+    if request.method == ""POST"":
+        domain = request.form.get(""domain"", """")
+        os_type = request.form.get(""os"", """")
+
+        if os_type == ""win"":
+            command = f""nslookup {domain}""
+        else:
+            command = f""dig {domain}""
+
+        try:
+            # Intentionally vulnerable command execution
+            process = subprocess.Popen(
+                command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+            )
+            stdout, stderr = process.communicate()
+            output = stdout.decode(""utf-8"") + stderr.decode(""utf-8"")
+        except Exception as e:"
+W31,eval (PyGoat),python,1,CWE-95,A05:2025,OWASP PyGoat - command_injection_lab/app.py,https://github.com/adeyosemanputra/pygoat/blob/master/dockerized_labs/command_injection_lab/app.py,"@app.route(""/lab2"", methods=[""GET"", ""POST""])
+def lab2():
+    """"""Lab 2: Python eval() Code Execution""""""
+    if request.method == ""POST"":
+        try:
+            # Intentionally vulnerable eval
+            expression = request.form.get(""val"", """")
+            output = eval(expression)
+            return render_template(""lab2.html"", output=str(output))"
+W32,SQL Injection (docs Python sqlite3),python,1,CWE-89,A05:2025,Documentación oficial Python - sqlite3 (ejemplo inseguro),https://docs.python.org/3/library/sqlite3.html#sqlite3-placeholders,"symbol = input()
+sql = ""SELECT * FROM stocks WHERE symbol = '%s'"" % symbol
+cur.execute(sql)"
+W33,Placeholders sqlite3 (docs Python),python,0,,,Documentación oficial Python - sqlite3 (ejemplo seguro),https://docs.python.org/3/library/sqlite3.html#sqlite3-placeholders,"params = (1972,)
+cur.execute(""SELECT * FROM lang WHERE first_appeared = ?"", params)
+print(cur.fetchall())
+con.close()"
+W34,SQL Injection raw() (docs Django),python,1,CWE-89,A05:2025,Documentación oficial Django - Performing raw SQL queries,https://docs.djangoproject.com/en/5.2/topics/db/sql/,"query = ""SELECT * FROM myapp_person WHERE last_name = %s"" % lname
+Person.objects.raw(query)"
+W35,raw() con params (docs Django),python,0,,,Documentación oficial Django - Performing raw SQL queries,https://docs.djangoproject.com/en/5.2/topics/db/sql/,"lname = ""Doe""
+Person.objects.raw(""SELECT * FROM myapp_person WHERE last_name = %s"", [lname])"
+W36,Subida con secure_filename (docs Flask),python,0,,,Documentación oficial de Flask - File Uploads,https://flask.palletsprojects.com/en/stable/quickstart/#file-uploads,"from werkzeug.utils import secure_filename
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        file = request.files['the_file']
+        file.save(f""/var/www/uploads/{secure_filename(file.filename)}"")"
+W37,Clave secreta fija (docs Flask),python,1,CWE-798,A07:2025,Documentación oficial de Flask - Sessions (ejemplo didáctico),https://flask.palletsprojects.com/en/stable/quickstart/#sessions,"from flask import session
+
+app.secret_key = b'_5#y2L""F4Q8z\n\xec]/'"

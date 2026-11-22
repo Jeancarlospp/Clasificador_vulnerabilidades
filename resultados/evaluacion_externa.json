@@ -1,0 +1,2273 @@
+{
+  "umbral": 0.49,
+  "resumen_proyectos_vulnerables": {
+    "vulnerabilidades_documentadas": 50,
+    "detectadas": 19,
+    "sensibilidad": 0.38,
+    "categoria_correcta": 16,
+    "categoria_correcta_sobre_detectadas": 0.842
+  },
+  "por_categoria": {
+    "A01:2025": {
+      "documentadas": 19,
+      "detectadas": 5,
+      "categoria_correcta": 4
+    },
+    "A02:2025": {
+      "documentadas": 3,
+      "detectadas": 2,
+      "categoria_correcta": 1
+    },
+    "A04:2025": {
+      "documentadas": 4,
+      "detectadas": 3,
+      "categoria_correcta": 1
+    },
+    "A05:2025": {
+      "documentadas": 9,
+      "detectadas": 5,
+      "categoria_correcta": 5
+    },
+    "A06:2025": {
+      "documentadas": 2,
+      "detectadas": 1,
+      "categoria_correcta": 0
+    },
+    "A07:2025": {
+      "documentadas": 6,
+      "detectadas": 1,
+      "categoria_correcta": 0
+    },
+    "A08:2025": {
+      "documentadas": 7,
+      "detectadas": 2,
+      "categoria_correcta": 2
+    },
+    "API10:2023": {
+      "documentadas": 1,
+      "detectadas": 0,
+      "categoria_correcta": 0
+    },
+    "API1:2023": {
+      "documentadas": 7,
+      "detectadas": 2,
+      "categoria_correcta": 0
+    },
+    "API2:2023": {
+      "documentadas": 10,
+      "detectadas": 4,
+      "categoria_correcta": 4
+    },
+    "API3:2023": {
+      "documentadas": 8,
+      "detectadas": 1,
+      "categoria_correcta": 0
+    },
+    "API4:2023": {
+      "documentadas": 4,
+      "detectadas": 1,
+      "categoria_correcta": 0
+    },
+    "API5:2023": {
+      "documentadas": 4,
+      "detectadas": 0,
+      "categoria_correcta": 0
+    },
+    "API7:2023": {
+      "documentadas": 2,
+      "detectadas": 1,
+      "categoria_correcta": 1
+    },
+    "API8:2023": {
+      "documentadas": 2,
+      "detectadas": 1,
+      "categoria_correcta": 1
+    }
+  },
+  "proyectos": {
+    "VAmPI": {
+      "tipo": "vulnerable",
+      "microservicios": 1,
+      "archivos": 15,
+      "unidades": 66,
+      "hallazgos": 14,
+      "hallazgos_por_100_unidades": 21.21,
+      "vulnerabilidades_documentadas": 9,
+      "detectadas": 1,
+      "sensibilidad": 0.111,
+      "categoria_correcta": 1,
+      "hallazgos_sobre_vulnerabilidades_documentadas": 1,
+      "hallazgos_adicionales": 13,
+      "duracion_segundos": 3.7,
+      "detalle": [
+        {
+          "id": "VAMPI-01",
+          "nombre": "Inyección SQL en la búsqueda de usuario",
+          "archivo": "models/user_model.py",
+          "linea": 74,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": null,
+          "lineas_unidad": [
+            69,
+            81
+          ]
+        },
+        {
+          "id": "VAMPI-02",
+          "nombre": "Cambio de contraseña de otro usuario",
+          "archivo": "api_views/users.py",
+          "linea": 187,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API1:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            179,
+            203
+          ]
+        },
+        {
+          "id": "VAMPI-03",
+          "nombre": "BOLA en la consulta de libros",
+          "archivo": "api_views/books.py",
+          "linea": 51,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API1:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            45,
+            72
+          ]
+        },
+        {
+          "id": "VAMPI-04",
+          "nombre": "Asignación masiva del atributo admin en el registro",
+          "archivo": "api_views/users.py",
+          "linea": 60,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A08:2025",
+            "API3:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            52,
+            82
+          ]
+        },
+        {
+          "id": "VAMPI-05",
+          "nombre": "Exposición excesiva de datos en el endpoint de depuración",
+          "archivo": "models/user_model.py",
+          "linea": 59,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API3:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            58,
+            59
+          ]
+        },
+        {
+          "id": "VAMPI-06",
+          "nombre": "Enumeración de usuarios y contraseñas en el login",
+          "archivo": "api_views/users.py",
+          "linea": 102,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A07:2025",
+            "API2:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            85,
+            114
+          ]
+        },
+        {
+          "id": "VAMPI-07",
+          "nombre": "ReDoS en la actualización del correo",
+          "archivo": "api_views/users.py",
+          "linea": 144,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A06:2025",
+            "API4:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            132,
+            176
+          ]
+        },
+        {
+          "id": "VAMPI-08",
+          "nombre": "Login sin limitación de intentos",
+          "archivo": "api_views/users.py",
+          "linea": 92,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A07:2025",
+            "API2:2023",
+            "API4:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            85,
+            114
+          ]
+        },
+        {
+          "id": "VAMPI-09",
+          "nombre": "Clave de firma JWT débil escrita en el código",
+          "archivo": "config.py",
+          "linea": 13,
+          "detectada": true,
+          "hallazgos": [
+            "VM-003"
+          ],
+          "confianza": 0.724,
+          "categorias_esperadas": [
+            "A07:2025",
+            "API2:2023"
+          ],
+          "categorias_predichas": [
+            "API2:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": false,
+          "api_correcta": true,
+          "lineas_unidad": [
+            1,
+            15
+          ]
+        }
+      ]
+    },
+    "crAPI": {
+      "tipo": "vulnerable",
+      "microservicios": 7,
+      "archivos": 268,
+      "unidades": 1385,
+      "hallazgos": 67,
+      "hallazgos_por_100_unidades": 4.84,
+      "vulnerabilidades_documentadas": 14,
+      "detectadas": 3,
+      "sensibilidad": 0.214,
+      "categoria_correcta": 3,
+      "hallazgos_sobre_vulnerabilidades_documentadas": 2,
+      "hallazgos_adicionales": 65,
+      "duracion_segundos": 16.9,
+      "detalle": [
+        {
+          "id": "CRAPI-01",
+          "nombre": "Pedido consultable sin autenticación ni verificación de propietario",
+          "archivo": "services/workshop/crapi/shop/views.py",
+          "linea": 122,
+          "detectada": true,
+          "hallazgos": [
+            "VM-007"
+          ],
+          "confianza": 0.559,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API1:2023"
+          ],
+          "categorias_predichas": [
+            "A01:2025",
+            "API2:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": false,
+          "lineas_unidad": [
+            109,
+            165
+          ]
+        },
+        {
+          "id": "CRAPI-02",
+          "nombre": "Asignación masiva del estado del pedido (reembolso)",
+          "archivo": "services/workshop/crapi/shop/views.py",
+          "linea": 250,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A08:2025",
+            "API3:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            218,
+            259
+          ]
+        },
+        {
+          "id": "CRAPI-03",
+          "nombre": "Inyección SQL al aplicar un cupón",
+          "archivo": "services/workshop/crapi/shop/views.py",
+          "linea": 389,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": null,
+          "lineas_unidad": [
+            365,
+            406
+          ]
+        },
+        {
+          "id": "CRAPI-04",
+          "nombre": "SSRF y repeticiones ilimitadas en contactar mecánico",
+          "archivo": "services/workshop/crapi/merchant/views.py",
+          "linea": 84,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API4:2023",
+            "API7:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            45,
+            86
+          ]
+        },
+        {
+          "id": "CRAPI-05",
+          "nombre": "BOLA en el reporte del mecánico",
+          "archivo": "services/workshop/crapi/mechanic/views.py",
+          "linea": 235,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API1:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            213,
+            244
+          ]
+        },
+        {
+          "id": "CRAPI-06",
+          "nombre": "Vista administrativa de usuarios sin verificación de rol",
+          "archivo": "services/workshop/crapi/user/views.py",
+          "linea": 53,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API5:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            40,
+            72
+          ]
+        },
+        {
+          "id": "CRAPI-07",
+          "nombre": "BOLA en la ubicación del vehículo",
+          "archivo": "services/identity/src/main/java/com/crapi/controller/VehicleController.java",
+          "linea": 122,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API1:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            121,
+            128
+          ]
+        },
+        {
+          "id": "CRAPI-08",
+          "nombre": "Verificación de OTP (v2) sin límite de intentos",
+          "archivo": "services/identity/src/main/java/com/crapi/controller/AuthController.java",
+          "linea": 127,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A07:2025",
+            "API2:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            126,
+            134
+          ]
+        },
+        {
+          "id": "CRAPI-09",
+          "nombre": "Eliminación de videos por endpoint administrativo accesible a usuarios",
+          "archivo": "services/identity/src/main/java/com/crapi/controller/ProfileController.java",
+          "linea": 130,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API5:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            129,
+            137
+          ]
+        },
+        {
+          "id": "CRAPI-10",
+          "nombre": "Asignación masiva de parámetros de conversión del video",
+          "archivo": "services/identity/src/main/java/com/crapi/controller/ProfileController.java",
+          "linea": 96,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A08:2025",
+            "API3:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            95,
+            105
+          ]
+        },
+        {
+          "id": "CRAPI-11",
+          "nombre": "Validación del JWT acepta algoritmos inseguros",
+          "archivo": "services/identity/src/main/java/com/crapi/config/JwtProvider.java",
+          "linea": 172,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A04:2025",
+            "API2:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            170,
+            209
+          ]
+        },
+        {
+          "id": "CRAPI-12",
+          "nombre": "Clave del JWT obtenida de la URL jku del propio token",
+          "archivo": "services/identity/src/main/java/com/crapi/config/JwtProvider.java",
+          "linea": 132,
+          "detectada": true,
+          "hallazgos": [
+            "VM-003"
+          ],
+          "confianza": 0.923,
+          "categorias_esperadas": [
+            "A04:2025",
+            "API2:2023"
+          ],
+          "categorias_predichas": [
+            "A01:2025",
+            "API2:2023",
+            "API7:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": false,
+          "api_correcta": true,
+          "lineas_unidad": [
+            130,
+            148
+          ]
+        },
+        {
+          "id": "CRAPI-13",
+          "nombre": "Lectura del usuario del JWT sin verificar la firma",
+          "archivo": "services/identity/src/main/java/com/crapi/config/JwtProvider.java",
+          "linea": 126,
+          "detectada": true,
+          "hallazgos": [
+            "VM-003"
+          ],
+          "confianza": 0.923,
+          "categorias_esperadas": [
+            "A04:2025",
+            "API2:2023"
+          ],
+          "categorias_predichas": [
+            "A01:2025",
+            "API2:2023",
+            "API7:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": false,
+          "api_correcta": true,
+          "lineas_unidad": [
+            124,
+            127
+          ]
+        },
+        {
+          "id": "CRAPI-14",
+          "nombre": "Secretos y contraseñas en el docker-compose",
+          "archivo": "deploy/docker/docker-compose.yml",
+          "linea": 31,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A07:2025",
+            "API2:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            15,
+            67
+          ]
+        }
+      ]
+    },
+    "dvws-node": {
+      "tipo": "vulnerable",
+      "microservicios": 1,
+      "archivos": 62,
+      "unidades": 271,
+      "hallazgos": 74,
+      "hallazgos_por_100_unidades": 27.31,
+      "vulnerabilidades_documentadas": 21,
+      "detectadas": 14,
+      "sensibilidad": 0.667,
+      "categoria_correcta": 11,
+      "hallazgos_sobre_vulnerabilidades_documentadas": 14,
+      "hallazgos_adicionales": 60,
+      "duracion_segundos": 8.7,
+      "detalle": [
+        {
+          "id": "DVWS-01",
+          "nombre": "Inyección SQL al guardar la passphrase",
+          "archivo": "src/controllers/passphrase.js",
+          "linea": 41,
+          "detectada": true,
+          "hallazgos": [
+            "VM-001"
+          ],
+          "confianza": 0.977,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [
+            "A05:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": null,
+          "lineas_unidad": [
+            31,
+            52
+          ]
+        },
+        {
+          "id": "DVWS-02",
+          "nombre": "Inyección SQL al consultar la passphrase",
+          "archivo": "src/controllers/passphrase.js",
+          "linea": 58,
+          "detectada": true,
+          "hallazgos": [
+            "VM-004"
+          ],
+          "confianza": 0.926,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [
+            "A05:2025",
+            "A10:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": null,
+          "lineas_unidad": [
+            54,
+            67
+          ]
+        },
+        {
+          "id": "DVWS-03",
+          "nombre": "Deserialización insegura (node-serialize)",
+          "archivo": "src/controllers/passphrase.js",
+          "linea": 96,
+          "detectada": true,
+          "hallazgos": [
+            "VM-016"
+          ],
+          "confianza": 0.919,
+          "categorias_esperadas": [
+            "A08:2025"
+          ],
+          "categorias_predichas": [
+            "A07:2025",
+            "A08:2025",
+            "A10:2025",
+            "API2:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": null,
+          "lineas_unidad": [
+            70,
+            129
+          ]
+        },
+        {
+          "id": "DVWS-04",
+          "nombre": "Inyección de comandos en sysinfo",
+          "archivo": "src/controllers/notes.js",
+          "linea": 69,
+          "detectada": true,
+          "hallazgos": [
+            "VM-002"
+          ],
+          "confianza": 0.947,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [
+            "A05:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": null,
+          "lineas_unidad": [
+            68,
+            76
+          ]
+        },
+        {
+          "id": "DVWS-05",
+          "nombre": "Inyección XPath",
+          "archivo": "src/controllers/notes.js",
+          "linea": 81,
+          "detectada": true,
+          "hallazgos": [
+            "VM-025"
+          ],
+          "confianza": 0.799,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [
+            "A01:2025",
+            "A05:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": null,
+          "lineas_unidad": [
+            77,
+            99
+          ]
+        },
+        {
+          "id": "DVWS-06",
+          "nombre": "Inyección NoSQL en la búsqueda de notas",
+          "archivo": "src/controllers/notes.js",
+          "linea": 166,
+          "detectada": true,
+          "hallazgos": [
+            "VM-032"
+          ],
+          "confianza": 0.648,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [
+            "A05:2025",
+            "A10:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": null,
+          "lineas_unidad": [
+            152,
+            176
+          ]
+        },
+        {
+          "id": "DVWS-07",
+          "nombre": "IDOR al leer una nota",
+          "archivo": "src/controllers/notes.js",
+          "linea": 121,
+          "detectada": true,
+          "hallazgos": [
+            "VM-066"
+          ],
+          "confianza": 0.545,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API1:2023"
+          ],
+          "categorias_predichas": [
+            "A01:2025",
+            "A10:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": false,
+          "lineas_unidad": [
+            120,
+            128
+          ]
+        },
+        {
+          "id": "DVWS-08",
+          "nombre": "XML bomb / XXE al importar notas",
+          "archivo": "src/controllers/notes.js",
+          "linea": 219,
+          "detectada": true,
+          "hallazgos": [
+            "VM-067"
+          ],
+          "confianza": 0.513,
+          "categorias_esperadas": [
+            "A02:2025",
+            "API4:2023"
+          ],
+          "categorias_predichas": [
+            "A10:2025",
+            "API2:2023"
+          ],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            201,
+            256
+          ]
+        },
+        {
+          "id": "DVWS-09",
+          "nombre": "JWT con algoritmo 'none' aceptado",
+          "archivo": "src/middleware/auth.js",
+          "linea": 43,
+          "detectada": true,
+          "hallazgos": [
+            "VM-012"
+          ],
+          "confianza": 0.951,
+          "categorias_esperadas": [
+            "A04:2025",
+            "API2:2023"
+          ],
+          "categorias_predichas": [
+            "A04:2025",
+            "API2:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": true,
+          "lineas_unidad": [
+            35,
+            64
+          ]
+        },
+        {
+          "id": "DVWS-10",
+          "nombre": "CORS que refleja el origen con credenciales",
+          "archivo": "src/controllers/passphrase.js",
+          "linea": 14,
+          "detectada": true,
+          "hallazgos": [
+            "VM-010"
+          ],
+          "confianza": 0.969,
+          "categorias_esperadas": [
+            "A02:2025",
+            "API8:2023"
+          ],
+          "categorias_predichas": [
+            "A02:2025",
+            "A06:2025",
+            "A07:2025",
+            "API8:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": true,
+          "lineas_unidad": [
+            12,
+            21
+          ]
+        },
+        {
+          "id": "DVWS-11",
+          "nombre": "Contaminación de prototipo en merge",
+          "archivo": "src/controllers/files.js",
+          "linea": 17,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A08:2025"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": null,
+          "lineas_unidad": [
+            15,
+            34
+          ]
+        },
+        {
+          "id": "DVWS-12",
+          "nombre": "Subida de archivos sin restricción",
+          "archivo": "src/controllers/files.js",
+          "linea": 50,
+          "detectada": true,
+          "hallazgos": [
+            "VM-026"
+          ],
+          "confianza": 0.787,
+          "categorias_esperadas": [
+            "A06:2025"
+          ],
+          "categorias_predichas": [
+            "A01:2025",
+            "A10:2025",
+            "API2:2023"
+          ],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": null,
+          "lineas_unidad": [
+            37,
+            88
+          ]
+        },
+        {
+          "id": "DVWS-13",
+          "nombre": "Path traversal en la descarga de archivos",
+          "archivo": "src/controllers/files.js",
+          "linea": 100,
+          "detectada": true,
+          "hallazgos": [
+            "VM-014"
+          ],
+          "confianza": 0.93,
+          "categorias_esperadas": [
+            "A01:2025"
+          ],
+          "categorias_predichas": [
+            "A06:2025",
+            "API2:2023"
+          ],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": null,
+          "lineas_unidad": [
+            98,
+            122
+          ]
+        },
+        {
+          "id": "DVWS-14",
+          "nombre": "Carga de YAML que ejecuta funciones",
+          "archivo": "src/controllers/integrations.js",
+          "linea": 76,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A08:2025",
+            "API10:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            70,
+            127
+          ]
+        },
+        {
+          "id": "DVWS-15",
+          "nombre": "Path traversal en el reporte mensual",
+          "archivo": "src/controllers/integrations.js",
+          "linea": 139,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A01:2025"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": null,
+          "lineas_unidad": [
+            129,
+            149
+          ]
+        },
+        {
+          "id": "DVWS-16",
+          "nombre": "Redirección abierta en el logout",
+          "archivo": "src/controllers/users.js",
+          "linea": 136,
+          "detectada": true,
+          "hallazgos": [
+            "VM-048"
+          ],
+          "confianza": 0.823,
+          "categorias_esperadas": [
+            "A01:2025"
+          ],
+          "categorias_predichas": [
+            "A01:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": null,
+          "lineas_unidad": [
+            136,
+            140
+          ]
+        },
+        {
+          "id": "DVWS-17",
+          "nombre": "Asignación masiva en el registro de usuarios",
+          "archivo": "src/controllers/users.js",
+          "linea": 80,
+          "detectada": true,
+          "hallazgos": [
+            "VM-049"
+          ],
+          "confianza": 0.786,
+          "categorias_esperadas": [
+            "A08:2025",
+            "API3:2023"
+          ],
+          "categorias_predichas": [
+            "A07:2025",
+            "A08:2025",
+            "A10:2025",
+            "API2:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": false,
+          "lineas_unidad": [
+            72,
+            107
+          ]
+        },
+        {
+          "id": "DVWS-18",
+          "nombre": "Enumeración de usuarios y registro sin neutralizar en el login",
+          "archivo": "src/controllers/users.js",
+          "linea": 150,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A07:2025",
+            "API2:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            143,
+            186
+          ]
+        },
+        {
+          "id": "DVWS-19",
+          "nombre": "Inyección LDAP",
+          "archivo": "src/controllers/users.js",
+          "linea": 655,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": null,
+          "lineas_unidad": [
+            654,
+            671
+          ]
+        },
+        {
+          "id": "DVWS-20",
+          "nombre": "Exposición de datos del perfil según rol",
+          "archivo": "src/controllers/users.js",
+          "linea": 450,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API3:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            444,
+            465
+          ]
+        },
+        {
+          "id": "DVWS-21",
+          "nombre": "Listado de usuarios con hashes de contraseña",
+          "archivo": "src/controllers/users.js",
+          "linea": 265,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API3:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            263,
+            279
+          ]
+        }
+      ]
+    },
+    "restaurant-api": {
+      "tipo": "vulnerable",
+      "microservicios": 1,
+      "archivos": 61,
+      "unidades": 170,
+      "hallazgos": 8,
+      "hallazgos_por_100_unidades": 4.71,
+      "vulnerabilidades_documentadas": 6,
+      "detectadas": 1,
+      "sensibilidad": 0.167,
+      "categoria_correcta": 1,
+      "hallazgos_sobre_vulnerabilidades_documentadas": 1,
+      "hallazgos_adicionales": 7,
+      "duracion_segundos": 0.7,
+      "detalle": [
+        {
+          "id": "REST-00",
+          "nombre": "Detalles de la tecnología expuestos en cabeceras HTTP",
+          "archivo": "app/apis/healthcheck/service.py",
+          "linea": 8,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A02:2025",
+            "API8:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            6,
+            9
+          ]
+        },
+        {
+          "id": "REST-01",
+          "nombre": "Eliminación de elementos del menú sin control de rol",
+          "archivo": "app/apis/menu/services/delete_menu_item_service.py",
+          "linea": 19,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API5:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            12,
+            19
+          ]
+        },
+        {
+          "id": "REST-02",
+          "nombre": "IDOR en la actualización del perfil",
+          "archivo": "app/apis/auth/services/update_profile_service.py",
+          "linea": 27,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API1:2023",
+            "API3:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            21,
+            37
+          ]
+        },
+        {
+          "id": "REST-03",
+          "nombre": "Escalada de privilegios al actualizar roles",
+          "archivo": "app/apis/users/services/update_user_role_service.py",
+          "linea": 26,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API5:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            12,
+            27
+          ]
+        },
+        {
+          "id": "REST-04",
+          "nombre": "SSRF al descargar la imagen del menú",
+          "archivo": "app/apis/menu/utils.py",
+          "linea": 10,
+          "detectada": true,
+          "hallazgos": [
+            "VM-003"
+          ],
+          "confianza": 0.644,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API7:2023"
+          ],
+          "categorias_predichas": [
+            "A01:2025",
+            "API7:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": true,
+          "lineas_unidad": [
+            9,
+            13
+          ]
+        },
+        {
+          "id": "REST-05",
+          "nombre": "Ejecución remota de comandos en estadísticas de disco",
+          "archivo": "app/apis/admin/utils.py",
+          "linea": 9,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": null,
+          "lineas_unidad": [
+            4,
+            15
+          ]
+        }
+      ]
+    },
+    "petclinic-microservices": {
+      "tipo": "referencia",
+      "microservicios": 9,
+      "archivos": 77,
+      "unidades": 229,
+      "hallazgos": 4,
+      "hallazgos_por_100_unidades": 1.75,
+      "vulnerabilidades_documentadas": 0,
+      "detectadas": 0,
+      "sensibilidad": null,
+      "categoria_correcta": 0,
+      "hallazgos_sobre_vulnerabilidades_documentadas": 0,
+      "hallazgos_adicionales": 4,
+      "duracion_segundos": 0.6,
+      "detalle": []
+    },
+    "microservices-demo": {
+      "tipo": "referencia",
+      "microservicios": 12,
+      "archivos": 41,
+      "unidades": 150,
+      "hallazgos": 21,
+      "hallazgos_por_100_unidades": 14.0,
+      "vulnerabilidades_documentadas": 0,
+      "detectadas": 0,
+      "sensibilidad": null,
+      "categoria_correcta": 0,
+      "hallazgos_sobre_vulnerabilidades_documentadas": 0,
+      "hallazgos_adicionales": 21,
+      "duracion_segundos": 1.2,
+      "detalle": []
+    }
+  },
+  "juice_shop": {
+    "n": 98,
+    "vulnerables": 71,
+    "precision": 1.0,
+    "recall": 0.07042253521126761,
+    "f1": 0.13157894736842105,
+    "accuracy": 0.32653061224489793,
+    "roc_auc": 0.6129368805425144,
+    "TP": 5,
+    "FP": 0,
+    "TN": 27,
+    "FN": 66,
+    "detalle": [
+      {
+        "fragmento": "accessLogDisclosureChallenge_1_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.071
+      },
+      {
+        "fragmento": "accessLogDisclosureChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.067
+      },
+      {
+        "fragmento": "accessLogDisclosureChallenge_3",
+        "vulnerable": 1,
+        "probabilidad": 0.067
+      },
+      {
+        "fragmento": "accessLogDisclosureChallenge_4",
+        "vulnerable": 1,
+        "probabilidad": 0.068
+      },
+      {
+        "fragmento": "adminSectionChallenge_1_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.072
+      },
+      {
+        "fragmento": "adminSectionChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.094
+      },
+      {
+        "fragmento": "adminSectionChallenge_3",
+        "vulnerable": 1,
+        "probabilidad": 0.107
+      },
+      {
+        "fragmento": "adminSectionChallenge_4",
+        "vulnerable": 1,
+        "probabilidad": 0.094
+      },
+      {
+        "fragmento": "changeProductChallenge_1",
+        "vulnerable": 1,
+        "probabilidad": 0.187
+      },
+      {
+        "fragmento": "changeProductChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.19
+      },
+      {
+        "fragmento": "changeProductChallenge_3_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.186
+      },
+      {
+        "fragmento": "changeProductChallenge_4",
+        "vulnerable": 1,
+        "probabilidad": 0.187
+      },
+      {
+        "fragmento": "chatbotGreedyInjectionChallenge_1",
+        "vulnerable": 1,
+        "probabilidad": 0.037
+      },
+      {
+        "fragmento": "chatbotGreedyInjectionChallenge_2_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.04
+      },
+      {
+        "fragmento": "chatbotGreedyInjectionChallenge_3",
+        "vulnerable": 1,
+        "probabilidad": 0.033
+      },
+      {
+        "fragmento": "chatbotGreedyInjectionChallenge_4",
+        "vulnerable": 1,
+        "probabilidad": 0.039
+      },
+      {
+        "fragmento": "chatbotPromptInjectionChallenge_1",
+        "vulnerable": 1,
+        "probabilidad": 0.012
+      },
+      {
+        "fragmento": "chatbotPromptInjectionChallenge_2_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.0
+      },
+      {
+        "fragmento": "chatbotPromptInjectionChallenge_3",
+        "vulnerable": 1,
+        "probabilidad": 0.003
+      },
+      {
+        "fragmento": "chatbotPromptInjectionChallenge_4",
+        "vulnerable": 1,
+        "probabilidad": 0.006
+      },
+      {
+        "fragmento": "dbSchemaChallenge_1",
+        "vulnerable": 1,
+        "probabilidad": 0.825
+      },
+      {
+        "fragmento": "dbSchemaChallenge_2_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.182
+      },
+      {
+        "fragmento": "dbSchemaChallenge_3",
+        "vulnerable": 1,
+        "probabilidad": 0.457
+      },
+      {
+        "fragmento": "directoryListingChallenge_1_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.048
+      },
+      {
+        "fragmento": "directoryListingChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.052
+      },
+      {
+        "fragmento": "directoryListingChallenge_3",
+        "vulnerable": 1,
+        "probabilidad": 0.065
+      },
+      {
+        "fragmento": "directoryListingChallenge_4",
+        "vulnerable": 1,
+        "probabilidad": 0.07
+      },
+      {
+        "fragmento": "exposedMetricsChallenge_1",
+        "vulnerable": 1,
+        "probabilidad": 0.033
+      },
+      {
+        "fragmento": "exposedMetricsChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.033
+      },
+      {
+        "fragmento": "exposedMetricsChallenge_3_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.02
+      },
+      {
+        "fragmento": "forgedReviewChallenge_1",
+        "vulnerable": 1,
+        "probabilidad": 0.206
+      },
+      {
+        "fragmento": "forgedReviewChallenge_2_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.185
+      },
+      {
+        "fragmento": "forgedReviewChallenge_3",
+        "vulnerable": 1,
+        "probabilidad": 0.225
+      },
+      {
+        "fragmento": "localXssChallenge_1",
+        "vulnerable": 1,
+        "probabilidad": 0.117
+      },
+      {
+        "fragmento": "localXssChallenge_2_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.03
+      },
+      {
+        "fragmento": "localXssChallenge_3",
+        "vulnerable": 1,
+        "probabilidad": 0.129
+      },
+      {
+        "fragmento": "localXssChallenge_4",
+        "vulnerable": 1,
+        "probabilidad": 0.116
+      },
+      {
+        "fragmento": "loginAdminChallenge_1",
+        "vulnerable": 1,
+        "probabilidad": 0.53
+      },
+      {
+        "fragmento": "loginAdminChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.343
+      },
+      {
+        "fragmento": "loginAdminChallenge_3",
+        "vulnerable": 1,
+        "probabilidad": 0.063
+      },
+      {
+        "fragmento": "loginAdminChallenge_4_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.065
+      },
+      {
+        "fragmento": "loginBenderChallenge_1",
+        "vulnerable": 1,
+        "probabilidad": 0.53
+      },
+      {
+        "fragmento": "loginBenderChallenge_2_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.066
+      },
+      {
+        "fragmento": "loginBenderChallenge_3",
+        "vulnerable": 1,
+        "probabilidad": 0.328
+      },
+      {
+        "fragmento": "loginBenderChallenge_4",
+        "vulnerable": 1,
+        "probabilidad": 0.378
+      },
+      {
+        "fragmento": "loginJimChallenge_1_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.065
+      },
+      {
+        "fragmento": "loginJimChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.378
+      },
+      {
+        "fragmento": "loginJimChallenge_3",
+        "vulnerable": 1,
+        "probabilidad": 0.047
+      },
+      {
+        "fragmento": "loginJimChallenge_4",
+        "vulnerable": 1,
+        "probabilidad": 0.53
+      },
+      {
+        "fragmento": "noSqlReviewsChallenge_1",
+        "vulnerable": 1,
+        "probabilidad": 0.349
+      },
+      {
+        "fragmento": "noSqlReviewsChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.225
+      },
+      {
+        "fragmento": "noSqlReviewsChallenge_3_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.12
+      },
+      {
+        "fragmento": "passkeyCredentialOverwriteChallenge_1",
+        "vulnerable": 1,
+        "probabilidad": 0.0
+      },
+      {
+        "fragmento": "passkeyCredentialOverwriteChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.002
+      },
+      {
+        "fragmento": "passkeyCredentialOverwriteChallenge_3_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.001
+      },
+      {
+        "fragmento": "passkeySignatureChallenge_1",
+        "vulnerable": 1,
+        "probabilidad": 0.007
+      },
+      {
+        "fragmento": "passkeySignatureChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.007
+      },
+      {
+        "fragmento": "passkeySignatureChallenge_3_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.007
+      },
+      {
+        "fragmento": "redirectChallenge_1",
+        "vulnerable": 1,
+        "probabilidad": 0.124
+      },
+      {
+        "fragmento": "redirectChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.081
+      },
+      {
+        "fragmento": "redirectChallenge_3",
+        "vulnerable": 1,
+        "probabilidad": 0.073
+      },
+      {
+        "fragmento": "redirectChallenge_4_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.054
+      },
+      {
+        "fragmento": "redirectCryptoCurrencyChallenge_1",
+        "vulnerable": 1,
+        "probabilidad": 0.08
+      },
+      {
+        "fragmento": "redirectCryptoCurrencyChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.074
+      },
+      {
+        "fragmento": "redirectCryptoCurrencyChallenge_3_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.067
+      },
+      {
+        "fragmento": "redirectCryptoCurrencyChallenge_4",
+        "vulnerable": 1,
+        "probabilidad": 0.073
+      },
+      {
+        "fragmento": "registerAdminChallenge_1",
+        "vulnerable": 1,
+        "probabilidad": 0.006
+      },
+      {
+        "fragmento": "registerAdminChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.018
+      },
+      {
+        "fragmento": "registerAdminChallenge_3_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.009
+      },
+      {
+        "fragmento": "registerAdminChallenge_4",
+        "vulnerable": 1,
+        "probabilidad": 0.009
+      },
+      {
+        "fragmento": "resetPasswordMortyChallenge_1",
+        "vulnerable": 1,
+        "probabilidad": 0.01
+      },
+      {
+        "fragmento": "resetPasswordMortyChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.013
+      },
+      {
+        "fragmento": "resetPasswordMortyChallenge_3",
+        "vulnerable": 1,
+        "probabilidad": 0.012
+      },
+      {
+        "fragmento": "resetPasswordMortyChallenge_4_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.028
+      },
+      {
+        "fragmento": "restfulXssChallenge_1_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.006
+      },
+      {
+        "fragmento": "restfulXssChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.013
+      },
+      {
+        "fragmento": "restfulXssChallenge_3",
+        "vulnerable": 1,
+        "probabilidad": 0.033
+      },
+      {
+        "fragmento": "restfulXssChallenge_4",
+        "vulnerable": 1,
+        "probabilidad": 0.04
+      },
+      {
+        "fragmento": "scoreBoardChallenge_1_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.083
+      },
+      {
+        "fragmento": "scoreBoardChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.091
+      },
+      {
+        "fragmento": "scoreBoardChallenge_3",
+        "vulnerable": 1,
+        "probabilidad": 0.091
+      },
+      {
+        "fragmento": "tokenSaleChallenge_1",
+        "vulnerable": 1,
+        "probabilidad": 0.053
+      },
+      {
+        "fragmento": "tokenSaleChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.049
+      },
+      {
+        "fragmento": "tokenSaleChallenge_3_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.079
+      },
+      {
+        "fragmento": "unionSqlInjectionChallenge_1",
+        "vulnerable": 1,
+        "probabilidad": 0.564
+      },
+      {
+        "fragmento": "unionSqlInjectionChallenge_2_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.182
+      },
+      {
+        "fragmento": "unionSqlInjectionChallenge_3",
+        "vulnerable": 1,
+        "probabilidad": 0.336
+      },
+      {
+        "fragmento": "weakPasswordChallenge_1_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.024
+      },
+      {
+        "fragmento": "weakPasswordChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.019
+      },
+      {
+        "fragmento": "weakPasswordChallenge_3",
+        "vulnerable": 1,
+        "probabilidad": 0.025
+      },
+      {
+        "fragmento": "weakPasswordChallenge_4",
+        "vulnerable": 1,
+        "probabilidad": 0.026
+      },
+      {
+        "fragmento": "web3SandboxChallenge_1_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.08
+      },
+      {
+        "fragmento": "web3SandboxChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.09
+      },
+      {
+        "fragmento": "web3SandboxChallenge_3",
+        "vulnerable": 1,
+        "probabilidad": 0.088
+      },
+      {
+        "fragmento": "xssBonusChallenge_1_correct",
+        "vulnerable": 0,
+        "probabilidad": 0.03
+      },
+      {
+        "fragmento": "xssBonusChallenge_2",
+        "vulnerable": 1,
+        "probabilidad": 0.117
+      },
+      {
+        "fragmento": "xssBonusChallenge_3",
+        "vulnerable": 1,
+        "probabilidad": 0.112
+      },
+      {
+        "fragmento": "xssBonusChallenge_4",
+        "vulnerable": 1,
+        "probabilidad": 0.119
+      }
+    ]
+  },
+  "fragmentos_web": {
+    "n": 30,
+    "vulnerables": 19,
+    "precision": 0.6956521739130435,
+    "recall": 0.8421052631578947,
+    "f1": 0.7619047619047619,
+    "accuracy": 0.6666666666666666,
+    "roc_auc": 0.7511961722488039,
+    "TP": 16,
+    "FP": 7,
+    "TN": 4,
+    "FN": 3,
+    "detalle": [
+      {
+        "id": "W02",
+        "tipo": "Command Injection (Java)",
+        "lenguaje": "java",
+        "vulnerable": 1,
+        "owasp_esperado": "A05:2025",
+        "probabilidad": 0.955,
+        "prediccion": 1,
+        "categorias": [
+          "A05:2025"
+        ],
+        "categoria_correcta": true,
+        "fuente": "OWASP Top 10:2025 - A05 Injection (escenario de ataque #3)"
+      },
+      {
+        "id": "W03",
+        "tipo": "Eval / inyección de código (Node.js)",
+        "lenguaje": "javascript",
+        "vulnerable": 1,
+        "owasp_esperado": "A05:2025",
+        "probabilidad": 0.964,
+        "prediccion": 1,
+        "categorias": [
+          "A05:2025"
+        ],
+        "categoria_correcta": true,
+        "fuente": "OWASP NodeGoat (repositorio) - app/routes/contributions.js"
+      },
+      {
+        "id": "W04",
+        "tipo": "Deserialización insegura (Python)",
+        "lenguaje": "python",
+        "vulnerable": 1,
+        "owasp_esperado": "A08:2025",
+        "probabilidad": 0.966,
+        "prediccion": 1,
+        "categorias": [
+          "A08:2025"
+        ],
+        "categoria_correcta": true,
+        "fuente": "OWASP PyGoat (repositorio) - insec_des_lab/main.py"
+      },
+      {
+        "id": "W05",
+        "tipo": "Cross-Site Scripting (JavaScript)",
+        "lenguaje": "javascript",
+        "vulnerable": 1,
+        "owasp_esperado": "A05:2025",
+        "probabilidad": 0.989,
+        "prediccion": 1,
+        "categorias": [
+          "A05:2025"
+        ],
+        "categoria_correcta": true,
+        "fuente": "Stack Overflow (foro) - pregunta 31737305"
+      },
+      {
+        "id": "W08",
+        "tipo": "PreparedStatement (Java)",
+        "lenguaje": "java",
+        "vulnerable": 0,
+        "owasp_esperado": "",
+        "probabilidad": 0.294,
+        "prediccion": 0,
+        "categorias": [
+          "A05:2025"
+        ],
+        "categoria_correcta": null,
+        "fuente": "Stack Overflow (foro) - respuesta 9516672"
+      },
+      {
+        "id": "W09",
+        "tipo": "Ejecución sin shell (Python)",
+        "lenguaje": "python",
+        "vulnerable": 0,
+        "owasp_esperado": "",
+        "probabilidad": 0.397,
+        "prediccion": 0,
+        "categorias": [
+          "A05:2025"
+        ],
+        "categoria_correcta": null,
+        "fuente": "Stack Overflow (foro) - respuesta 9365995"
+      },
+      {
+        "id": "W10",
+        "tipo": "Escape HTML en Flask (Python)",
+        "lenguaje": "python",
+        "vulnerable": 0,
+        "owasp_esperado": "",
+        "probabilidad": 0.505,
+        "prediccion": 1,
+        "categorias": [],
+        "categoria_correcta": null,
+        "fuente": "Documentación oficial de Flask - Quickstart, HTML Escaping"
+      },
+      {
+        "id": "W11",
+        "tipo": "Defensa de Path Traversal (Java)",
+        "lenguaje": "java",
+        "vulnerable": 0,
+        "owasp_esperado": "",
+        "probabilidad": 0.672,
+        "prediccion": 1,
+        "categorias": [
+          "A01:2025"
+        ],
+        "categoria_correcta": null,
+        "fuente": "Stack Overflow (foro) - pregunta 2375903"
+      },
+      {
+        "id": "W12",
+        "tipo": "Corrección de eval con parseInt (Node.js)",
+        "lenguaje": "javascript",
+        "vulnerable": 0,
+        "owasp_esperado": "",
+        "probabilidad": 0.931,
+        "prediccion": 1,
+        "categorias": [
+          "A06:2025",
+          "API4:2023"
+        ],
+        "categoria_correcta": null,
+        "fuente": "OWASP NodeGoat (repositorio) - corrección documentada en contributions.js"
+      },
+      {
+        "id": "W13",
+        "tipo": "SQL Injection (Java)",
+        "lenguaje": "java",
+        "vulnerable": 1,
+        "owasp_esperado": "A05:2025",
+        "probabilidad": 0.599,
+        "prediccion": 1,
+        "categorias": [
+          "A05:2025"
+        ],
+        "categoria_correcta": true,
+        "fuente": "Stack Overflow - pregunta 9516625"
+      },
+      {
+        "id": "W16",
+        "tipo": "XSS innerHTML (JSP/JS)",
+        "lenguaje": "javascript",
+        "vulnerable": 1,
+        "owasp_esperado": "A05:2025",
+        "probabilidad": 0.912,
+        "prediccion": 1,
+        "categorias": [
+          "A05:2025"
+        ],
+        "categoria_correcta": true,
+        "fuente": "Stack Overflow - respuesta 30707806"
+      },
+      {
+        "id": "W17",
+        "tipo": "textContent (JavaScript)",
+        "lenguaje": "javascript",
+        "vulnerable": 0,
+        "owasp_esperado": "",
+        "probabilidad": 0.561,
+        "prediccion": 1,
+        "categorias": [
+          "A05:2025"
+        ],
+        "categoria_correcta": null,
+        "fuente": "Stack Overflow - respuesta 30677323"
+      },
+      {
+        "id": "W18",
+        "tipo": "Command Injection os.popen (Python)",
+        "lenguaje": "python",
+        "vulnerable": 1,
+        "owasp_esperado": "A05:2025",
+        "probabilidad": 0.663,
+        "prediccion": 1,
+        "categorias": [
+          "A05:2025"
+        ],
+        "categoria_correcta": true,
+        "fuente": "Stack Overflow - pregunta 9365956"
+      },
+      {
+        "id": "W19",
+        "tipo": "execFile sin shell (Node.js)",
+        "lenguaje": "javascript",
+        "vulnerable": 0,
+        "owasp_esperado": "",
+        "probabilidad": 0.919,
+        "prediccion": 1,
+        "categorias": [
+          "A05:2025"
+        ],
+        "categoria_correcta": null,
+        "fuente": "Stack Overflow - respuesta 64190364"
+      },
+      {
+        "id": "W22",
+        "tipo": "SQL Injection Java (OWASP 2025)",
+        "lenguaje": "java",
+        "vulnerable": 1,
+        "owasp_esperado": "A05:2025",
+        "probabilidad": 0.892,
+        "prediccion": 1,
+        "categorias": [
+          "A05:2025"
+        ],
+        "categoria_correcta": true,
+        "fuente": "OWASP Top 10:2025 - A05 (escenario #1)"
+      },
+      {
+        "id": "W23",
+        "tipo": "HQL Injection (OWASP 2025)",
+        "lenguaje": "java",
+        "vulnerable": 1,
+        "owasp_esperado": "A05:2025",
+        "probabilidad": 0.939,
+        "prediccion": 1,
+        "categorias": [
+          "A05:2025"
+        ],
+        "categoria_correcta": true,
+        "fuente": "OWASP Top 10:2025 - A05 (escenario #2)"
+      },
+      {
+        "id": "W24",
+        "tipo": "IDOR (OWASP 2025 A01)",
+        "lenguaje": "java",
+        "vulnerable": 1,
+        "owasp_esperado": "A01:2025",
+        "probabilidad": 0.693,
+        "prediccion": 1,
+        "categorias": [
+          "A05:2025"
+        ],
+        "categoria_correcta": false,
+        "fuente": "OWASP Top 10:2025 - A01 (escenario #1)"
+      },
+      {
+        "id": "W25",
+        "tipo": "NoSQL $where (NodeGoat)",
+        "lenguaje": "javascript",
+        "vulnerable": 1,
+        "owasp_esperado": "A05:2025",
+        "probabilidad": 0.065,
+        "prediccion": 0,
+        "categorias": [
+          "A05:2025"
+        ],
+        "categoria_correcta": null,
+        "fuente": "OWASP NodeGoat - app/data/allocations-dao.js"
+      },
+      {
+        "id": "W26",
+        "tipo": "Open redirect (NodeGoat)",
+        "lenguaje": "javascript",
+        "vulnerable": 1,
+        "owasp_esperado": "A01:2025",
+        "probabilidad": 0.927,
+        "prediccion": 1,
+        "categorias": [
+          "A01:2025"
+        ],
+        "categoria_correcta": true,
+        "fuente": "OWASP NodeGoat - app/routes/index.js"
+      },
+      {
+        "id": "W27",
+        "tipo": "Log injection (NodeGoat)",
+        "lenguaje": "javascript",
+        "vulnerable": 1,
+        "owasp_esperado": "A09:2025",
+        "probabilidad": 0.254,
+        "prediccion": 0,
+        "categorias": [
+          "A06:2025",
+          "A09:2025"
+        ],
+        "categoria_correcta": null,
+        "fuente": "OWASP NodeGoat - app/routes/session.js"
+      },
+      {
+        "id": "W28",
+        "tipo": "Log sin CRLF (NodeGoat fix)",
+        "lenguaje": "javascript",
+        "vulnerable": 0,
+        "owasp_esperado": "",
+        "probabilidad": 0.543,
+        "prediccion": 1,
+        "categorias": [
+          "A06:2025",
+          "A09:2025"
+        ],
+        "categoria_correcta": null,
+        "fuente": "OWASP NodeGoat - corrección documentada en session.js"
+      },
+      {
+        "id": "W29",
+        "tipo": "SQL Injection f-string (PyGoat)",
+        "lenguaje": "python",
+        "vulnerable": 1,
+        "owasp_esperado": "A05:2025",
+        "probabilidad": 0.966,
+        "prediccion": 1,
+        "categorias": [
+          "A05:2025",
+          "A07:2025",
+          "API2:2023"
+        ],
+        "categoria_correcta": true,
+        "fuente": "OWASP PyGoat - sql_injection_lab/app.py"
+      },
+      {
+        "id": "W30",
+        "tipo": "Command Injection shell=True (PyGoat)",
+        "lenguaje": "python",
+        "vulnerable": 1,
+        "owasp_esperado": "A05:2025",
+        "probabilidad": 0.967,
+        "prediccion": 1,
+        "categorias": [
+          "A05:2025"
+        ],
+        "categoria_correcta": true,
+        "fuente": "OWASP PyGoat - command_injection_lab/app.py"
+      },
+      {
+        "id": "W31",
+        "tipo": "eval (PyGoat)",
+        "lenguaje": "python",
+        "vulnerable": 1,
+        "owasp_esperado": "A05:2025",
+        "probabilidad": 0.98,
+        "prediccion": 1,
+        "categorias": [
+          "A05:2025"
+        ],
+        "categoria_correcta": true,
+        "fuente": "OWASP PyGoat - command_injection_lab/app.py"
+      },
+      {
+        "id": "W32",
+        "tipo": "SQL Injection (docs Python sqlite3)",
+        "lenguaje": "python",
+        "vulnerable": 1,
+        "owasp_esperado": "A05:2025",
+        "probabilidad": 0.949,
+        "prediccion": 1,
+        "categorias": [
+          "A05:2025"
+        ],
+        "categoria_correcta": true,
+        "fuente": "Documentación oficial Python - sqlite3 (ejemplo inseguro)"
+      },
+      {
+        "id": "W33",
+        "tipo": "Placeholders sqlite3 (docs Python)",
+        "lenguaje": "python",
+        "vulnerable": 0,
+        "owasp_esperado": "",
+        "probabilidad": 0.114,
+        "prediccion": 0,
+        "categorias": [
+          "A05:2025"
+        ],
+        "categoria_correcta": null,
+        "fuente": "Documentación oficial Python - sqlite3 (ejemplo seguro)"
+      },
+      {
+        "id": "W34",
+        "tipo": "SQL Injection raw() (docs Django)",
+        "lenguaje": "python",
+        "vulnerable": 1,
+        "owasp_esperado": "A05:2025",
+        "probabilidad": 0.799,
+        "prediccion": 1,
+        "categorias": [
+          "A05:2025",
+          "A08:2025",
+          "API3:2023"
+        ],
+        "categoria_correcta": true,
+        "fuente": "Documentación oficial Django - Performing raw SQL queries"
+      },
+      {
+        "id": "W35",
+        "tipo": "raw() con params (docs Django)",
+        "lenguaje": "python",
+        "vulnerable": 0,
+        "owasp_esperado": "",
+        "probabilidad": 0.431,
+        "prediccion": 0,
+        "categorias": [
+          "A08:2025"
+        ],
+        "categoria_correcta": null,
+        "fuente": "Documentación oficial Django - Performing raw SQL queries"
+      },
+      {
+        "id": "W36",
+        "tipo": "Subida con secure_filename (docs Flask)",
+        "lenguaje": "python",
+        "vulnerable": 0,
+        "owasp_esperado": "",
+        "probabilidad": 0.927,
+        "prediccion": 1,
+        "categorias": [
+          "A06:2025"
+        ],
+        "categoria_correcta": null,
+        "fuente": "Documentación oficial de Flask - File Uploads"
+      },
+      {
+        "id": "W37",
+        "tipo": "Clave secreta fija (docs Flask)",
+        "lenguaje": "python",
+        "vulnerable": 1,
+        "owasp_esperado": "A07:2025",
+        "probabilidad": 0.252,
+        "prediccion": 0,
+        "categorias": [
+          "A04:2025",
+          "A02:2025"
+        ],
+        "categoria_correcta": null,
+        "fuente": "Documentación oficial de Flask - Sessions (ejemplo didáctico)"
+      }
+    ]
+  }
+}
