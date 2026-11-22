@@ -159,3 +159,10 @@ def test_handlers_anidados_registrados_dentro_de_una_funcion():
               "    @app.route('/a', methods=['POST'])\n    def a_post():\n        return request.form['x']\n")
     nombres = {u.nombre for u in segmentar("h.py", codigo)}
     assert {"a_get", "a_post"} <= nombres and "init" not in nombres
+
+
+def test_metodos_de_objeto_literal_no_comparten_lineas():
+    codigo = ("module.exports = {\n  save: async (req, res) => {\n    a();\n  },\n\n  get: async (req, res) => {\n"
+              "    b();\n  },\n};\n")
+    u = {x.nombre: x for x in segmentar("c.js", codigo)}
+    assert u["save"].linea_fin == 4 and u["get"].linea_inicio == 6

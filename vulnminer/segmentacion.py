@@ -17,6 +17,7 @@ el modelo se entrena con el mismo tipo de unidad que luego clasifica.
 import ast
 import json
 import re
+import warnings
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -163,7 +164,9 @@ def _bloques_sueltos(archivo, lenguaje, subtipo, lineas, cubiertas, contexto="")
 def _segmentar_python(archivo, texto):
     lineas = texto.splitlines()
     try:
-        arbol = ast.parse(texto)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            arbol = ast.parse(texto)
     except (SyntaxError, ValueError):
         return _segmentar_python_indentacion(archivo, lineas)
     unidades, cubiertas = [], set()
@@ -349,7 +352,7 @@ def _segmentar_llaves(archivo, texto, lenguaje):
     funciones, clases = [], []
     for abre, cierra in pares:
         ini = _inicio_sentencia(mapa, abre)
-        while ini < abre and mapa[ini].isspace():
+        while ini < abre and (mapa[ini].isspace() or mapa[ini] == ","):
             ini += 1
         cab = mapa[ini:abre]
         cab_txt = texto[ini:abre]
