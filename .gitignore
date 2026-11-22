@@ -18,7 +18,7 @@ CLAUDE.md
 .DS_Store
 
 # --- Datos descargados (se regeneran con scripts/descargar_fuentes.py) ---
-fuentes/
+/fuentes/
 evaluacion/proyectos/
 
 # --- Reportes generados al ejecutar la herramienta ---

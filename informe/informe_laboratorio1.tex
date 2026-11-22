@@ -1,0 +1,615 @@
+\documentclass[12pt,a4paper]{article}
+
+% =========================================================
+% CONFIGURACION GENERAL (compatible con Overleaf / pdfLaTeX)
+% =========================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[a4paper,top=2.6cm,bottom=2.5cm,left=2.8cm,right=2.6cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{array,tabularx,booktabs,longtable}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,babel}
+\usepackage{enumitem}
+\usepackage{fancyhdr,lastpage}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{setspace}
+
+\definecolor{AzulESPE}{HTML}{000000}
+\definecolor{VerdeESPE}{HTML}{000000}
+\definecolor{GrisTexto}{HTML}{000000}
+\definecolor{GrisSuave}{HTML}{FFFFFF}
+\definecolor{Borde}{HTML}{000000}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=AzulESPE,
+    urlcolor=AzulESPE,
+    citecolor=AzulESPE,
+    pdftitle={Clasificación de vulnerabilidades en microservicios con minería de datos},
+    pdfauthor={Jeancarlo Santi}
+}
+
+\titleformat{\section}{\Large\bfseries\color{AzulESPE}}{\thesection.}{0.75em}{}
+\titleformat{\subsection}{\large\bfseries\color{AzulESPE}}{\thesubsection.}{0.7em}{}
+\titlespacing*{\section}{0pt}{1.35em}{0.65em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.4em}
+\captionsetup{font=small,labelfont={bf,color=AzulESPE},justification=centering}
+\renewcommand{\arraystretch}{1.15}
+\setlist[itemize]{topsep=4pt,itemsep=3pt,parsep=0pt,leftmargin=*}
+\setlist[enumerate]{topsep=4pt,itemsep=3pt,parsep=0pt,leftmargin=*}
+\setstretch{1.12}
+
+% Encabezados y pies, excluyendo la portada
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\scriptsize\color{GrisTexto} Desarrollo de Software Seguro}
+\fancyhead[R]{\footnotesize\color{GrisTexto} Parcial 2 -- Laboratorio 1}
+\fancyfoot[L]{\footnotesize\color{GrisTexto} Jeancarlo Santi \;|\; NRC 36900}
+\fancyfoot[R]{\footnotesize\color{GrisTexto} Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\headheight}{15pt}
+
+\lstdefinestyle{sesion}{
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{GrisSuave},
+    frame=single,
+    rulecolor=\color{Borde},
+    breaklines=true,
+    columns=fullflexible,
+    keepspaces=true,
+    showstringspaces=false,
+    upquote=true,
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {ñ}{{\~n}}1 {Á}{{\'A}}1 {É}{{\'E}}1 {Ó}{{\'O}}1,
+    xleftmargin=0.1cm,
+    xrightmargin=0.1cm,
+    framexleftmargin=0.25cm,
+    framexrightmargin=0.25cm,
+    aboveskip=0.8em,
+    belowskip=0.6em
+}
+\lstset{style=sesion}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\ruta}[1]{\nolinkurl{#1}}
+\newcommand{\rotulo}[1]{\textbf{\color{AzulESPE}#1}}
+\newcommand{\cod}[1]{\texttt{#1}}
+
+\urlstyle{tt}
+\setlength{\emergencystretch}{1.5em}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+\graphicspath{{figuras/}}
+\input{generado/cifras.tex}
+
+\begin{document}
+\begin{titlepage}
+\thispagestyle{empty}\centering
+\vspace*{0.6cm}
+\IfFileExists{logo_espe.png}{\includegraphics[width=5.2cm,height=2.2cm,keepaspectratio]{logo_espe.png}}{\fbox{\parbox[c][2.0cm][c]{5.2cm}{\centering\texttt{logo\_espe.png}}}}
+\vspace{0.8cm}
+
+{\large\bfseries\color{AzulESPE} UNIVERSIDAD DE LAS FUERZAS ARMADAS ESPE\par}
+\vspace{0.3cm}
+{\large Ingeniería en Software\par}
+{\normalsize Desarrollo de Software Seguro\par}
+\vspace{0.55cm}
+{\color{VerdeESPE}\rule{0.73\textwidth}{1.3pt}\par}
+\vspace{0.6cm}
+{\Large\bfseries\color{AzulESPE} MINERÍA DE DATOS APLICADA A LA CLASIFICACIÓN DE VULNERABILIDADES EN ARQUITECTURAS DE MICROSERVICIOS\par}
+\vspace{0.35cm}
+{\LARGE\bfseries vulnminer: herramienta CLI basada en un modelo de minería de datos (OWASP Top 10:2025 y API Security Top 10:2023)\par}
+\vspace{0.3cm}
+{\normalsize\color{GrisTexto} Parcial 2 -- Laboratorio 1\par}
+\vspace{0.7cm}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabularx}{0.96\textwidth}{@{}>{\bfseries\color{AzulESPE}}lY@{}}
+Integrante: & Jeancarlo Santi\\
+Docente: & Ing. Geovanny Cudco\\
+NRC: & 36900\\
+Carrera: & Ingeniería en Software\\
+Asignatura: & Desarrollo de Software Seguro\\
+Repositorio: & \url{https://github.com/Jeancarlospp/Clasificador_vulnerabilidades}\\
+Fecha: & 26 de noviembre de 2026\\
+\end{tabularx}
+\vfill
+{\color{VerdeESPE}\rule{0.73\textwidth}{0.8pt}\par}
+\end{titlepage}
+\setcounter{page}{2}
+
+% =========================================================
+\section*{Resumen}
+\addcontentsline{toc}{section}{Resumen}
+Desarrollé \textbf{vulnminer}, una herramienta de línea de comandos que analiza un proyecto de microservicios desde su directorio raíz y reporta posibles vulnerabilidades clasificadas según el OWASP Top 10:2025 y el OWASP API Security Top 10:2023. El componente central es un modelo de minería de datos construido con la metodología SEMMA. Reuní un dataset de \nUnidades{} unidades de código y configuración (\nVulnerables{} vulnerables y \nSeguras{} no vulnerables) en Java, Python, JavaScript, TypeScript y archivos de configuración, a partir de las pruebas de reglas de Semgrep y CodeQL, el OWASP Benchmark, las pruebas de KICS, SecurityEval, casos controlados de API desarrollados para el proyecto y \nBenignos{} proyectos reales como código no vulnerable. Cada unidad se representa con TF-IDF de tokens y de caracteres más \nCaracteristicas{} características de seguridad extraídas por análisis estático. Comparé cuatro algoritmos (regresión logística, SVM lineal, Random Forest y Gradient Boosting) y seleccioné la \detAlgoritmo{} para el detector y para el clasificador multietiqueta de categorías. En la partición de prueba, formada por proyectos y fuentes no vistos, el detector obtuvo F1 = \pruebaFUno{} y AUC = \pruebaAUC{}. En una prueba funcional sobre cuatro proyectos de microservicios vulnerables que no participaron en el entrenamiento (OWASP crAPI, VAmPI, dvws-node y Damn Vulnerable RESTaurant), la herramienta detectó \extDetectadas{} de \extDocumentadas{} vulnerabilidades documentadas. Las principales limitaciones son las fallas de autorización y de lógica de negocio, que requieren contexto que un análisis estático por función no siempre tiene.
+
+\tableofcontents
+\newpage
+
+% =========================================================
+\section{Introducción}
+Las arquitecturas de microservicios dividen una aplicación en servicios pequeños que se comunican mediante API, cada uno con su propio código, dependencias y configuración. Esta división multiplica la superficie de ataque: cada servicio expone endpoints, gestiona tokens, se configura con archivos como \cod{application.yml} o \cod{docker-compose.yml} y puede estar escrito en un lenguaje distinto. Revisar manualmente todo ese material es costoso, y las reglas fijas de búsqueda no generalizan bien a estilos de código nuevos.
+
+El objetivo de este laboratorio es desarrollar e integrar un modelo de minería de datos que identifique patrones asociados con posibles vulnerabilidades en proyectos de microservicios y los clasifique conforme al OWASP Top 10:2025 y al OWASP API Security Top 10:2023, mediante una herramienta ejecutable por línea de comandos y siguiendo las cinco fases de la metodología SEMMA. El informe responde a la pregunta orientadora del laboratorio: \emph{¿en qué medida un modelo de minería de datos desarrollado mediante SEMMA permite identificar y clasificar posibles vulnerabilidades de seguridad en proyectos basados en microservicios?}
+
+% =========================================================
+\section{Estándares de clasificación}
+La herramienta incorpora las veinte categorías de ambos estándares con sus identificadores oficiales (Tabla~\ref{tab:estandares}). Una misma vulnerabilidad puede pertenecer a categorías de los dos estándares; por ejemplo, el acceso a un objeto ajeno por su identificador es A01:2025 y API1:2023 a la vez. Por eso la clasificación es \textbf{multietiqueta}.
+
+\begin{table}[H]
+\centering\footnotesize
+\caption{Categorías de clasificación.}
+\label{tab:estandares}
+\begin{tabularx}{\textwidth}{@{}lY|lY@{}}
+\toprule
+\textbf{Código} & \textbf{OWASP Top 10:2025} & \textbf{Código} & \textbf{OWASP API Security Top 10:2023}\\
+\midrule
+A01 & Pérdida de control de acceso & API1 & Autorización incorrecta a nivel de objeto\\
+A02 & Configuración de seguridad incorrecta & API2 & Autenticación incorrecta\\
+A03 & Fallas en la cadena de suministro de software & API3 & Autorización incorrecta a nivel de propiedades\\
+A04 & Fallas criptográficas & API4 & Consumo ilimitado de recursos\\
+A05 & Inyección & API5 & Autorización incorrecta a nivel de función\\
+A06 & Diseño inseguro & API6 & Acceso ilimitado a flujos de negocio sensibles\\
+A07 & Fallas de autenticación & API7 & Falsificación de solicitudes del lado del servidor\\
+A08 & Fallas de integridad del software o de los datos & API8 & Configuración de seguridad incorrecta\\
+A09 & Fallas de registro, alerta y monitoreo & API9 & Gestión inadecuada del inventario de API\\
+A10 & Manejo inadecuado de condiciones excepcionales & API10 & Consumo inseguro de API\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La relación entre debilidades CWE y categorías se tomó de los documentos oficiales: la sección \emph{List of Mapped CWEs} de cada categoría del Top 10:2025 y las referencias externas de cada riesgo del API Security Top 10:2023 \cite{owasp2025,owaspapi}. La tabla resultante tiene \nCWEtabla{} CWE. Algunos CWE frecuentes no aparecen en las listas oficiales, pero su CWE padre en la jerarquía de MITRE sí \cite{cwe}: por ejemplo, CWE-943 (inyección NoSQL) es hijo de CWE-74 (inyección). Esas relaciones se marcan como \emph{extendidas} y cada una lleva su justificación en \ruta{datos/correspondencias_cwe_owasp.csv}.
+
+Cuando el modelo no supera el umbral de ninguna categoría, el hallazgo se marca como \textbf{pendiente de revisión} y no se asigna una categoría arbitraria.
+
+% =========================================================
+\section{Arquitectura de la solución}
+La Figura~\ref{fig:arquitectura} resume el flujo de la herramienta. El mismo segmentador y la misma representación se usan para construir el dataset y para analizar proyectos, de modo que el modelo clasifica en producción el mismo tipo de fragmento con el que aprendió.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  caja/.style={draw, rounded corners=2pt, align=center, font=\small, minimum height=1.0cm, text width=2.6cm, fill=white},
+  ancha/.style={caja, text width=3.4cm},
+  flecha/.style={-{Stealth[length=2.2mm]}, thick}]
+\node[caja] (proy) at (0,0) {Proyecto de microservicios};
+\node[caja] (desc) at (3.4,0) {Descubrimiento de servicios y archivos};
+\node[caja] (seg) at (6.8,0) {Segmentación en unidades};
+\node[caja] (rep) at (10.2,0) {Representación TF-IDF + seguridad};
+\node[caja] (det) at (10.2,-2.0) {Detector (vulnerable / no)};
+\node[caja] (cat) at (6.8,-2.0) {Categorías OWASP (multietiqueta)};
+\node[caja] (cwe) at (3.4,-2.0) {CWE más probable};
+\node[caja] (loc) at (0,-2.0) {Línea relevante y evidencia};
+\node[caja] (sev) at (0,-4.0) {Severidad y estado};
+\node[ancha] (rep2) at (5.1,-4.0) {Reportes: consola, JSON y HTML};
+\draw[flecha] (proy) -- (desc);
+\draw[flecha] (desc) -- (seg);
+\draw[flecha] (seg) -- (rep);
+\draw[flecha] (rep) -- (det);
+\draw[flecha] (det) -- (cat);
+\draw[flecha] (cat) -- (cwe);
+\draw[flecha] (cwe) -- (loc);
+\draw[flecha] (loc) -- (sev);
+\draw[flecha] (sev) -- (rep2);
+\end{tikzpicture}
+\caption{Flujo de análisis de vulnminer.}
+\label{fig:arquitectura}
+\end{figure}
+
+El código se organizó en el paquete de Python \cod{vulnminer}:
+\begin{itemize}
+  \item \cod{segmentacion}: divide archivos en funciones, \emph{handlers} y bloques de configuración.
+  \item \cod{caracteristicas}: extrae los indicadores de seguridad del análisis estático.
+  \item \cod{modelo}: representación, algoritmos y modelo serializado.
+  \item \cod{descubrimiento}: identifica los microservicios y sus tecnologías.
+  \item \cod{analizador}: orquesta el análisis, localiza la línea y arma la evidencia.
+  \item \cod{severidad}, \cod{reportes} y \cod{cli}: severidad y estado, reportes y comando \cod{vulnminer}.
+\end{itemize}
+Usé Python 3.12, scikit-learn \cite{sklearn} para la representación, los clasificadores y las métricas, pandas y Matplotlib para el análisis, y Jupyter para los notebooks de cada fase.
+
+% =========================================================
+\section{Fase 1. Sample: muestreo y selección de datos}
+
+\subsection{Unidad de análisis}
+Cada registro del dataset es una \textbf{unidad}: una función o método con sus anotaciones (\cod{@GetMapping}, \cod{@UseGuards}, \cod{@router.get}) o la llamada que registra una ruta de Express; un servicio de \cod{docker-compose}; una sección de \cod{application.yml}; un grupo de propiedades; una etapa de un \cod{Dockerfile}; una ruta de una especificación OpenAPI; o la sección de dependencias de un manifiesto. Las unidades de más de 60 líneas se dividen en ventanas que conservan la cabecera. Cada unidad guarda además su \emph{contexto}: la cabecera de la clase y el \emph{middleware} del archivo, porque un \cod{@UseGuards} declarado en la clase protege todos sus métodos.
+
+\subsection{Fuentes de datos}
+La Tabla~\ref{tab:fuentes} muestra la composición del dataset final. Todas las fuentes son públicas y su versión exacta (commit) quedó registrada en \ruta{datos/versiones_fuentes.json}.
+
+\begin{table}[H]
+\centering\small
+\caption{Composición del dataset por fuente.}
+\label{tab:fuentes}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\textbf{Fuente} & \textbf{Unidades} & \textbf{Vulnerables} & \textbf{No vulnerables}\\
+\midrule
+\input{generado/tabla_fuentes.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+  \item \textbf{Pruebas de reglas de Semgrep y de consultas de CodeQL} \cite{semgrep,codeql}. Cada línea vulnerable está anotada (\cod{ruleid:}, \cod{\$ Alert}, \cod{BAD}) y cada línea segura también (\cod{ok:}, \cod{GOOD}). Etiqueté como vulnerable la unidad que contiene una línea vulnerable, con el CWE de la regla, y como no vulnerable la que solo contiene líneas seguras. Además de código, Semgrep aporta pruebas de \cod{Dockerfile} y \cod{docker-compose}.
+  \item \textbf{OWASP Benchmark} para Java (v1.2) y Python (v0.1) \cite{benchmark}, sugerido en el enunciado: casos de prueba con su resultado esperado (verdadero o falso positivo) y su CWE.
+  \item \textbf{KICS} \cite{kics}: pruebas positivas y negativas de consultas sobre \cod{Dockerfile}, \cod{docker-compose} y OpenAPI. Seleccioné 60 consultas de seguridad y les asigné su CWE y su categoría API (por ejemplo, \emph{security\_empty\_array} \(\rightarrow\) CWE-306, API2).
+  \item \textbf{SecurityEval} \cite{securityeval}: ejemplos Python inseguros clasificados por CWE.
+  \item \textbf{Casos controlados.} Las fuentes públicas casi no tienen ejemplos de autorización a nivel de objeto o de función, asignación masiva, consumo de recursos, inventario o consumo inseguro de API. Escribí plantillas de \textbf{pares vulnerable/corregido} en \nFamilias{} familias y cinco frameworks (Express, NestJS, FastAPI, Flask y Spring Boot), además de configuraciones de Spring Boot, OpenAPI, manifiestos y \cod{docker-compose}. Cada plantilla se instancia con entidades, nombres de variables, rutas y mensajes distintos, y hay al menos dos estilos por familia.
+  \item \textbf{Código no vulnerable de \nBenignos{} proyectos reales}: aplicaciones y \emph{boilerplates} de NestJS, Express, Spring Boot, FastAPI, Flask y Django, como Netflix Dispatch, JHipster, Piggymetrics y NetBox. Excluí sus carpetas de pruebas y de ejemplos, porque estas suelen contener código inseguro a propósito.
+\end{itemize}
+
+\subsection{Procedimiento de muestreo y limpieza}
+\begin{enumerate}
+  \item Eliminé los comentarios que delatan la etiqueta (\cod{ruleid}, \cod{BAD}, \cod{vulnerable}) y neutralicé los identificadores como \cod{bad1()} o \cod{BenchmarkTest00042}. Sin este paso el modelo aprendería las marcas y no el código.
+  \item Descarté duplicados exactos (tras normalizar espacios), unidades con etiquetas contradictorias y vulnerabilidades sin categoría OWASP (por ejemplo, de seguridad de memoria).
+  \item Limité a 12 unidades por archivo y a 420 por combinación de fuente y CWE, para que ningún origen domine, y a 600 unidades por proyecto benigno.
+  \item Asigné las etiquetas OWASP a partir del CWE con la tabla de correspondencias. En los casos controlados y en KICS, la categoría API se fijó por diseño. Los CWE genéricos de API10 (CWE-20, CWE-200, CWE-295 y CWE-319) solo se asignan cuando la unidad consume otra API.
+\end{enumerate}
+
+\subsection{Partición}
+Dividí el dataset en entrenamiento (\nEntrenamiento{}), validación (\nValidacion{}) y prueba (\nPrueba{}), aproximadamente 70/15/15. La división se hizo \textbf{por grupo de origen} (\nGrupos{} grupos): todas las unidades de un mismo proyecto, del mismo directorio de pruebas de una regla o de la misma familia, framework y estilo de casos controlados quedan en la misma partición. Así ninguna partición comparte procedencia con otra, y la prueba mide la generalización a proyectos y estilos no vistos. Los grupos se asignaron con estratificación iterativa multietiqueta \cite{sechidis}, de modo que cada categoría aparezca en las tres particiones. Las pruebas automáticas verifican que ningún grupo ni ningún fragmento de código se repita entre particiones.
+
+\subsection{Entregables de la fase}
+El dataset (\ruta{datos/dataset.csv}), el diccionario de datos (\ruta{datos/diccionario_datos.csv}), la descripción de las fuentes, la tabla de correspondencias CWE--OWASP y la justificación del muestreo están en el repositorio y en el notebook \ruta{01_sample.ipynb}.
+
+% =========================================================
+\section{Fase 2. Explore: análisis exploratorio}
+El notebook \ruta{02_explore.ipynb} contiene las tablas descriptivas y los gráficos interpretados. Los hallazgos principales son los siguientes.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{eda_clases_fuentes.png}
+\caption{Proporción de clases y composición por fuente.}
+\label{fig:clases}
+\end{figure}
+
+\textbf{Proporción de clases.} Hay aproximadamente dos unidades no vulnerables por cada vulnerable (Figura~\ref{fig:clases}), lo que es realista: la mayor parte del código de un proyecto no es vulnerable.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{eda_categorias.png}
+\caption{Distribución de las unidades vulnerables por categoría.}
+\label{fig:categorias}
+\end{figure}
+
+\textbf{Distribución por categoría.} La inyección (A05), el control de acceso (A01) y la criptografía (A04) son las categorías más representadas (Figura~\ref{fig:categorias}), porque son las más estudiadas por las herramientas de análisis. A03, A09, A10, API5 y API9 tienen pocos ejemplos, y API6 no tiene ninguno: los flujos de negocio sensibles dependen de la lógica de cada aplicación y no de un patrón de código. La diferencia entre la categoría más frecuente y la menos frecuente supera dos órdenes de magnitud.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{eda_lenguajes.png}
+\caption{Unidades por lenguaje y por tipo de archivo de configuración.}
+\label{fig:lenguajes}
+\end{figure}
+
+\textbf{Lenguajes.} Los cuatro lenguajes del alcance están representados (Figura~\ref{fig:lenguajes}). La configuración es la parte menos representada.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{eda_indicadores.png}
+\caption{Indicadores de seguridad con mayor diferencia de prevalencia entre clases.}
+\label{fig:indicadores}
+\end{figure}
+
+\textbf{Patrones frecuentes.} Las fuentes de entrada no confiable, las consultas SQL dinámicas, la ejecución de comandos y el hash débil son mucho más frecuentes en el código vulnerable. La validación de entrada y el uso de la identidad del usuario lo son en el no vulnerable (Figura~\ref{fig:indicadores}). Ningún indicador separa las clases por sí solo, lo que justifica un modelo que aprenda sus combinaciones.
+
+\textbf{Calidad.} Tras la limpieza no hay duplicados, valores faltantes ni etiquetas inconsistentes. Las unidades vulnerables son algo más cortas en promedio porque muchas provienen de pruebas de reglas. Por eso la representación usa TF-IDF normalizado y métricas de longitud en escala logarítmica, y la evaluación final incluye proyectos completos.
+
+% =========================================================
+\section{Fase 3. Modify: preparación y transformación}
+\subsection{Representación}
+Cada unidad se transforma con un pipeline de scikit-learn que se ajusta \textbf{solo con la partición de entrenamiento} y se serializa con el modelo:
+
+\begin{enumerate}
+  \item \textbf{TF-IDF de tokens} (\dimTokens{} términos, unigramas y bigramas): tokens propios de código (identificadores, operadores y marcadores como \cod{+}, \cod{\$\{} o \cod{\%}) y sub-tokens de identificadores compuestos (\cod{userId} \(\rightarrow\) \cod{user}, \cod{id}).
+  \item \textbf{TF-IDF de n-gramas de caracteres} (\dimCaracteres{} n-gramas de 3 a 5 caracteres), que capta diferencias finas como \cod{execute(sql + x)} frente a \cod{execute(sql, (x,))}.
+  \item \textbf{\nCaracteristicas{} características de seguridad} escaladas a \([-1, 1]\).
+\end{enumerate}
+
+\subsection{Características de seguridad}
+Las características cubren las nueve familias sugeridas en el enunciado (Tabla~\ref{tab:caracteristicas}). Hay \nIndicadores{} indicadores de análisis estático; cada uno reconoce un patrón sintáctico en Java, Python, JavaScript, TypeScript o en archivos de configuración. A ellos se suman \nDerivadas{} \textbf{interacciones}, que expresan la relación entre una fuente de entrada y una operación peligrosa o la ausencia de un control (por ejemplo, \emph{ruta con identificador + búsqueda por id + sin verificación del propietario}), métricas de código y el tipo de unidad. Ningún indicador asigna una categoría OWASP: son variables cuyo peso aprende el modelo.
+
+\begin{table}[H]
+\centering\footnotesize
+\caption{Características de seguridad por familia.}
+\label{tab:caracteristicas}
+\begin{tabularx}{\textwidth}{@{}P{4.2cm}Y@{}}
+\toprule
+\textbf{Característica sugerida} & \textbf{Indicadores implementados (ejemplos)}\\
+\midrule
+Consultas dinámicas a bases de datos & SQL concatenado o interpolado, SQL parametrizado, consultas nativas del ORM, NoSQL con datos de la petición, búsqueda por id, colección sin paginar\\
+Autenticación y autorización & guards (\cod{@UseGuards}, \cod{@PreAuthorize}, \cod{Depends(get\_current\_user)}), endpoint público, verificación de rol, identidad del usuario, verificación de propietario\\
+Validación de parámetros & DTO y anotaciones de validación, conversión de tipos, listas blancas, normalización de rutas, codificación de salida\\
+Funciones criptográficas & hash débil, cifrado débil, aleatorio no criptográfico, hash de contraseñas robusto, TLS sin verificar, HTTP sin cifrar\\
+Errores y excepciones & excepción silenciada o genérica, error expuesto al cliente, fallo abierto, registro de datos sensibles o de la petición\\
+Configuración de permisos y seguridad & depuración activa, CORS permisivo, CSRF deshabilitado, Actuator expuesto, contenedor privilegiado, imagen sin versión, cabeceras de seguridad\\
+Tokens y credenciales & uso de JWT, JWT sin verificar, secreto literal, secreto en variables de entorno, contraseña en texto plano, límite de intentos\\
+Rutas y endpoints REST & definición de ruta, identificador en la ruta, método de modificación, ruta administrativa, versión de la API, ruta de autenticación\\
+Dependencias y componentes externos & peticiones salientes, URL variable, tiempo de espera, respuesta externa usada sin validar, paquetes sin versión, descargas remotas\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Tratamiento del desbalance}
+Entre clases usé pesos balanceados y un umbral de decisión calibrado en validación. Entre categorías usé un clasificador uno-contra-el-resto con pesos balanceados, un umbral propio por categoría y un mínimo de 15 ejemplos de entrenamiento para considerar evaluable una categoría. No usé sobremuestreo sintético: interpolar vectores TF-IDF no produce código plausible, y los casos controlados ya aportan ejemplos de las categorías escasas.
+
+% =========================================================
+\section{Fase 4. Model: construcción del modelo}
+\subsection{Algoritmos comparados}
+Comparé cuatro algoritmos de clasificación supervisada, todos con pesos de clase balanceados:
+
+\begin{itemize}
+  \item \textbf{Regresión logística} (\cod{C} \(\in\) \{2, 8, 32, 128\}): lineal, adecuada para matrices dispersas de alta dimensión y con coeficientes interpretables.
+  \item \textbf{SVM lineal} con calibración sigmoide (\cod{C} \(\in\) \{0,2; 1; 4\}).
+  \item \textbf{Random Forest} de 400 árboles sobre las \(k\) variables con mayor \(\chi^2\) (\(k\) \(\in\) \{3000, 8000\}, \cod{min\_samples\_leaf} \(\in\) \{1, 2\}).
+  \item \textbf{Gradient Boosting} (HistGradientBoosting) sobre 200 componentes SVD (\cod{learning\_rate} \(\in\) \{0,05; 0,1\}, \cod{max\_leaf\_nodes} \(\in\) \{31, 63\}).
+\end{itemize}
+Cada configuración se probó con dos pesos para el bloque de características de seguridad (1 y 3). Los hiperparámetros se eligieron en \textbf{validación}; la prueba no participó en ninguna decisión.
+
+\subsection{Comparación experimental}
+Para el detector usé como criterio la \textbf{precisión promedio} (AP, área bajo la curva precisión--sensibilidad), que no depende del umbral y es adecuada con clases desbalanceadas. La Tabla~\ref{tab:detector} muestra la mejor configuración de cada algoritmo. Las columnas de prueba se calcularon con cada modelo entrenado solo con la partición de entrenamiento.
+
+\begin{table}[H]
+\centering\footnotesize
+\caption{Comparación del detector (mejor configuración de cada algoritmo).}
+\label{tab:detector}
+\begin{tabularx}{\textwidth}{@{}lYccccc@{}}
+\toprule
+ & & \multicolumn{3}{c}{\textbf{Validación}} & \multicolumn{2}{c}{\textbf{Prueba}}\\
+\cmidrule(lr){3-5}\cmidrule(l){6-7}
+\textbf{Algoritmo} & \textbf{Hiperparámetros} & \textbf{AP} & \textbf{AUC} & \textbf{F1} & \textbf{F1} & \textbf{AUC}\\
+\midrule
+\input{generado/tabla_detector.tex}
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.62\textwidth]{modelo_curvas_pr.png}
+\caption{Curvas precisión--sensibilidad de los cuatro algoritmos en validación.}
+\label{fig:curvas}
+\end{figure}
+
+Para las categorías entrené cada algoritmo en modo uno-contra-el-resto sobre las unidades vulnerables y usé como criterio el \textbf{F1 macro}, que da el mismo peso a las categorías escasas que a la inyección (Tabla~\ref{tab:categorizador}).
+
+\begin{table}[H]
+\centering\small
+\caption{Comparación del clasificador multietiqueta de categorías (validación).}
+\label{tab:categorizador}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Algoritmo} & \textbf{F1 micro} & \textbf{F1 macro} & \textbf{F1 macro (umbral 0,5)}\\
+\midrule
+\input{generado/tabla_categorizador.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Selección y justificación}
+Seleccioné la \textbf{\detAlgoritmo} (C = \detC, peso \pesoSeguridad{} para las características de seguridad) para el detector, y la \catAlgoritmo{} para las categorías, por las siguientes razones:
+\begin{itemize}
+  \item Obtuvo la mayor precisión promedio en validación y el mayor F1 macro de categorías.
+  \item Aprovecha la representación dispersa completa. Random Forest y Gradient Boosting necesitan reducirla (\(\chi^2\) o SVD) y pierden información léxica fina.
+  \item Produce probabilidades calibradas, necesarias para el umbral y para informar la confianza.
+  \item Es interpretable, y entrena y predice lo bastante rápido como para analizar proyectos completos.
+\end{itemize}
+
+El umbral de decisión del detector se fijó en \umbral{}, el valor que maximiza F1 en validación, y cada categoría tiene su propio umbral elegido del mismo modo. El clasificador de CWE es una regresión logística multinomial sobre los \nClasesCWE{} CWE con al menos 10 ejemplos de entrenamiento; se usa para la descripción y la recomendación del hallazgo, y solo se informa si es coherente con las categorías asignadas.
+
+Finalmente, reentrené los tres componentes con entrenamiento y validación, y los serialicé con su pipeline en \ruta{vulnminer/modelos/vulnminer.joblib}. La herramienta carga este archivo y no vuelve a entrenar en cada ejecución.
+
+% =========================================================
+\section{Fase 5. Assess: evaluación del modelo}
+\subsection{Detector en la partición de prueba}
+En la partición de prueba (\nPrueba{} unidades de grupos de origen nunca vistos), el detector obtuvo precisión \pruebaPrecision{}, sensibilidad \pruebaRecall{}, F1 \pruebaFUno{}, exactitud \pruebaExactitud{}, AUC-ROC \pruebaAUC{} y precisión promedio \pruebaAP{}, con una tasa de falsos positivos de \pruebaFPR{} (Figura~\ref{fig:prueba}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{evaluacion_prueba.png}
+\caption{Matriz de confusión y curvas ROC y precisión--sensibilidad en la partición de prueba.}
+\label{fig:prueba}
+\end{figure}
+
+\subsection{Desempeño por categoría}
+La Tabla~\ref{tab:porcategoria} muestra dos vistas. En la vista \emph{extremo a extremo}, la unidad debe detectarse como vulnerable y además recibir la categoría correcta; es lo que experimenta quien usa la herramienta. En la vista \emph{dado que es vulnerable} se evalúa el categorizador por sí solo. En prueba, el F1 micro fue \catMicro{} y el F1 macro \catMacro{} (dado que es vulnerable), y \catMicroEE{} y \catMacroEE{} extremo a extremo. La exactitud del CWE fue \cweExactitud{}.
+
+{\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}lP{5.0cm}ccccc@{}}
+\caption{Métricas por categoría en la partición de prueba (F1: extremo a extremo / dado que es vulnerable).}\label{tab:porcategoria}\\
+\toprule
+\textbf{Código} & \textbf{Categoría} & \textbf{Entren.} & \textbf{Prueba} & \textbf{Precisión} & \textbf{Sensib.} & \textbf{F1}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Código} & \textbf{Categoría} & \textbf{Entren.} & \textbf{Prueba} & \textbf{Precisión} & \textbf{Sensib.} & \textbf{F1}\\
+\midrule
+\endhead
+\input{generado/tabla_categorias.tex}
+\bottomrule
+\end{longtable}
+}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{evaluacion_categorias.png}
+\caption{F1 por categoría en la partición de prueba.}
+\label{fig:fcategorias}
+\end{figure}
+
+\subsection{Análisis de falsos positivos y falsos negativos}
+\input{analisis_errores.tex}
+
+\subsection{Sobreajuste y generalización}
+\input{generalizacion.tex}
+
+% =========================================================
+\section{Herramienta CLI}
+\subsection{Instalación y ejecución}
+La herramienta se instala como paquete de Python y se ejecuta con una única instrucción desde el directorio raíz del proyecto analizado:
+\begin{lstlisting}
+pip install -e .            # desde el repositorio de vulnminer
+cd proyecto-microservicios
+vulnminer scan . --standards owasp2025,api2023 --format json,html --output ./reportes
+\end{lstlisting}
+
+\subsection{Proceso de análisis}
+\begin{enumerate}
+  \item \textbf{Descubrimiento.} Identifica los microservicios por sus manifiestos (\cod{package.json}, \cod{pom.xml}, \cod{build.gradle}, \cod{requirements.txt}, \cod{pyproject.toml}) o su \cod{Dockerfile}, usa los nombres del \cod{docker-compose} cuando existen y reconoce las tecnologías (NestJS, Express, Spring Boot, FastAPI, Flask, Django). Excluye dependencias, compilados y pruebas (estas se incluyen con \cod{--include-tests}). Los lenguajes no soportados se listan en el reporte.
+  \item \textbf{Selección de archivos.} Código Java, Python, JavaScript y TypeScript; \cod{application.yml} y \cod{.properties}; \cod{.env}; \cod{Dockerfile}; \cod{docker-compose}; especificaciones OpenAPI/Swagger; y manifiestos de dependencias.
+  \item \textbf{Predicción.} Segmenta, extrae las características, aplica el pipeline y el modelo serializado, y asigna las categorías que superan su umbral.
+  \item \textbf{Localización.} La línea informada es la que más reduce la probabilidad de vulnerabilidad al quitarla de la unidad (\emph{oclusión}); se prefiere la que coincide con un indicador de seguridad.
+  \item \textbf{Severidad y estado.} La severidad parte de la severidad base del CWE o de la categoría y se ajusta según el contexto: datos de la petición que llegan a una operación peligrosa, endpoint sin autenticación o archivo de pruebas. No se deriva de la confianza del modelo, y su justificación acompaña al hallazgo. El estado distingue entre hallazgos \emph{potenciales}, los que requieren verificación manual o dinámica (autorización, lógica de negocio, monitoreo) y los \emph{pendientes de revisión}. La herramienta nunca marca un hallazgo como confirmado, porque el análisis estático no puede confirmarlo.
+  \item \textbf{Reportes.} Resumen en consola y reportes \cod{analisis.json} y \cod{analisis.html}.
+\end{enumerate}
+
+\subsection{Información de cada hallazgo}
+Cada hallazgo incluye los trece elementos exigidos:
+\begin{enumerate}
+  \item Identificador.
+  \item Microservicio.
+  \item Archivo.
+  \item Línea.
+  \item Descripción.
+  \item Evidencia técnica: fragmento con la línea resaltada, líneas que más aportan a la predicción e indicadores de análisis estático.
+  \item Categoría del Top 10:2025.
+  \item Categoría de API Security 2023.
+  \item CWE.
+  \item Confianza del modelo.
+  \item Severidad con su justificación.
+  \item Recomendación de remediación.
+  \item Estado de verificación.
+\end{enumerate}
+El reporte HTML es autocontenido y permite examinar los resultados mediante una matriz de microservicio \(\times\) categoría y filtros por microservicio, categoría, severidad y texto. También informa las categorías no evaluadas.
+
+\subsection{Ejemplo de salida}
+\input{ejemplo_salida.tex}
+
+% =========================================================
+\section{Evaluación funcional sobre proyectos no vistos}
+Ejecuté la herramienta completa sobre cuatro proyectos vulnerables con vulnerabilidades \textbf{documentadas por sus autores} y sobre dos proyectos de referencia sin vulnerabilidades intencionales. Ninguno participó en el entrenamiento. Para cada vulnerabilidad documentada registré el archivo y la línea en \ruta{evaluacion/verdad_terreno.json}; se cuenta como detectada si algún hallazgo cae en la función que la contiene.
+
+\begin{table}[H]
+\centering\footnotesize
+\caption{Resultados por proyecto (vulnerables arriba, de referencia abajo).}
+\label{tab:proyectos}
+\begin{tabular}{@{}lccccccc@{}}
+\toprule
+\textbf{Proyecto} & \textbf{Servicios} & \textbf{Archivos} & \textbf{Unidades} & \textbf{Hallazgos} & \textbf{Por 100 unid.} & \textbf{Detectadas} & \textbf{Categoría}\\
+\midrule
+\input{generado/tabla_proyectos.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+En total detecté \extDetectadas{} de \extDocumentadas{} vulnerabilidades documentadas (sensibilidad \extSensibilidad{}), y en \extCategoria{} casos (\extCategoriaPct{} de las detectadas) la categoría asignada coincidió con alguna de las esperadas. La Tabla~\ref{tab:cobertura} desglosa el resultado por categoría y demuestra la cobertura funcional exigida: al menos cinco categorías del Top 10:2025 y cuatro de API Security 2023.
+
+\begin{table}[H]
+\centering\footnotesize
+\caption{Vulnerabilidades documentadas por categoría en los proyectos no vistos.}
+\label{tab:cobertura}
+\begin{tabular}{@{}llccc@{}}
+\toprule
+\textbf{Código} & \textbf{Categoría} & \textbf{Documentadas} & \textbf{Detectadas} & \textbf{Con categoría correcta}\\
+\midrule
+\input{generado/tabla_cobertura_externa.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\input{analisis_proyectos.tex}
+
+Además evalué el detector con fragmentos sueltos: \webN{} fragmentos reales de foros y documentación oficial (F1 = \webF{}, exactitud = \webAccuracy{}) y \juiceN{} variantes de los retos de código de OWASP Juice Shop, que son casi idénticas entre sí (F1 = \juiceF{}, AUC = \juiceAUC{}).
+
+% =========================================================
+\section{Categorías evaluadas y no evaluadas}
+El modelo tiene clasificador para \nCategoriasEvaluadas{} de las 20 categorías. \textbf{API6:2023} (acceso ilimitado a flujos de negocio sensibles) se declara \textbf{no evaluada}: depende de la lógica de negocio de cada aplicación (qué flujo es sensible, qué ritmo de uso es legítimo) y no hay datos etiquetados que permitan aprenderla de forma estática. \textbf{API9:2023} (inventario) tampoco alcanzó el mínimo de ejemplos de entrenamiento y se declara no evaluada; sus patrones (versiones antiguas, servidores de pruebas, documentación expuesta) quedan cubiertos como configuración insegura (A02). Ambas aparecen como \emph{no evaluadas} en todos los reportes y en el comando \cod{vulnminer info}.
+
+% =========================================================
+\section{Limitaciones y propuestas de mejora}
+\input{limitaciones.tex}
+
+% =========================================================
+\section{Conclusiones}
+\input{conclusiones.tex}
+
+% =========================================================
+\begin{thebibliography}{99}
+\small
+\bibitem{owasp2025} OWASP Foundation. \emph{OWASP Top 10:2025}. \url{https://owasp.org/Top10/2025/}
+\bibitem{owaspapi} OWASP Foundation. \emph{OWASP API Security Top 10:2023}. \url{https://owasp.org/API-Security/editions/2023/en/0x11-t10/}
+\bibitem{cwe} MITRE Corporation. \emph{Common Weakness Enumeration (CWE)}. \url{https://cwe.mitre.org/}
+\bibitem{sklearn} F.~Pedregosa et~al. Scikit-learn: Machine Learning in Python. \emph{Journal of Machine Learning Research}, 12:2825--2830, 2011.
+\bibitem{semma} SAS Institute. \emph{Introduction to SEMMA}. SAS Enterprise Miner documentation.
+\bibitem{sechidis} K.~Sechidis, G.~Tsoumakas e I.~Vlahavas. On the Stratification of Multi-label Data. En \emph{Machine Learning and Knowledge Discovery in Databases (ECML PKDD)}, pp.~145--158, 2011.
+\bibitem{semgrep} Semgrep. \emph{semgrep-rules}. \url{https://github.com/semgrep/semgrep-rules}
+\bibitem{codeql} GitHub. \emph{CodeQL}. \url{https://github.com/github/codeql}
+\bibitem{benchmark} OWASP Foundation. \emph{OWASP Benchmark}. \url{https://owasp.org/www-project-benchmark/}
+\bibitem{kics} Checkmarx. \emph{KICS: Keeping Infrastructure as Code Secure}. \url{https://github.com/Checkmarx/kics}
+\bibitem{securityeval} M.~L. Siddiq y J.~C.~S. Santos. SecurityEval Dataset. En \emph{Proceedings of MSR4P\&S}, 2022. \url{https://github.com/s2e-lab/SecurityEval}
+\bibitem{crapi} OWASP Foundation. \emph{completely ridiculous API (crAPI)}. \url{https://github.com/OWASP/crAPI}
+\bibitem{vampi} erev0s. \emph{VAmPI: Vulnerable REST API}. \url{https://github.com/erev0s/VAmPI}
+\bibitem{dvws} snoopysecurity. \emph{Damn Vulnerable Web Services (dvws-node)}. \url{https://github.com/snoopysecurity/dvws-node}
+\bibitem{restaurant} theowni. \emph{Damn Vulnerable RESTaurant API Game}. \url{https://github.com/theowni/Damn-Vulnerable-RESTaurant-API-Game}
+\bibitem{petclinic} Spring Petclinic. \emph{Spring PetClinic Microservices}. \url{https://github.com/spring-petclinic/spring-petclinic-microservices}
+\bibitem{boutique} Google Cloud Platform. \emph{Online Boutique (microservices-demo)}. \url{https://github.com/GoogleCloudPlatform/microservices-demo}
+\bibitem{juiceshop} OWASP Foundation. \emph{OWASP Juice Shop}. \url{https://github.com/juice-shop/juice-shop}
+\end{thebibliography}
+
+% =========================================================
+\appendix
+\section{Trazabilidad de los requerimientos}
+\begin{table}[H]
+\centering\footnotesize
+\caption{Cumplimiento de los requerimientos funcionales.}
+\label{tab:requisitos}
+\begin{tabularx}{\textwidth}{@{}lP{4.3cm}Y@{}}
+\toprule
+\textbf{Código} & \textbf{Requerimiento} & \textbf{Evidencia}\\
+\midrule
+RF01 & Dataset de código vulnerable y no vulnerable & \ruta{datos/dataset.csv} (\nUnidades{} unidades, \nSeguras{} no vulnerables); \ruta{scripts/construir_dataset.py}\\
+RF02 & Cinco fases de SEMMA & Notebooks \ruta{01_sample} a \ruta{05_assess} y secciones 4 a 8 de este informe\\
+RF03 & Al menos dos algoritmos comparados & Cuatro algoritmos con búsqueda de hiperparámetros (Tablas~\ref{tab:detector} y \ref{tab:categorizador}); \ruta{resultados/comparacion_*.csv}\\
+RF04 & Análisis estático de código y configuración & \nIndicadores{} indicadores y \nDerivadas{} interacciones (\ruta{vulnminer/caracteristicas.py}) como variables y evidencia\\
+RF05 & Clasificación OWASP 2025 y API 2023 & Clasificador multietiqueta con umbral por categoría; categorías no evaluadas declaradas\\
+RF06 & Identificación de microservicios & \ruta{vulnminer/descubrimiento.py} (manifiestos, Dockerfile y docker-compose)\\
+RF07 & CLI desde el directorio raíz & \cod{vulnminer scan .} (\ruta{vulnminer/cli.py})\\
+RF08 & Microservicio, archivo y ubicación & Cada hallazgo informa microservicio, archivo, línea y rango de la unidad\\
+RF09 & Reportes JSON y HTML & \ruta{reportes/analisis.json} y \ruta{reportes/analisis.html}\\
+RF10 & Evaluación con métricas y proyectos no vistos & Partición de prueba, F1 macro, matrices de confusión y seis proyectos de microservicios (sección 10)\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Las pruebas automáticas del repositorio (\cod{pytest}) verifican el catálogo y las correspondencias, la segmentación, las características, el dataset (mínimos y ausencia de fugas), el descubrimiento de microservicios, la severidad y la CLI completa sobre un proyecto de microservicios de ejemplo.
+
+\section{Detalle de la evaluación en proyectos no vistos}
+{\footnotesize
+\begin{longtable}{@{}lP{5.6cm}P{2.3cm}cP{0.7cm}P{2.4cm}@{}}
+\caption{Vulnerabilidades documentadas y resultado de la herramienta.}\label{tab:detalle}\\
+\toprule
+\textbf{Id} & \textbf{Vulnerabilidad} & \textbf{Esperado} & \textbf{Det.} & \textbf{Conf.} & \textbf{Categorías predichas}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Id} & \textbf{Vulnerabilidad} & \textbf{Esperado} & \textbf{Det.} & \textbf{Conf.} & \textbf{Categorías predichas}\\
+\midrule
+\endhead
+\input{generado/tabla_detalle_externo.tex}
+\bottomrule
+\end{longtable}
+}
+
+\end{document}
