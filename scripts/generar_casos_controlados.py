@@ -645,47 +645,46 @@ async updateMe(@Req() req, @Body() body: UpdateProfileDto) {{
 ])
 
 F["exposicion_datos"] = dict(cwe=["CWE-213"], api=["API3:2023"], owasp=["A01:2025"], plantillas=[
-    ("express", "a", "js", "router.get('/users/:id'", 1, """router.get('/users/:id', auth, async (req, res) => {{
-  const user = await User.findById(req.params.id);
+    # El usuario consulta SU propio perfil (no hay BOLA): el problema es devolver propiedades internas.
+    ("express", "a", "js", "router.get('/me'", 1, """router.get('/me', auth, async (req, res) => {{
+  const user = await User.findById(req.user.id);
   res.json(user);
 }});
 """),
-    ("express", "a", "js", "router.get('/users/:id'", 0, """router.get('/users/:id', auth, async (req, res) => {{
-  const user = await User.findById(req.params.id).select('username avatar bio');
+    ("express", "a", "js", "router.get('/me'", 0, """router.get('/me', auth, async (req, res) => {{
+  const user = await User.findById(req.user.id).select('username email avatar');
   res.json(user);
 }});
 """),
-    ("fastapi", "a", "py", "@router.get(", 1, """@router.get("/users/{{user_id}}")
-def get_user(user_id: int, db: Session = Depends(get_db)):
-    user = db.get(User, user_id)
-    return {{"id": user.id, "email": user.email, "password_hash": user.password_hash, "role": user.role,
-            "ssn": user.ssn}}
+    ("fastapi", "a", "py", "@router.get(", 1, """@router.get("/users/me")
+def read_me(current_user: User = Depends(get_current_user)):
+    return {{"id": current_user.id, "email": current_user.email, "password_hash": current_user.password_hash,
+            "role": current_user.role, "ssn": current_user.ssn}}
 """),
-    ("fastapi", "a", "py", "@router.get(", 0, """@router.get("/users/{{user_id}}", response_model=UserPublic)
-def get_user(user_id: int, db: Session = Depends(get_db)):
-    user = db.get(User, user_id)
-    return UserPublic(id=user.id, display_name=user.display_name)
+    ("fastapi", "a", "py", "@router.get(", 0, """@router.get("/users/me", response_model=UserPublic)
+def read_me(current_user: User = Depends(get_current_user)):
+    return UserPublic(id=current_user.id, display_name=current_user.display_name)
 """),
-    ("spring", "a", "java", "@GetMapping(", 1, """@GetMapping("/users/{{id}}")
-public User getUser(@PathVariable Long id) {{
-    return userRepository.findById(id).orElseThrow();
+    ("spring", "a", "java", "@GetMapping(", 1, """@GetMapping("/users/me")
+public User me(@AuthenticationPrincipal UserDetails principal) {{
+    return userRepository.findByUsername(principal.getUsername());
 }}
 """),
-    ("spring", "a", "java", "@GetMapping(", 0, """@GetMapping("/users/{{id}}")
-public UserPublicDto getUser(@PathVariable Long id) {{
-    User user = userRepository.findById(id).orElseThrow();
+    ("spring", "a", "java", "@GetMapping(", 0, """@GetMapping("/users/me")
+public UserPublicDto me(@AuthenticationPrincipal UserDetails principal) {{
+    User user = userRepository.findByUsername(principal.getUsername());
     return new UserPublicDto(user.getId(), user.getDisplayName());
 }}
 """),
-    ("flask", "a", "py", "@app.get(", 1, """@app.get("/api/users/<username>")
-def user_detail(username):
-    user = User.query.filter_by(username=username).first_or_404()
-    return jsonify(user.__dict__)
+    ("flask", "a", "py", "@app.get(", 1, """@app.get("/api/me")
+@login_required
+def me():
+    return jsonify(current_user.__dict__)
 """),
-    ("flask", "a", "py", "@app.get(", 0, """@app.get("/api/users/<username>")
-def user_detail(username):
-    user = User.query.filter_by(username=username).first_or_404()
-    return jsonify(username=user.username, joined=user.created_at.isoformat())
+    ("flask", "a", "py", "@app.get(", 0, """@app.get("/api/me")
+@login_required
+def me():
+    return jsonify(username=current_user.username, joined=current_user.created_at.isoformat())
 """),
 ])
 

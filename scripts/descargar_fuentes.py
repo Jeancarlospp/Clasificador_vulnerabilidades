@@ -35,32 +35,33 @@ ENTRENAMIENTO = {
     "kics": ("Checkmarx/kics", ["assets/queries/dockerfile", "assets/queries/dockerCompose", "assets/queries/openAPI"]),
     "securityeval": ("s2e-lab/SecurityEval", ["Testcases_Insecure_Code", "dataset.jsonl"]),
     # Código de aplicaciones reales (clase no vulnerable)
-    "benigno/full-stack-fastapi-template": ("tiangolo/full-stack-fastapi-template", ["backend"]),
+    "benigno/full-stack-fastapi-template": ("tiangolo/full-stack-fastapi-template", ["backend", "package.json", "Dockerfile", "docker-compose.yml", "docker-compose.yaml", "pom.xml", "requirements.txt", "build.gradle"]),
     "benigno/fastapi-realworld": ("nsidnev/fastapi-realworld-example-app", ["app"]),
-    "benigno/nestjs-realworld": ("lujakob/nestjs-realworld-example-app", ["src"]),
+    "benigno/nestjs-realworld": ("lujakob/nestjs-realworld-example-app", ["src", "package.json", "Dockerfile", "docker-compose.yml", "docker-compose.yaml", "pom.xml", "requirements.txt", "build.gradle"]),
     "benigno/nest-samples": ("nestjs/nest", ["sample"]),
-    "benigno/express-realworld": ("gothinkster/node-express-realworld-example-app", ["src"]),
-    "benigno/spring-boot-realworld": ("gothinkster/spring-boot-realworld-example-app", ["src"]),
+    "benigno/express-realworld": ("gothinkster/node-express-realworld-example-app", ["src", "package.json", "Dockerfile", "docker-compose.yml", "docker-compose.yaml", "pom.xml", "requirements.txt", "build.gradle"]),
+    "benigno/spring-boot-realworld": ("gothinkster/spring-boot-realworld-example-app", ["src", "package.json", "Dockerfile", "docker-compose.yml", "docker-compose.yaml", "pom.xml", "requirements.txt", "build.gradle"]),
     "benigno/flask": ("pallets/flask", ["src"]),
     "benigno/express": ("expressjs/express", ["lib", "examples"]),
-    "benigno/node-express-boilerplate": ("hagopj13/node-express-boilerplate", ["src"]),
-    "benigno/express-rest-boilerplate": ("danielfsousa/express-rest-boilerplate", ["src"]),
-    "benigno/express-typescript-boilerplate": ("w3tecch/express-typescript-boilerplate", ["src"]),
-    "benigno/nestjs-boilerplate": ("brocoders/nestjs-boilerplate", ["src"]),
-    "benigno/awesome-nest-boilerplate": ("NarHakobyan/awesome-nest-boilerplate", ["src"]),
+    "benigno/node-express-boilerplate": ("hagopj13/node-express-boilerplate", ["src", "package.json", "Dockerfile", "docker-compose.yml", "docker-compose.yaml", "pom.xml", "requirements.txt", "build.gradle"]),
+    "benigno/express-rest-boilerplate": ("danielfsousa/express-rest-boilerplate", ["src", "package.json", "Dockerfile", "docker-compose.yml", "docker-compose.yaml", "pom.xml", "requirements.txt", "build.gradle"]),
+    "benigno/express-typescript-boilerplate": ("w3tecch/express-typescript-boilerplate", ["src", "package.json", "Dockerfile", "docker-compose.yml", "docker-compose.yaml", "pom.xml", "requirements.txt", "build.gradle"]),
+    "benigno/nestjs-boilerplate": ("brocoders/nestjs-boilerplate", ["src", "package.json", "Dockerfile", "docker-compose.yml", "docker-compose.yaml", "pom.xml", "requirements.txt", "build.gradle"]),
+    "benigno/awesome-nest-boilerplate": ("NarHakobyan/awesome-nest-boilerplate", ["src", "package.json", "Dockerfile", "docker-compose.yml", "docker-compose.yaml", "pom.xml", "requirements.txt", "build.gradle"]),
     "benigno/nest-cli": ("nestjs/nest-cli", ["lib", "actions", "commands"]),
-    "benigno/jhipster-sample-app": ("jhipster/jhipster-sample-app", ["src/main/java", "src/main/webapp/app"]),
+    "benigno/jhipster-sample-app": ("jhipster/jhipster-sample-app", ["src/main/java", "src/main/webapp/app", "package.json", "Dockerfile", "docker-compose.yml", "docker-compose.yaml", "pom.xml", "requirements.txt", "build.gradle"]),
     "benigno/piggymetrics": ("sqshq/piggymetrics", None),
-    "benigno/polls-app": ("callicoder/spring-security-react-ant-design-polls-app", ["polling-app-server/src/main"]),
+    "benigno/polls-app": ("callicoder/spring-security-react-ant-design-polls-app", ["polling-app-server/src/main", "package.json", "Dockerfile", "docker-compose.yml", "docker-compose.yaml", "pom.xml", "requirements.txt", "build.gradle"]),
     "benigno/mall-swarm": ("macrozheng/mall-swarm", None),
     "benigno/shiro": ("apache/shiro", ["core/src/main", "web/src/main"]),
     "benigno/keycloak-quickstarts": ("keycloak/keycloak-quickstarts", None),
-    "benigno/microblog": ("miguelgrinberg/microblog", ["app"]),
-    "benigno/dispatch": ("Netflix/dispatch", ["src/dispatch"]),
+    "benigno/microblog": ("miguelgrinberg/microblog", ["app", "package.json", "Dockerfile", "docker-compose.yml", "docker-compose.yaml", "pom.xml", "requirements.txt", "build.gradle"]),
+    "benigno/dispatch": ("Netflix/dispatch", ["src/dispatch", "package.json", "Dockerfile", "docker-compose.yml", "docker-compose.yaml", "pom.xml", "requirements.txt", "build.gradle"]),
     "benigno/django-realworld": ("gothinkster/django-realworld-example-app", ["conduit"]),
-    "benigno/fastapi-tdd-docker": ("testdrivenio/fastapi-tdd-docker", ["project/app"]),
+    "benigno/fastapi-tdd-docker": ("testdrivenio/fastapi-tdd-docker", ["project/app", "package.json", "Dockerfile", "docker-compose.yml", "docker-compose.yaml", "pom.xml", "requirements.txt", "build.gradle"]),
     "benigno/netbox": ("netbox-community/netbox", ["netbox"]),
     "benigno/starlette": ("encode/starlette", ["starlette"]),
+    "benigno/awesome-compose": ("docker/awesome-compose", None),
     # Documentos oficiales de los estándares (correspondencias CWE)
     "owasp-top10": ("OWASP/Top10", ["2025/docs/en"]),
     "owasp-api": ("OWASP/API-Security", ["editions/2023/en"]),
@@ -88,6 +89,8 @@ def git(*args, cwd=None):
 def descargar(destino: Path, repo: str, rutas):
     url = f"https://github.com/{repo}.git"
     if (destino / ".git").exists():
+        if rutas:
+            git("sparse-checkout", "set", "--no-cone", *rutas, cwd=destino)
         print(f"  ya existe: {destino.relative_to(BASE)}")
     else:
         destino.parent.mkdir(parents=True, exist_ok=True)

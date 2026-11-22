@@ -396,7 +396,24 @@ DUDOSO = re.compile(r"secret\w*\s*[:=]\s*['\"][^'\"]{6,}|verify\s*=\s*False|reje
                     r"\beval\s*\(|shell\s*=\s*True|pickle\.loads|innerHTML", re.I)
 
 
-def cargar_benigno(max_por_proyecto=600):
+# Indicadores de configuración insegura: las unidades de configuración de proyectos reales que los
+# activan no se usan como ejemplos "no vulnerables", porque no se puede asegurar que sean seguras.
+CONFIG_DUDOSA = ["secreto_literal", "debug_activo", "cors_permisivo", "actuator_expuesto", "consola_bd", "tls_desactivado",
+                 "contenedor_root", "imagen_sin_version", "descarga_remota", "paquete_sin_version", "csrf_desactivado",
+                 "http_texto_claro", "openapi_sin_seguridad", "documentacion_expuesta", "puerto_sensible"]
+
+
+def configuracion_dudosa(u):
+    from vulnminer.caracteristicas import COMPILADOS, INDICE
+
+    if u.subtipo == "dockerfile" and not u.meta.get("archivo_tiene_user", True):
+        return True
+    return any(COMPILADOS[INDICE[n]][1].search(u.texto) for n in CONFIG_DUDOSA)
+
+
+def cargar_benigno(max_por_proyecto=600, max_config=150):
+    from vulnminer.descubrimiento import es_generado
+
     raiz = FUENTES / "benigno"
     filas = []
     rng = np.random.default_rng(SEMILLA)
@@ -407,19 +424,30 @@ def cargar_benigno(max_por_proyecto=600):
             if not archivo.is_file() or EXCLUIR_BENIGNO.search(rel.lower()):
                 continue
             t = tipo_archivo(archivo)
-            if not t or t[1] != "codigo" or t[0] not in LENGUAJES:
+            if not t or (t[1] == "codigo" and t[0] not in LENGUAJES) or t[1] == "env":
                 continue
-            for u in segmentar(rel, leer(archivo), *t):
+            texto = leer(archivo)
+            if es_generado(archivo.name, texto):
+                continue
+            for u in segmentar(rel, texto, *t):
                 if len(u.lineas) < 2 or DUDOSO.search(u.texto):
+                    continue
+                if u.subtipo != "codigo" and configuracion_dudosa(u):
                     continue
                 # en las muestras de NestJS cada ejemplo es un proyecto independiente
                 grupo = "/".join(Path(rel).parts[:3]) if "nest-samples" in rel else proyecto.name
                 candidatas.append((grupo, rel, u))
-        if len(candidatas) > max_por_proyecto:
-            idx = rng.choice(len(candidatas), max_por_proyecto, replace=False)
-            candidatas = [candidatas[i] for i in sorted(idx)]
-        for grupo, rel, u in candidatas:
-            filas.append(registro("benigno", f"benigno:{grupo}", rel, u, 0, origen="código de producción de un proyecto open source"))
+        seleccion = []
+        for es_config, tope in ((False, max_por_proyecto), (True, max_config)):
+            grupo_c = [c for c in candidatas if (c[2].subtipo != "codigo") == es_config]
+            if len(grupo_c) > tope:
+                idx = rng.choice(len(grupo_c), tope, replace=False)
+                grupo_c = [grupo_c[i] for i in sorted(idx)]
+            seleccion += grupo_c
+        for grupo, rel, u in seleccion:
+            origen = ("configuración de un proyecto open source sin indicadores de configuración insegura"
+                      if u.subtipo != "codigo" else "código de producción de un proyecto open source")
+            filas.append(registro("benigno", f"benigno:{grupo}", rel, u, 0, origen=origen))
     return filas
 
 

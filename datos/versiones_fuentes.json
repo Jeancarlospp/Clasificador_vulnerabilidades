@@ -68,7 +68,14 @@
     "commit": "77e550a73bb49dd2967622c5ed11bf7a49603c93",
     "uso": "entrenamiento",
     "carpetas": [
-      "backend"
+      "backend",
+      "package.json",
+      "Dockerfile",
+      "docker-compose.yml",
+      "docker-compose.yaml",
+      "pom.xml",
+      "requirements.txt",
+      "build.gradle"
     ]
   },
   "benigno/fastapi-realworld": {
@@ -84,7 +91,14 @@
     "commit": "c1c2cc4e448b279ff083272df1ac50d20c3304fa",
     "uso": "entrenamiento",
     "carpetas": [
-      "src"
+      "src",
+      "package.json",
+      "Dockerfile",
+      "docker-compose.yml",
+      "docker-compose.yaml",
+      "pom.xml",
+      "requirements.txt",
+      "build.gradle"
     ]
   },
   "benigno/nest-samples": {
@@ -100,7 +114,14 @@
     "commit": "30b68e1e881462b2f4164ea09ab4c4f5699c7b0b",
     "uso": "entrenamiento",
     "carpetas": [
-      "src"
+      "src",
+      "package.json",
+      "Dockerfile",
+      "docker-compose.yml",
+      "docker-compose.yaml",
+      "pom.xml",
+      "requirements.txt",
+      "build.gradle"
     ]
   },
   "benigno/spring-boot-realworld": {
@@ -108,7 +129,14 @@
     "commit": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
     "uso": "entrenamiento",
     "carpetas": [
-      "src"
+      "src",
+      "package.json",
+      "Dockerfile",
+      "docker-compose.yml",
+      "docker-compose.yaml",
+      "pom.xml",
+      "requirements.txt",
+      "build.gradle"
     ]
   },
   "benigno/flask": {
@@ -215,7 +243,14 @@
     "commit": "179ae84efec61b14206d0305d941daed6c6d07f9",
     "uso": "entrenamiento",
     "carpetas": [
-      "src"
+      "src",
+      "package.json",
+      "Dockerfile",
+      "docker-compose.yml",
+      "docker-compose.yaml",
+      "pom.xml",
+      "requirements.txt",
+      "build.gradle"
     ]
   },
   "benigno/express-rest-boilerplate": {
@@ -223,7 +258,14 @@
     "commit": "b8bed6d7cfce3cf2ef89ec1b5e47b52dfc50e874",
     "uso": "entrenamiento",
     "carpetas": [
-      "src"
+      "src",
+      "package.json",
+      "Dockerfile",
+      "docker-compose.yml",
+      "docker-compose.yaml",
+      "pom.xml",
+      "requirements.txt",
+      "build.gradle"
     ]
   },
   "benigno/express-typescript-boilerplate": {
@@ -231,7 +273,14 @@
     "commit": "17727010f7f098d8ca8b78da0a5b3c7297659381",
     "uso": "entrenamiento",
     "carpetas": [
-      "src"
+      "src",
+      "package.json",
+      "Dockerfile",
+      "docker-compose.yml",
+      "docker-compose.yaml",
+      "pom.xml",
+      "requirements.txt",
+      "build.gradle"
     ]
   },
   "benigno/nestjs-boilerplate": {
@@ -239,7 +288,14 @@
     "commit": "9620f159eefe38f47747d02ab162852367c5472c",
     "uso": "entrenamiento",
     "carpetas": [
-      "src"
+      "src",
+      "package.json",
+      "Dockerfile",
+      "docker-compose.yml",
+      "docker-compose.yaml",
+      "pom.xml",
+      "requirements.txt",
+      "build.gradle"
     ]
   },
   "benigno/awesome-nest-boilerplate": {
@@ -247,7 +303,14 @@
     "commit": "28bc9bb2940a3409c852ae69b29e28c8b095f414",
     "uso": "entrenamiento",
     "carpetas": [
-      "src"
+      "src",
+      "package.json",
+      "Dockerfile",
+      "docker-compose.yml",
+      "docker-compose.yaml",
+      "pom.xml",
+      "requirements.txt",
+      "build.gradle"
     ]
   },
   "benigno/nest-cli": {
@@ -266,7 +329,14 @@
     "uso": "entrenamiento",
     "carpetas": [
       "src/main/java",
-      "src/main/webapp/app"
+      "src/main/webapp/app",
+      "package.json",
+      "Dockerfile",
+      "docker-compose.yml",
+      "docker-compose.yaml",
+      "pom.xml",
+      "requirements.txt",
+      "build.gradle"
     ]
   },
   "benigno/piggymetrics": {
@@ -282,7 +352,14 @@
     "commit": "362fad90cab17e76453b3b9e273c594de6ee3d7f",
     "uso": "entrenamiento",
     "carpetas": [
-      "polling-app-server/src/main"
+      "polling-app-server/src/main",
+      "package.json",
+      "Dockerfile",
+      "docker-compose.yml",
+      "docker-compose.yaml",
+      "pom.xml",
+      "requirements.txt",
+      "build.gradle"
     ]
   },
   "benigno/mall-swarm": {
@@ -315,7 +392,14 @@
     "commit": "a975ef64864354867c88e0ed3a17ba7d17dca752",
     "uso": "entrenamiento",
     "carpetas": [
-      "app"
+      "app",
+      "package.json",
+      "Dockerfile",
+      "docker-compose.yml",
+      "docker-compose.yaml",
+      "pom.xml",
+      "requirements.txt",
+      "build.gradle"
     ]
   },
   "benigno/dispatch": {
@@ -323,7 +407,14 @@
     "commit": "dd2837e82a0bf5565b1b4b4b91ea30b7262d4061",
     "uso": "entrenamiento",
     "carpetas": [
-      "src/dispatch"
+      "src/dispatch",
+      "package.json",
+      "Dockerfile",
+      "docker-compose.yml",
+      "docker-compose.yaml",
+      "pom.xml",
+      "requirements.txt",
+      "build.gradle"
     ]
   },
   "benigno/django-realworld": {
@@ -339,7 +430,14 @@
     "commit": "16433b6621e9afd801de8eba9738a6bfefb1f601",
     "uso": "entrenamiento",
     "carpetas": [
-      "project/app"
+      "project/app",
+      "package.json",
+      "Dockerfile",
+      "docker-compose.yml",
+      "docker-compose.yaml",
+      "pom.xml",
+      "requirements.txt",
+      "build.gradle"
     ]
   },
   "benigno/netbox": {
@@ -356,6 +454,14 @@
     "uso": "entrenamiento",
     "carpetas": [
       "starlette"
+    ]
+  },
+  "benigno/awesome-compose": {
+    "repositorio": "https://github.com/docker/awesome-compose",
+    "commit": "503c0dcef31b07fb77b2d4c5556bfafdf86f4f1a",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "(todo)"
     ]
   }
 }
