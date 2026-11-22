@@ -42,3 +42,6 @@ informe/*.lot
 notas/
 *.tmp
 *.bak
+
+# --- Casos controlados (se regeneran con scripts/generar_casos_controlados.py, semilla fija) ---
+datos/casos_controlados/
