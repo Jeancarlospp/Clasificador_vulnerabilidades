@@ -1,0 +1,679 @@
+{
+  "fecha": "2026-11-21T21:10:31",
+  "version": "1.0.0",
+  "particiones": {
+    "entrenamiento": 9150,
+    "validacion": 2573,
+    "prueba": 2410
+  },
+  "representacion": {
+    "tokens": 60000,
+    "caracteres": 60000,
+    "seguridad": 149,
+    "peso_seguridad": 1.0
+  },
+  "detector": {
+    "algoritmo": "regresion_logistica",
+    "hiperparametros": {
+      "C": 2.0
+    },
+    "prueba": {
+      "precision": 0.7555555555555555,
+      "recall": 0.8453038674033149,
+      "f1": 0.7979139504563233,
+      "accuracy": 0.8713692946058091,
+      "roc_auc": 0.9313857048295026,
+      "ap": 0.8131951218489387,
+      "tasa_falsos_positivos": 0.11743772241992882,
+      "TP": 612,
+      "FP": 198,
+      "TN": 1488,
+      "FN": 112,
+      "umbral": 0.49
+    },
+    "por_fuente": {
+      "benigno": {
+        "n": 1293,
+        "vulnerables": 0,
+        "accuracy": 0.9706109822119103,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "casos-controlados": {
+        "n": 212,
+        "vulnerables": 106,
+        "accuracy": 0.7122641509433962,
+        "precision": 0.8461538461538461,
+        "recall": 0.5188679245283019,
+        "f1": 0.6432748538011696
+      },
+      "codeql-tests": {
+        "n": 376,
+        "vulnerables": 313,
+        "accuracy": 0.776595744680851,
+        "precision": 0.8318840579710145,
+        "recall": 0.9169329073482428,
+        "f1": 0.8723404255319149
+      },
+      "kics": {
+        "n": 55,
+        "vulnerables": 27,
+        "accuracy": 0.5818181818181818,
+        "precision": 0.5588235294117647,
+        "recall": 0.7037037037037037,
+        "f1": 0.6229508196721312
+      },
+      "owasp-benchmark-java": {
+        "n": 196,
+        "vulnerables": 100,
+        "accuracy": 0.7551020408163265,
+        "precision": 0.6805555555555556,
+        "recall": 0.98,
+        "f1": 0.8032786885245902
+      },
+      "owasp-benchmark-python": {
+        "n": 91,
+        "vulnerables": 32,
+        "accuracy": 0.8021978021978022,
+        "precision": 0.6590909090909091,
+        "recall": 0.90625,
+        "f1": 0.7631578947368421
+      },
+      "securityeval": {
+        "n": 12,
+        "vulnerables": 12,
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "semgrep-rules": {
+        "n": 175,
+        "vulnerables": 134,
+        "accuracy": 0.7828571428571428,
+        "precision": 0.875,
+        "recall": 0.835820895522388,
+        "f1": 0.8549618320610687
+      }
+    },
+    "por_lenguaje": {
+      "config": {
+        "n": 165,
+        "vulnerables": 56,
+        "accuracy": 0.7454545454545455,
+        "precision": 0.6590909090909091,
+        "recall": 0.5178571428571429,
+        "f1": 0.58
+      },
+      "java": {
+        "n": 1307,
+        "vulnerables": 322,
+        "accuracy": 0.9028309104820199,
+        "precision": 0.743142144638404,
+        "recall": 0.9254658385093167,
+        "f1": 0.8243430152143845
+      },
+      "javascript": {
+        "n": 343,
+        "vulnerables": 184,
+        "accuracy": 0.7842565597667639,
+        "precision": 0.7522935779816514,
+        "recall": 0.8913043478260869,
+        "f1": 0.8159203980099502
+      },
+      "python": {
+        "n": 356,
+        "vulnerables": 151,
+        "accuracy": 0.8286516853932584,
+        "precision": 0.8260869565217391,
+        "recall": 0.7549668874172185,
+        "f1": 0.7889273356401384
+      },
+      "typescript": {
+        "n": 239,
+        "vulnerables": 11,
+        "accuracy": 0.9748953974895398,
+        "precision": 0.7777777777777778,
+        "recall": 0.6363636363636364,
+        "f1": 0.7
+      }
+    },
+    "por_subtipo": {
+      "codigo": {
+        "n": 2245,
+        "vulnerables": 668,
+        "accuracy": 0.8806236080178174,
+        "precision": 0.7610966057441253,
+        "recall": 0.8727544910179641,
+        "f1": 0.8131101813110181
+      },
+      "compose": {
+        "n": 29,
+        "vulnerables": 11,
+        "accuracy": 0.7931034482758621,
+        "precision": 1.0,
+        "recall": 0.45454545454545453,
+        "f1": 0.625
+      },
+      "dockerfile": {
+        "n": 21,
+        "vulnerables": 11,
+        "accuracy": 0.5238095238095238,
+        "precision": 0.5238095238095238,
+        "recall": 1.0,
+        "f1": 0.6875
+      },
+      "manifiesto": {
+        "n": 41,
+        "vulnerables": 2,
+        "accuracy": 0.9512195121951219,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "openapi": {
+        "n": 31,
+        "vulnerables": 13,
+        "accuracy": 0.7741935483870968,
+        "precision": 0.6875,
+        "recall": 0.8461538461538461,
+        "f1": 0.7586206896551724
+      },
+      "properties": {
+        "n": 23,
+        "vulnerables": 10,
+        "accuracy": 0.6521739130434783,
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.3333333333333333
+      },
+      "yaml": {
+        "n": 20,
+        "vulnerables": 9,
+        "accuracy": 0.55,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    }
+  },
+  "categorias": {
+    "algoritmo": "regresion_logistica",
+    "hiperparametros": {
+      "C": 2.0
+    },
+    "evaluadas": [
+      "A01:2025",
+      "A02:2025",
+      "A03:2025",
+      "A04:2025",
+      "A05:2025",
+      "A06:2025",
+      "A07:2025",
+      "A08:2025",
+      "A09:2025",
+      "A10:2025",
+      "API1:2023",
+      "API2:2023",
+      "API3:2023",
+      "API4:2023",
+      "API5:2023",
+      "API7:2023",
+      "API8:2023",
+      "API10:2023"
+    ],
+    "no_evaluadas": {
+      "API6:2023": "datos insuficientes para entrenar (0 ejemplos; mínimo 15)",
+      "API9:2023": "datos insuficientes para entrenar (7 ejemplos; mínimo 15)"
+    },
+    "umbrales": {
+      "A01:2025": 0.42,
+      "A02:2025": 0.2,
+      "A03:2025": 0.52,
+      "A04:2025": 0.48,
+      "A05:2025": 0.58,
+      "A06:2025": 0.38,
+      "A07:2025": 0.28,
+      "A08:2025": 0.44,
+      "A09:2025": 0.15,
+      "A10:2025": 0.15,
+      "API1:2023": 0.63,
+      "API2:2023": 0.15,
+      "API3:2023": 0.43,
+      "API4:2023": 0.27,
+      "API5:2023": 0.15,
+      "API7:2023": 0.64,
+      "API8:2023": 0.77,
+      "API10:2023": 0.77
+    },
+    "prueba": {
+      "f1_micro": 0.6939409632314862,
+      "f1_macro": 0.5566543290323164,
+      "f1_micro_extremo_a_extremo": 0.5619094977623074,
+      "f1_macro_extremo_a_extremo": 0.40927937852276536,
+      "hallazgos_pendientes_de_revision": 77
+    },
+    "por_categoria": {
+      "A01:2025": {
+        "soporte_prueba": 128,
+        "precision": 0.5850340136054422,
+        "recall": 0.671875,
+        "f1": 0.6254545454545455,
+        "precision_dado_vulnerable": 0.8617886178861789,
+        "recall_dado_vulnerable": 0.828125,
+        "f1_dado_vulnerable": 0.8446215139442231,
+        "ejemplos_entrenamiento": 597,
+        "matriz_confusion": [
+          [
+            2221,
+            61
+          ],
+          [
+            42,
+            86
+          ]
+        ]
+      },
+      "A02:2025": {
+        "soporte_prueba": 49,
+        "precision": 0.4528301886792453,
+        "recall": 0.4897959183673469,
+        "f1": 0.47058823529411764,
+        "precision_dado_vulnerable": 0.7735849056603774,
+        "recall_dado_vulnerable": 0.8367346938775511,
+        "f1_dado_vulnerable": 0.803921568627451,
+        "ejemplos_entrenamiento": 210,
+        "matriz_confusion": [
+          [
+            2332,
+            29
+          ],
+          [
+            25,
+            24
+          ]
+        ]
+      },
+      "A03:2025": {
+        "soporte_prueba": 8,
+        "precision": 0.2857142857142857,
+        "recall": 0.75,
+        "f1": 0.41379310344827586,
+        "precision_dado_vulnerable": 0.6153846153846154,
+        "recall_dado_vulnerable": 1.0,
+        "f1_dado_vulnerable": 0.7619047619047619,
+        "ejemplos_entrenamiento": 43,
+        "matriz_confusion": [
+          [
+            2387,
+            15
+          ],
+          [
+            2,
+            6
+          ]
+        ]
+      },
+      "A04:2025": {
+        "soporte_prueba": 110,
+        "precision": 0.664,
+        "recall": 0.7545454545454545,
+        "f1": 0.7063829787234043,
+        "precision_dado_vulnerable": 0.9090909090909091,
+        "recall_dado_vulnerable": 0.8181818181818182,
+        "f1_dado_vulnerable": 0.861244019138756,
+        "ejemplos_entrenamiento": 472,
+        "matriz_confusion": [
+          [
+            2258,
+            42
+          ],
+          [
+            27,
+            83
+          ]
+        ]
+      },
+      "A05:2025": {
+        "soporte_prueba": 280,
+        "precision": 0.8015564202334631,
+        "recall": 0.7357142857142858,
+        "f1": 0.7672253258845437,
+        "precision_dado_vulnerable": 0.96875,
+        "recall_dado_vulnerable": 0.775,
+        "f1_dado_vulnerable": 0.8611111111111112,
+        "ejemplos_entrenamiento": 1249,
+        "matriz_confusion": [
+          [
+            2079,
+            51
+          ],
+          [
+            74,
+            206
+          ]
+        ]
+      },
+      "A06:2025": {
+        "soporte_prueba": 60,
+        "precision": 0.4,
+        "recall": 0.43333333333333335,
+        "f1": 0.416,
+        "precision_dado_vulnerable": 0.484375,
+        "recall_dado_vulnerable": 0.5166666666666667,
+        "f1_dado_vulnerable": 0.5,
+        "ejemplos_entrenamiento": 263,
+        "matriz_confusion": [
+          [
+            2311,
+            39
+          ],
+          [
+            34,
+            26
+          ]
+        ]
+      },
+      "A07:2025": {
+        "soporte_prueba": 38,
+        "precision": 0.20353982300884957,
+        "recall": 0.6052631578947368,
+        "f1": 0.304635761589404,
+        "precision_dado_vulnerable": 0.27450980392156865,
+        "recall_dado_vulnerable": 0.7368421052631579,
+        "f1_dado_vulnerable": 0.4,
+        "ejemplos_entrenamiento": 189,
+        "matriz_confusion": [
+          [
+            2282,
+            90
+          ],
+          [
+            15,
+            23
+          ]
+        ]
+      },
+      "A08:2025": {
+        "soporte_prueba": 37,
+        "precision": 0.7272727272727273,
+        "recall": 0.6486486486486487,
+        "f1": 0.6857142857142857,
+        "precision_dado_vulnerable": 0.9642857142857143,
+        "recall_dado_vulnerable": 0.7297297297297297,
+        "f1_dado_vulnerable": 0.8307692307692308,
+        "ejemplos_entrenamiento": 167,
+        "matriz_confusion": [
+          [
+            2364,
+            9
+          ],
+          [
+            13,
+            24
+          ]
+        ]
+      },
+      "A09:2025": {
+        "soporte_prueba": 6,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "precision_dado_vulnerable": 0.2857142857142857,
+        "recall_dado_vulnerable": 1.0,
+        "f1_dado_vulnerable": 0.4444444444444444,
+        "ejemplos_entrenamiento": 29,
+        "matriz_confusion": [
+          [
+            2390,
+            14
+          ],
+          [
+            6,
+            0
+          ]
+        ]
+      },
+      "A10:2025": {
+        "soporte_prueba": 8,
+        "precision": 0.3333333333333333,
+        "recall": 0.5,
+        "f1": 0.4,
+        "precision_dado_vulnerable": 0.4,
+        "recall_dado_vulnerable": 1.0,
+        "f1_dado_vulnerable": 0.5714285714285714,
+        "ejemplos_entrenamiento": 36,
+        "matriz_confusion": [
+          [
+            2394,
+            8
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      "API1:2023": {
+        "soporte_prueba": 23,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "precision_dado_vulnerable": 0.0,
+        "recall_dado_vulnerable": 0.0,
+        "f1_dado_vulnerable": 0.0,
+        "ejemplos_entrenamiento": 65,
+        "matriz_confusion": [
+          [
+            2383,
+            4
+          ],
+          [
+            23,
+            0
+          ]
+        ]
+      },
+      "API2:2023": {
+        "soporte_prueba": 48,
+        "precision": 0.3181818181818182,
+        "recall": 0.7291666666666666,
+        "f1": 0.4430379746835443,
+        "precision_dado_vulnerable": 0.3877551020408163,
+        "recall_dado_vulnerable": 0.7916666666666666,
+        "f1_dado_vulnerable": 0.5205479452054794,
+        "ejemplos_entrenamiento": 188,
+        "matriz_confusion": [
+          [
+            2287,
+            75
+          ],
+          [
+            13,
+            35
+          ]
+        ]
+      },
+      "API3:2023": {
+        "soporte_prueba": 28,
+        "precision": 0.6666666666666666,
+        "recall": 0.2857142857142857,
+        "f1": 0.4,
+        "precision_dado_vulnerable": 0.9090909090909091,
+        "recall_dado_vulnerable": 0.35714285714285715,
+        "f1_dado_vulnerable": 0.5128205128205128,
+        "ejemplos_entrenamiento": 69,
+        "matriz_confusion": [
+          [
+            2378,
+            4
+          ],
+          [
+            20,
+            8
+          ]
+        ]
+      },
+      "API4:2023": {
+        "soporte_prueba": 26,
+        "precision": 0.2903225806451613,
+        "recall": 0.34615384615384615,
+        "f1": 0.3157894736842105,
+        "precision_dado_vulnerable": 0.3333333333333333,
+        "recall_dado_vulnerable": 0.5384615384615384,
+        "f1_dado_vulnerable": 0.4117647058823529,
+        "ejemplos_entrenamiento": 120,
+        "matriz_confusion": [
+          [
+            2362,
+            22
+          ],
+          [
+            17,
+            9
+          ]
+        ]
+      },
+      "API5:2023": {
+        "soporte_prueba": 6,
+        "precision": 0.3076923076923077,
+        "recall": 0.6666666666666666,
+        "f1": 0.42105263157894735,
+        "precision_dado_vulnerable": 0.18181818181818182,
+        "recall_dado_vulnerable": 0.6666666666666666,
+        "f1_dado_vulnerable": 0.2857142857142857,
+        "ejemplos_entrenamiento": 23,
+        "matriz_confusion": [
+          [
+            2395,
+            9
+          ],
+          [
+            2,
+            4
+          ]
+        ]
+      },
+      "API7:2023": {
+        "soporte_prueba": 33,
+        "precision": 0.6086956521739131,
+        "recall": 0.42424242424242425,
+        "f1": 0.5,
+        "precision_dado_vulnerable": 0.875,
+        "recall_dado_vulnerable": 0.42424242424242425,
+        "f1_dado_vulnerable": 0.5714285714285714,
+        "ejemplos_entrenamiento": 131,
+        "matriz_confusion": [
+          [
+            2368,
+            9
+          ],
+          [
+            19,
+            14
+          ]
+        ]
+      },
+      "API8:2023": {
+        "soporte_prueba": 50,
+        "precision": 0.8461538461538461,
+        "recall": 0.22,
+        "f1": 0.3492063492063492,
+        "precision_dado_vulnerable": 1.0,
+        "recall_dado_vulnerable": 0.52,
+        "f1_dado_vulnerable": 0.6842105263157895,
+        "ejemplos_entrenamiento": 236,
+        "matriz_confusion": [
+          [
+            2358,
+            2
+          ],
+          [
+            39,
+            11
+          ]
+        ]
+      },
+      "API10:2023": {
+        "soporte_prueba": 15,
+        "precision": 0.16666666666666666,
+        "recall": 0.13333333333333333,
+        "f1": 0.14814814814814814,
+        "precision_dado_vulnerable": 0.18181818181818182,
+        "recall_dado_vulnerable": 0.13333333333333333,
+        "f1_dado_vulnerable": 0.15384615384615385,
+        "ejemplos_entrenamiento": 73,
+        "matriz_confusion": [
+          [
+            2385,
+            10
+          ],
+          [
+            13,
+            2
+          ]
+        ]
+      }
+    }
+  },
+  "cwe": {
+    "clases": [
+      "CWE-79",
+      "CWE-89",
+      "CWE-78",
+      "CWE-22",
+      "CWE-327",
+      "CWE-918",
+      "CWE-330",
+      "CWE-502",
+      "CWE-601",
+      "CWE-328",
+      "CWE-94",
+      "CWE-639",
+      "CWE-400",
+      "CWE-915",
+      "CWE-770",
+      "CWE-798",
+      "CWE-352",
+      "CWE-95",
+      "CWE-250",
+      "CWE-326",
+      "CWE-347",
+      "CWE-90",
+      "CWE-614",
+      "CWE-611",
+      "CWE-295",
+      "CWE-643",
+      "CWE-200",
+      "CWE-1004",
+      "CWE-287",
+      "CWE-942",
+      "CWE-20",
+      "CWE-116",
+      "CWE-319",
+      "CWE-501",
+      "CWE-209",
+      "CWE-74",
+      "CWE-1357",
+      "CWE-117",
+      "CWE-312",
+      "CWE-307",
+      "CWE-73",
+      "CWE-522",
+      "CWE-1104",
+      "CWE-862",
+      "CWE-943",
+      "CWE-16",
+      "CWE-306",
+      "CWE-183",
+      "CWE-96",
+      "CWE-598",
+      "CWE-552",
+      "CWE-213",
+      "CWE-297"
+    ],
+    "exactitud_validacion": 0.6887608069164265,
+    "exactitud_prueba": 0.5808383233532934
+  }
+}

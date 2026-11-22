@@ -1,0 +1,5 @@
+algoritmo,nombre,hiperparametros,segundos,val_f1_micro,val_f1_macro,val_f1_macro_umbral05,val_exactitud_subconjunto
+regresion_logistica,Regresión logística,"{""C"": 2.0}",3.7,0.7698149027052682,0.6582555877813827,0.5686721469447124,0.6442432082794308
+svm_lineal,SVM lineal (calibrada),"{""C"": 0.2}",4.9,0.7665505226480837,0.5912315593240371,0.44496375764917967,0.648124191461837
+random_forest,Random Forest,"{""k"": 8000, ""n_estimators"": 400, ""min_samples_leaf"": 2}",7.5,0.7647058823529411,0.6693035955894171,0.39596485412922927,0.6532988357050453
+gradient_boosting,Gradient Boosting (HistGB + SVD),"{""componentes"": 200, ""learning_rate"": 0.05, ""max_leaf_nodes"": 63}",28.8,0.6994594594594594,0.507948644370813,0.46579002025553545,0.5679172056921087
