@@ -1,0 +1,19 @@
+columna,tipo,descripcion,ejemplo
+id,texto,Identificador único de la unidad en el dataset,u00042
+fuente,categórica,"Origen del registro: semgrep-rules, codeql-tests, owasp-benchmark-java, owasp-benchmark-python, kics, securityeval, casos-controlados o benigno",codeql-tests
+proyecto,texto,"Grupo de origen (proyecto, archivo de prueba o familia de casos). Todas las unidades de un grupo pertenecen a la misma partición",codeql:java/ql/test/query-tests/security/CWE-089
+archivo,texto,Ruta del archivo de origen dentro de la fuente,src/main/java/.../BenchmarkTest00008.java
+lenguaje,categórica,"Lenguaje de la unidad: java, python, javascript, typescript o config (archivo de configuración)",java
+subtipo,categórica,"Tipo de unidad: codigo, dockerfile, compose, yaml, properties, env, openapi o manifiesto",codigo
+unidad,texto,"Nombre de la función, handler o sección de configuración",doPost
+linea_inicio,entero,Primera línea de la unidad en el archivo de origen,24
+linea_fin,entero,Última línea de la unidad en el archivo de origen,51
+codigo,texto,Texto de la unidad tal como aparece en el archivo,"@GetMapping(""/{id}"") public Order get(...)"
+contexto,texto,"Cabecera de la clase y middleware del archivo (guards, CORS, rate limiting) que acompañan a la unidad",@UseGuards(JwtAuthGuard) export class OrdersController
+meta,JSON,"Información auxiliar de la segmentación (p. ej. si el Dockerfile define USER, si las líneas son aproximadas)","{""archivo_tiene_user"": false}"
+vulnerable,binaria,1 = la unidad contiene una vulnerabilidad; 0 = no vulnerable,1
+cwe,texto,"CWE de la vulnerabilidad (separados por ';'), vacío si no es vulnerable",CWE-89
+owasp2025,texto,"Categorías OWASP Top 10:2025 (separadas por ';')",A05:2025
+api2023,texto,"Categorías OWASP API Security Top 10:2023 (separadas por ';'), vacío si no aplica",API1:2023
+origen_etiqueta,texto,Cómo se obtuvo la etiqueta (anotación de la prueba; resultado esperado del Benchmark; caso controlado...),anotación de la prueba de la consulta
+particion,categórica,"Partición asignada: entrenamiento (70 %), validacion (15 %) o prueba (15 %)",entrenamiento
