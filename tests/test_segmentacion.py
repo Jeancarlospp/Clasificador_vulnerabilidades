@@ -152,3 +152,10 @@ def test_archivo_vacio_o_invalido_no_falla():
     assert segmentar("a.py", "") == []
     assert segmentar("a.py", "def roto(:\n  pass") is not None
     assert segmentar("a.java", "}}}{{{") is not None
+
+
+def test_handlers_anidados_registrados_dentro_de_una_funcion():
+    codigo = ("def init(app):\n\n    @app.route('/a', methods=['GET'])\n    def a_get():\n        return 'x'\n\n"
+              "    @app.route('/a', methods=['POST'])\n    def a_post():\n        return request.form['x']\n")
+    nombres = {u.nombre for u in segmentar("h.py", codigo)}
+    assert {"a_get", "a_post"} <= nombres and "init" not in nombres

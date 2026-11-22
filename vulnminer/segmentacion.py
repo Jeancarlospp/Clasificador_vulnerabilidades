@@ -177,7 +177,8 @@ def _segmentar_python(archivo, texto):
                 anidadas = [n for n in ast.walk(hijo) if n is not hijo and isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))]
                 inicio = min([d.lineno for d in hijo.decorator_list] + [hijo.lineno]) - 1
                 fin = hijo.end_lineno - 1
-                if anidadas and (fin - inicio) > MAX_LINEAS:
+                decoradas = [n for n in anidadas if n.decorator_list]
+                if anidadas and ((fin - inicio) > MAX_LINEAS or decoradas):
                     visitar(hijo, contexto_clase)
                     continue
                 unidades.extend(_crear(archivo, "python", "codigo", hijo.name, lineas, inicio, fin,
