@@ -209,5 +209,153 @@
     "carpetas": [
       "cheatsheets"
     ]
+  },
+  "benigno/node-express-boilerplate": {
+    "repositorio": "https://github.com/hagopj13/node-express-boilerplate",
+    "commit": "179ae84efec61b14206d0305d941daed6c6d07f9",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "src"
+    ]
+  },
+  "benigno/express-rest-boilerplate": {
+    "repositorio": "https://github.com/danielfsousa/express-rest-boilerplate",
+    "commit": "b8bed6d7cfce3cf2ef89ec1b5e47b52dfc50e874",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "src"
+    ]
+  },
+  "benigno/express-typescript-boilerplate": {
+    "repositorio": "https://github.com/w3tecch/express-typescript-boilerplate",
+    "commit": "17727010f7f098d8ca8b78da0a5b3c7297659381",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "src"
+    ]
+  },
+  "benigno/nestjs-boilerplate": {
+    "repositorio": "https://github.com/brocoders/nestjs-boilerplate",
+    "commit": "9620f159eefe38f47747d02ab162852367c5472c",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "src"
+    ]
+  },
+  "benigno/awesome-nest-boilerplate": {
+    "repositorio": "https://github.com/NarHakobyan/awesome-nest-boilerplate",
+    "commit": "28bc9bb2940a3409c852ae69b29e28c8b095f414",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "src"
+    ]
+  },
+  "benigno/nest-cli": {
+    "repositorio": "https://github.com/nestjs/nest-cli",
+    "commit": "10872d940088429fdeeb212589928caf9f6f7b8c",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "lib",
+      "actions",
+      "commands"
+    ]
+  },
+  "benigno/jhipster-sample-app": {
+    "repositorio": "https://github.com/jhipster/jhipster-sample-app",
+    "commit": "6b000b5d23a36c45e01472471b84a44fa2464044",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "src/main/java",
+      "src/main/webapp/app"
+    ]
+  },
+  "benigno/piggymetrics": {
+    "repositorio": "https://github.com/sqshq/piggymetrics",
+    "commit": "6bb2cf9ddbca980b664d3edbb6ff775d75369278",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "(todo)"
+    ]
+  },
+  "benigno/polls-app": {
+    "repositorio": "https://github.com/callicoder/spring-security-react-ant-design-polls-app",
+    "commit": "362fad90cab17e76453b3b9e273c594de6ee3d7f",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "polling-app-server/src/main"
+    ]
+  },
+  "benigno/mall-swarm": {
+    "repositorio": "https://github.com/macrozheng/mall-swarm",
+    "commit": "04c442fe318356bae4445a109dde7af297ce1e84",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "(todo)"
+    ]
+  },
+  "benigno/shiro": {
+    "repositorio": "https://github.com/apache/shiro",
+    "commit": "0b3f11fd944a7b3c1b0850e0aaca354507eede04",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "core/src/main",
+      "web/src/main"
+    ]
+  },
+  "benigno/keycloak-quickstarts": {
+    "repositorio": "https://github.com/keycloak/keycloak-quickstarts",
+    "commit": "03002a69bbca820d47bf3f548b36d64dcc96973a",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "(todo)"
+    ]
+  },
+  "benigno/microblog": {
+    "repositorio": "https://github.com/miguelgrinberg/microblog",
+    "commit": "a975ef64864354867c88e0ed3a17ba7d17dca752",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "app"
+    ]
+  },
+  "benigno/dispatch": {
+    "repositorio": "https://github.com/Netflix/dispatch",
+    "commit": "dd2837e82a0bf5565b1b4b4b91ea30b7262d4061",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "src/dispatch"
+    ]
+  },
+  "benigno/django-realworld": {
+    "repositorio": "https://github.com/gothinkster/django-realworld-example-app",
+    "commit": "29c9d42831fa0cfc5a4aa7561f674396eacf20a2",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "conduit"
+    ]
+  },
+  "benigno/fastapi-tdd-docker": {
+    "repositorio": "https://github.com/testdrivenio/fastapi-tdd-docker",
+    "commit": "16433b6621e9afd801de8eba9738a6bfefb1f601",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "project/app"
+    ]
+  },
+  "benigno/netbox": {
+    "repositorio": "https://github.com/netbox-community/netbox",
+    "commit": "85a9f8076cb63e6870ad2f7e582d04516d028180",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "netbox"
+    ]
+  },
+  "benigno/starlette": {
+    "repositorio": "https://github.com/encode/starlette",
+    "commit": "271c277da0ff64e2048a4d46ecc812b9d61db5f6",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "starlette"
+    ]
   }
 }

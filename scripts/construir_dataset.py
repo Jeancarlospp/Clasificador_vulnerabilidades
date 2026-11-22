@@ -390,13 +390,13 @@ def cargar_controlados():
 # 8. Código benigno de aplicaciones reales
 # ---------------------------------------------------------------------------------------------
 EXCLUIR_BENIGNO = re.compile(r"(^|/)(node_modules|dist|build|target|tests?|__tests__|spec|e2e|migrations?|alembic|docs?|"
-                             r"\.git|vendor|static|public|scripts)(/|$)|\.(spec|test|d)\.(ts|js)$|_test\.py$|test_\w+\.py$|\.min\.js$")
+                             r"\.git|vendor|static|public|scripts|examples?|demo)(/|$)|\.(spec|test|d)\.(ts|js)$|_test\.py$|test_\w+\.py$|\.min\.js$")
 # indicadores de problemas evidentes: esas unidades se descartan de la clase segura (posible ruido de etiqueta)
 DUDOSO = re.compile(r"secret\w*\s*[:=]\s*['\"][^'\"]{6,}|verify\s*=\s*False|rejectUnauthorized\s*:\s*false|\bmd5\b|\bsha1\b|"
                     r"\beval\s*\(|shell\s*=\s*True|pickle\.loads|innerHTML", re.I)
 
 
-def cargar_benigno(max_por_proyecto=1600):
+def cargar_benigno(max_por_proyecto=600):
     raiz = FUENTES / "benigno"
     filas = []
     rng = np.random.default_rng(SEMILLA)
@@ -452,24 +452,59 @@ def balancear(df, max_por_archivo=12, max_por_cwe=420):
 
 
 def particionar(df, prop=(0.70, 0.15, 0.15)):
-    """Partición por grupo de origen (proyecto / archivo de prueba / familia de casos).
+    """Partición 70/15/15 por grupo de origen con estratificación iterativa multietiqueta.
 
-    Todas las unidades de un mismo grupo quedan en la misma partición, evitando fugas entre
-    entrenamiento, validación y prueba. La asignación se estratifica por la categoría principal.
+    - Todas las unidades de un grupo (proyecto, directorio de pruebas de una regla, familia de
+      casos controlados) quedan en la misma partición: no hay fugas entre particiones.
+    - Los grupos se asignan de la etiqueta más escasa a la más frecuente; cada grupo va a la
+      partición con mayor déficit relativo para su etiqueta más escasa (estratificación iterativa
+      de Sechidis et al., 2011, aplicada a grupos). Así cada categoría OWASP aparece en las tres
+      particiones cuando hay suficientes grupos que la contienen.
     """
-    from sklearn.model_selection import StratifiedGroupKFold
-
-    estrato = df.apply(lambda r: (r["owasp2025"].split(";")[0] if r["vulnerable"] else "seguro") + "|" + r["subtipo"], axis=1)
-    conteo = estrato.value_counts()
-    estrato = estrato.where(estrato.map(conteo) >= 20, "otros")
-    folds = np.zeros(len(df), dtype=int)
-    sgkf = StratifiedGroupKFold(n_splits=20, shuffle=True, random_state=SEMILLA)
-    for k, (_, idx) in enumerate(sgkf.split(df, estrato, groups=df["proyecto"])):
-        folds[idx] = k
-    n_test = round(20 * prop[2])
-    n_val = round(20 * prop[1])
-    particion = np.where(folds < n_test, "prueba", np.where(folds < n_test + n_val, "validacion", "entrenamiento"))
-    return particion
+    nombres = ("entrenamiento", "validacion", "prueba")
+    etiquetas_unidad = []
+    for r in df.itertuples(index=False):
+        if r.vulnerable:
+            e = set(filter(None, r.owasp2025.split(";"))) | set(filter(None, r.api2023.split(";")))
+        else:
+            e = {"seguro"}
+        e.add(f"subtipo:{r.subtipo}")
+        etiquetas_unidad.append(e)
+    df = df.assign(_e=etiquetas_unidad)
+    grupos = {}
+    for g, sub in df.groupby("proyecto"):
+        conteo = defaultdict(int)
+        for e in sub["_e"]:
+            for x in e:
+                conteo[x] += 1
+        grupos[g] = (len(sub), dict(conteo))
+    total = defaultdict(int)
+    for _, (_, c) in grupos.items():
+        for x, n in c.items():
+            total[x] += n
+    objetivo = {p: {x: prop[k] * n for x, n in total.items()} for k, p in enumerate(nombres)}
+    objetivo_tam = {p: prop[k] * len(df) for k, p in enumerate(nombres)}
+    actual = {p: defaultdict(float) for p in nombres}
+    tam = {p: 0 for p in nombres}
+    rng = np.random.default_rng(SEMILLA)
+    orden = list(grupos)
+    rng.shuffle(orden)
+    # primero los grupos que contienen las etiquetas más escasas
+    orden.sort(key=lambda g: min(total[x] for x in grupos[g][1] if not x.startswith("subtipo:"))
+               if any(not x.startswith("subtipo:") for x in grupos[g][1]) else 10**9)
+    asignacion = {}
+    for g in orden:
+        n, conteo = grupos[g]
+        clave = [x for x in conteo if not x.startswith("subtipo:")] or list(conteo)
+        rara = min(clave, key=lambda x: total[x])
+        deficit = {p: (objetivo[p][rara] - actual[p][rara]) / max(objetivo[p][rara], 1e-9) for p in nombres}
+        deficit_tam = {p: (objetivo_tam[p] - tam[p]) / objetivo_tam[p] for p in nombres}
+        elegido = max(nombres, key=lambda p: (round(deficit[p], 3), deficit_tam[p]))
+        asignacion[g] = elegido
+        tam[elegido] += n
+        for x, c in conteo.items():
+            actual[elegido][x] += c
+    return df["proyecto"].map(asignacion).values
 
 
 def main():
