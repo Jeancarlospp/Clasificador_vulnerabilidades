@@ -1,0 +1,17 @@
+# Herramienta (vulnminer)
+scikit-learn==1.9.1
+numpy==2.5.5
+scipy==1.18.1
+pandas==3.1.1
+joblib==1.6.0
+pyyaml==6.0.3
+
+# Notebooks SEMMA y gráficos
+matplotlib==3.11.2
+seaborn==0.13.2
+jupyter==1.1.1
+ipykernel==7.4.0
+jupytext==1.17.3
+
+# Pruebas
+pytest==8.4.2

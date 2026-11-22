@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vulnminer"
+version = "1.0.0"
+description = "Clasificador de posibles vulnerabilidades en proyectos de microservicios (OWASP Top 10:2025 y OWASP API Security Top 10:2023) basado en minería de datos"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Jeancarlo Santi" }]
+dependencies = [
+    "scikit-learn>=1.5",
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "pandas>=2.0",
+    "joblib>=1.3",
+    "pyyaml>=6.0",
+]
+
+[project.scripts]
+vulnminer = "vulnminer.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["vulnminer*"]
+
+[tool.setuptools.package-data]
+vulnminer = ["datos/*.json", "modelos/*.joblib", "plantillas/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

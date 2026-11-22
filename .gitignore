@@ -1,0 +1,44 @@
+# --- Entorno de Python ---
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# --- Editores y herramientas locales ---
+.vscode/
+.idea/
+.claude/
+CLAUDE.md
+*.swp
+.DS_Store
+
+# --- Datos descargados (se regeneran con scripts/descargar_fuentes.py) ---
+fuentes/
+evaluacion/proyectos/
+
+# --- Reportes generados al ejecutar la herramienta ---
+reportes/
+**/reportes/
+
+# --- Archivos auxiliares de LaTeX ---
+informe/*.aux
+informe/*.log
+informe/*.out
+informe/*.toc
+informe/*.fls
+informe/*.fdb_latexmk
+informe/*.synctex.gz
+informe/*.lof
+informe/*.lot
+
+# --- Notas y borradores (solo se versiona el README) ---
+*.md
+!/README.md
+notas/
+*.tmp
+*.bak

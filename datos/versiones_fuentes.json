@@ -1,0 +1,213 @@
+{
+  "semgrep-rules": {
+    "repositorio": "https://github.com/semgrep/semgrep-rules",
+    "commit": "a5ad1714f00c9f7fde980cab0ea1d6dc6d414fd2",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "java",
+      "python",
+      "javascript",
+      "typescript",
+      "dockerfile",
+      "yaml",
+      "generic",
+      "json"
+    ]
+  },
+  "codeql": {
+    "repositorio": "https://github.com/github/codeql",
+    "commit": "aafa7deeff16c1e3c4e356eabec46cbca2dc09e3",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "java/ql/test/query-tests/security",
+      "java/ql/test/experimental/query-tests/security",
+      "javascript/ql/test/query-tests/Security",
+      "javascript/ql/test/experimental/Security",
+      "python/ql/test/query-tests/Security",
+      "python/ql/test/experimental/query-tests/Security"
+    ]
+  },
+  "benchmark-java": {
+    "repositorio": "https://github.com/OWASP-Benchmark/BenchmarkJava",
+    "commit": "10dfcc54ad02dcfcb358b0ba4a0fef8c919a6d17",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "src/main/java/org/owasp/benchmark/testcode",
+      "expectedresults-1.2.csv"
+    ]
+  },
+  "benchmark-python": {
+    "repositorio": "https://github.com/OWASP-Benchmark/BenchmarkPython",
+    "commit": "f1291485808b66e20ddb6b01b10dc71b3df8c8ba",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "(todo)"
+    ]
+  },
+  "kics": {
+    "repositorio": "https://github.com/Checkmarx/kics",
+    "commit": "150910f842f1c4385dbf76d57e55f2076f287375",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "assets/queries/dockerfile",
+      "assets/queries/dockerCompose",
+      "assets/queries/openAPI"
+    ]
+  },
+  "securityeval": {
+    "repositorio": "https://github.com/s2e-lab/SecurityEval",
+    "commit": "6f4fb70f782c6d47b02ea24341e8ef8c1eb04a6a",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "Testcases_Insecure_Code",
+      "dataset.jsonl"
+    ]
+  },
+  "benigno/full-stack-fastapi-template": {
+    "repositorio": "https://github.com/tiangolo/full-stack-fastapi-template",
+    "commit": "77e550a73bb49dd2967622c5ed11bf7a49603c93",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "backend"
+    ]
+  },
+  "benigno/fastapi-realworld": {
+    "repositorio": "https://github.com/nsidnev/fastapi-realworld-example-app",
+    "commit": "029eb7781c60d5f563ee8990a0cbfb79b244538c",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "app"
+    ]
+  },
+  "benigno/nestjs-realworld": {
+    "repositorio": "https://github.com/lujakob/nestjs-realworld-example-app",
+    "commit": "c1c2cc4e448b279ff083272df1ac50d20c3304fa",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "src"
+    ]
+  },
+  "benigno/nest-samples": {
+    "repositorio": "https://github.com/nestjs/nest",
+    "commit": "e0600bb04c3aedc3f643cc1dd2d5e515e12cbc2a",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "sample"
+    ]
+  },
+  "benigno/express-realworld": {
+    "repositorio": "https://github.com/gothinkster/node-express-realworld-example-app",
+    "commit": "30b68e1e881462b2f4164ea09ab4c4f5699c7b0b",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "src"
+    ]
+  },
+  "benigno/spring-boot-realworld": {
+    "repositorio": "https://github.com/gothinkster/spring-boot-realworld-example-app",
+    "commit": "ee17e31aafe733d98c4853c8b9a74d7f2f6c924a",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "src"
+    ]
+  },
+  "benigno/flask": {
+    "repositorio": "https://github.com/pallets/flask",
+    "commit": "49943b5a94413a530761350f04e896f76e8d620e",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "src"
+    ]
+  },
+  "benigno/express": {
+    "repositorio": "https://github.com/expressjs/express",
+    "commit": "43fca52d28a422c8be48fd489cbd4f2d6152bab6",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "lib",
+      "examples"
+    ]
+  },
+  "owasp-top10": {
+    "repositorio": "https://github.com/OWASP/Top10",
+    "commit": "3a31f35346c3f4e90f350395124382fa53af2afe",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "2025/docs/en"
+    ]
+  },
+  "owasp-api": {
+    "repositorio": "https://github.com/OWASP/API-Security",
+    "commit": "33cea37b2ffde3e2e62f6b5d79a029a22a846633",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "editions/2023/en"
+    ]
+  },
+  "crAPI": {
+    "repositorio": "https://github.com/OWASP/crAPI",
+    "commit": "b5fc307f3e5f875809b095b771108ef342a33724",
+    "uso": "evaluacion",
+    "carpetas": [
+      "services",
+      "deploy/docker"
+    ]
+  },
+  "VAmPI": {
+    "repositorio": "https://github.com/erev0s/VAmPI",
+    "commit": "f16052dce83f05847133ec98f01c5193a41de7d8",
+    "uso": "evaluacion",
+    "carpetas": [
+      "(todo)"
+    ]
+  },
+  "dvws-node": {
+    "repositorio": "https://github.com/snoopysecurity/dvws-node",
+    "commit": "4221c04f132960a0ccca4bf5aa5f3a9f53172778",
+    "uso": "evaluacion",
+    "carpetas": [
+      "(todo)"
+    ]
+  },
+  "restaurant-api": {
+    "repositorio": "https://github.com/theowni/Damn-Vulnerable-RESTaurant-API-Game",
+    "commit": "d32d09972aec7830f5f1d4a5d274cac7aae7eb82",
+    "uso": "evaluacion",
+    "carpetas": [
+      "(todo)"
+    ]
+  },
+  "petclinic-microservices": {
+    "repositorio": "https://github.com/spring-petclinic/spring-petclinic-microservices",
+    "commit": "e8b747ab522721076cacb5cf688eb8a54ba8c5c9",
+    "uso": "evaluacion",
+    "carpetas": [
+      "(todo)"
+    ]
+  },
+  "microservices-demo": {
+    "repositorio": "https://github.com/GoogleCloudPlatform/microservices-demo",
+    "commit": "c7cb6d5bfd6ea3aed768634ebbcb98cb7a523712",
+    "uso": "evaluacion",
+    "carpetas": [
+      "src",
+      "docker-compose.yml"
+    ]
+  },
+  "juice-shop": {
+    "repositorio": "https://github.com/juice-shop/juice-shop",
+    "commit": "c9f99228d9d56afb5f5ca7925376292f7fa44b13",
+    "uso": "evaluacion",
+    "carpetas": [
+      "data/static/codefixes"
+    ]
+  },
+  "cheatsheets": {
+    "repositorio": "https://github.com/OWASP/CheatSheetSeries",
+    "commit": "c2a1e3e32cec12f27be0a3b1e771ce51288a363e",
+    "uso": "evaluacion",
+    "carpetas": [
+      "cheatsheets"
+    ]
+  }
+}
