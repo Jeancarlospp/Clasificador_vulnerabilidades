@@ -20,6 +20,7 @@ CLAUDE.md
 # --- Datos descargados (se regeneran con scripts/descargar_fuentes.py) ---
 /fuentes/
 evaluacion/proyectos/
+evaluacion/desarrollo/
 
 # --- Reportes generados al ejecutar la herramienta ---
 reportes/

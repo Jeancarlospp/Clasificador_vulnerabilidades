@@ -1,0 +1,470 @@
+{
+ "_descripcion": "Conjunto de DESARROLLO a nivel de proyecto (no participa en el entrenamiento ni en la evaluación final). Se usa para elegir la variante de la representación y el umbral de decisión. Las líneas se tomaron de las marcas de los autores en el código.",
+ "proyectos": {
+  "pygoat": {
+   "ruta": "evaluacion/desarrollo/pygoat",
+   "tipo": "vulnerable",
+   "vulnerabilidades": [
+    {
+     "id": "PG-01",
+     "nombre": "SSRF en el laboratorio de SSRF",
+     "archivo": "dockerized_labs/ssrf_lab/app.py",
+     "linea": 37,
+     "cwe": "CWE-918",
+     "owasp2025": [
+      "A01:2025"
+     ],
+     "api2023": [
+      "API7:2023"
+     ]
+    },
+    {
+     "id": "PG-02",
+     "nombre": "Lectura de archivos con ruta del usuario",
+     "archivo": "dockerized_labs/ssrf_lab/app.py",
+     "linea": 20,
+     "cwe": "CWE-22",
+     "owasp2025": [
+      "A01:2025"
+     ],
+     "api2023": []
+    },
+    {
+     "id": "PG-03",
+     "nombre": "Deserialización con pickle",
+     "archivo": "dockerized_labs/software_integrity_lab/app.py",
+     "linea": 46,
+     "cwe": "CWE-502",
+     "owasp2025": [
+      "A08:2025"
+     ],
+     "api2023": []
+    },
+    {
+     "id": "PG-04",
+     "nombre": "Inyección de comandos",
+     "archivo": "dockerized_labs/command_injection_lab/app.py",
+     "linea": 28,
+     "cwe": "CWE-78",
+     "owasp2025": [
+      "A05:2025"
+     ],
+     "api2023": []
+    },
+    {
+     "id": "PG-05",
+     "nombre": "eval de una expresión del usuario",
+     "archivo": "dockerized_labs/command_injection_lab/app.py",
+     "linea": 47,
+     "cwe": "CWE-95",
+     "owasp2025": [
+      "A05:2025"
+     ],
+     "api2023": []
+    },
+    {
+     "id": "PG-06",
+     "nombre": "XXE",
+     "archivo": "dockerized_labs/xxe_lab/app.py",
+     "linea": 56,
+     "cwe": "CWE-611",
+     "owasp2025": [
+      "A02:2025"
+     ],
+     "api2023": []
+    },
+    {
+     "id": "PG-07",
+     "nombre": "Inicio de sesión sin registro de eventos",
+     "archivo": "dockerized_labs/insufficient_logging_lab/app.py",
+     "linea": 39,
+     "cwe": "CWE-778",
+     "owasp2025": [
+      "A09:2025"
+     ],
+     "api2023": []
+    },
+    {
+     "id": "PG-08",
+     "nombre": "Cambio de rol sin registro",
+     "archivo": "dockerized_labs/insufficient_logging_lab/app.py",
+     "linea": 72,
+     "cwe": "CWE-778",
+     "owasp2025": [
+      "A09:2025"
+     ],
+     "api2023": []
+    },
+    {
+     "id": "PG-09",
+     "nombre": "Modo debug activo",
+     "archivo": "dockerized_labs/sec_misconfig/app.py",
+     "linea": 8,
+     "cwe": "CWE-489",
+     "owasp2025": [
+      "A02:2025"
+     ],
+     "api2023": [
+      "API8:2023"
+     ]
+    },
+    {
+     "id": "PG-10",
+     "nombre": "Clave secreta débil",
+     "archivo": "dockerized_labs/sec_misconfig/app.py",
+     "linea": 97,
+     "cwe": "CWE-798",
+     "owasp2025": [
+      "A07:2025"
+     ],
+     "api2023": [
+      "API2:2023"
+     ]
+    },
+    {
+     "id": "PG-11",
+     "nombre": "XSS reflejado",
+     "archivo": "dockerized_labs/xss_lab/app.py",
+     "linea": 54,
+     "cwe": "CWE-79",
+     "owasp2025": [
+      "A05:2025"
+     ],
+     "api2023": []
+    },
+    {
+     "id": "PG-12",
+     "nombre": "yaml.load inseguro",
+     "archivo": "dockerized_labs/a9_uckv_lab/app.py",
+     "linea": 61,
+     "cwe": "CWE-502",
+     "owasp2025": [
+      "A08:2025"
+     ],
+     "api2023": []
+    },
+    {
+     "id": "PG-13",
+     "nombre": "eval en el procesamiento de imágenes",
+     "archivo": "dockerized_labs/a9_uckv_lab/app.py",
+     "linea": 93,
+     "cwe": "CWE-95",
+     "owasp2025": [
+      "A05:2025"
+     ],
+     "api2023": []
+    },
+    {
+     "id": "PG-14",
+     "nombre": "Exposición de datos sensibles en la API",
+     "archivo": "dockerized_labs/sensitive_data_exposure/dataexposure/views.py",
+     "linea": 122,
+     "cwe": "CWE-200",
+     "owasp2025": [
+      "A01:2025"
+     ],
+     "api2023": [
+      "API3:2023"
+     ]
+    },
+    {
+     "id": "PG-15",
+     "nombre": "Contraseña comparada en texto plano",
+     "archivo": "dockerized_labs/insecure_design_lab/app.py",
+     "linea": 56,
+     "cwe": "CWE-256",
+     "owasp2025": [
+      "A06:2025"
+     ],
+     "api2023": [
+      "API2:2023"
+     ]
+    },
+    {
+     "id": "PG-16",
+     "nombre": "Valor predecible",
+     "archivo": "dockerized_labs/insecure_design_lab/app.py",
+     "linea": 125,
+     "cwe": "CWE-330",
+     "owasp2025": [
+      "A04:2025"
+     ],
+     "api2023": []
+    },
+    {
+     "id": "PG-17",
+     "nombre": "Inyección SQL en el login",
+     "archivo": "dockerized_labs/sql_injection_lab/app.py",
+     "linea": 49,
+     "cwe": "CWE-89",
+     "owasp2025": [
+      "A05:2025"
+     ],
+     "api2023": []
+    },
+    {
+     "id": "PG-18",
+     "nombre": "Secreto débil en la configuración",
+     "archivo": "dockerized_labs/auth_failure_lab/app.py",
+     "linea": 12,
+     "cwe": "CWE-798",
+     "owasp2025": [
+      "A07:2025"
+     ],
+     "api2023": [
+      "API2:2023"
+     ]
+    },
+    {
+     "id": "PG-19",
+     "nombre": "OTP sin limitación de intentos",
+     "archivo": "dockerized_labs/auth_failure_lab/app.py",
+     "linea": 122,
+     "cwe": "CWE-307",
+     "owasp2025": [
+      "A07:2025"
+     ],
+     "api2023": [
+      "API2:2023"
+     ]
+    },
+    {
+     "id": "PG-20",
+     "nombre": "Enumeración de usuarios",
+     "archivo": "dockerized_labs/auth_failure_lab/app.py",
+     "linea": 139,
+     "cwe": "CWE-204",
+     "owasp2025": [
+      "A07:2025"
+     ],
+     "api2023": [
+      "API2:2023"
+     ]
+    },
+    {
+     "id": "PG-21",
+     "nombre": "Sesión en cookie sin firma",
+     "archivo": "dockerized_labs/auth_failure_lab/app.py",
+     "linea": 216,
+     "cwe": "CWE-565",
+     "owasp2025": [
+      "A08:2025"
+     ],
+     "api2023": [
+      "API2:2023"
+     ]
+    },
+    {
+     "id": "PG-22",
+     "nombre": "Clave secreta en el código",
+     "archivo": "dockerized_labs/broken_auth_lab/app.py",
+     "linea": 16,
+     "cwe": "CWE-798",
+     "owasp2025": [
+      "A07:2025"
+     ],
+     "api2023": [
+      "API2:2023"
+     ]
+    },
+    {
+     "id": "PG-23",
+     "nombre": "Contraseñas en texto plano",
+     "archivo": "dockerized_labs/broken_auth_lab/app.py",
+     "linea": 54,
+     "cwe": "CWE-256",
+     "owasp2025": [
+      "A06:2025"
+     ],
+     "api2023": [
+      "API2:2023"
+     ]
+    },
+    {
+     "id": "PG-24",
+     "nombre": "Token de recuperación predecible",
+     "archivo": "dockerized_labs/broken_auth_lab/app.py",
+     "linea": 102,
+     "cwe": "CWE-640",
+     "owasp2025": [
+      "A07:2025"
+     ],
+     "api2023": [
+      "API2:2023"
+     ]
+    },
+    {
+     "id": "PG-25",
+     "nombre": "Rol de administrador en una cookie",
+     "archivo": "dockerized_labs/broken_access_lab/main.py",
+     "linea": 59,
+     "cwe": "CWE-565",
+     "owasp2025": [
+      "A01:2025"
+     ],
+     "api2023": [
+      "API5:2023"
+     ]
+    },
+    {
+     "id": "PG-26",
+     "nombre": "Secreto de Django en settings",
+     "archivo": "dockerized_labs/sensitive_data_exposure/sensitive_data_lab/settings.py",
+     "linea": 8,
+     "cwe": "CWE-798",
+     "owasp2025": [
+      "A07:2025"
+     ],
+     "api2023": [
+      "API2:2023"
+     ]
+    }
+   ]
+  },
+  "NodeGoat": {
+   "ruta": "evaluacion/desarrollo/NodeGoat",
+   "tipo": "vulnerable",
+   "vulnerabilidades": [
+    {
+     "id": "NG-01",
+     "nombre": "eval de los datos del formulario",
+     "archivo": "app/routes/contributions.js",
+     "linea": 32,
+     "cwe": "CWE-95",
+     "owasp2025": [
+      "A05:2025"
+     ],
+     "api2023": []
+    },
+    {
+     "id": "NG-02",
+     "nombre": "Inyección NoSQL con $where",
+     "archivo": "app/data/allocations-dao.js",
+     "linea": 78,
+     "cwe": "CWE-943",
+     "owasp2025": [
+      "A05:2025"
+     ],
+     "api2023": []
+    },
+    {
+     "id": "NG-03",
+     "nombre": "SSRF en la investigación de acciones",
+     "archivo": "app/routes/research.js",
+     "linea": 15,
+     "cwe": "CWE-918",
+     "owasp2025": [
+      "A01:2025"
+     ],
+     "api2023": [
+      "API7:2023"
+     ]
+    },
+    {
+     "id": "NG-04",
+     "nombre": "Beneficios sin verificación de administrador",
+     "archivo": "app/routes/index.js",
+     "linea": 55,
+     "cwe": "CWE-862",
+     "owasp2025": [
+      "A01:2025"
+     ],
+     "api2023": [
+      "API5:2023"
+     ]
+    },
+    {
+     "id": "NG-05",
+     "nombre": "ReDoS en la validación del perfil",
+     "archivo": "app/routes/profile.js",
+     "linea": 59,
+     "cwe": "CWE-1333",
+     "owasp2025": [
+      "A06:2025"
+     ],
+     "api2023": [
+      "API4:2023"
+     ]
+    },
+    {
+     "id": "NG-06",
+     "nombre": "Contraseña guardada en texto plano",
+     "archivo": "app/data/user-dao.js",
+     "linea": 25,
+     "cwe": "CWE-256",
+     "owasp2025": [
+      "A06:2025"
+     ],
+     "api2023": [
+      "API2:2023"
+     ]
+    },
+    {
+     "id": "NG-07",
+     "nombre": "Contraseña comparada en texto plano",
+     "archivo": "app/data/user-dao.js",
+     "linea": 62,
+     "cwe": "CWE-256",
+     "owasp2025": [
+      "A06:2025"
+     ],
+     "api2023": [
+      "API2:2023"
+     ]
+    },
+    {
+     "id": "NG-08",
+     "nombre": "Cookie de sesión sin Secure",
+     "archivo": "server.js",
+     "linea": 98,
+     "cwe": "CWE-614",
+     "owasp2025": [
+      "A02:2025"
+     ],
+     "api2023": [
+      "API8:2023"
+     ]
+    },
+    {
+     "id": "NG-09",
+     "nombre": "Registro de datos del usuario sin neutralizar",
+     "archivo": "app/routes/session.js",
+     "linea": 64,
+     "cwe": "CWE-117",
+     "owasp2025": [
+      "A09:2025"
+     ],
+     "api2023": []
+    },
+    {
+     "id": "NG-10",
+     "nombre": "Secreto de la cookie en la configuración",
+     "archivo": "config/env/all.js",
+     "linea": 8,
+     "cwe": "CWE-798",
+     "owasp2025": [
+      "A07:2025"
+     ],
+     "api2023": [
+      "API2:2023"
+     ]
+    }
+   ]
+  },
+  "fastapi-realworld": {
+   "ruta": "fuentes/benigno/fastapi-realworld",
+   "tipo": "referencia",
+   "vulnerabilidades": []
+  },
+  "spring-boot-realworld": {
+   "ruta": "fuentes/benigno/spring-boot-realworld",
+   "tipo": "referencia",
+   "vulnerabilidades": []
+  },
+  "nestjs-realworld": {
+   "ruta": "fuentes/benigno/nestjs-realworld",
+   "tipo": "referencia",
+   "vulnerabilidades": []
+  }
+ }
+}
