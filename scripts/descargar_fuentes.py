@@ -34,6 +34,7 @@ ENTRENAMIENTO = {
     "benchmark-python": ("OWASP-Benchmark/BenchmarkPython", None),
     "kics": ("Checkmarx/kics", ["assets/queries/dockerfile", "assets/queries/dockerCompose", "assets/queries/openAPI"]),
     "securityeval": ("s2e-lab/SecurityEval", ["Testcases_Insecure_Code", "dataset.jsonl"]),
+    "juice-shop-codefixes": ("juice-shop/juice-shop", ["data/static/codefixes"]),
     # Código de aplicaciones reales (clase no vulnerable)
     "benigno/full-stack-fastapi-template": ("tiangolo/full-stack-fastapi-template", ["backend", "package.json", "Dockerfile", "docker-compose.yml", "docker-compose.yaml", "pom.xml", "requirements.txt", "build.gradle"]),
     "benigno/fastapi-realworld": ("nsidnev/fastapi-realworld-example-app", ["app"]),
@@ -67,6 +68,13 @@ ENTRENAMIENTO = {
     "owasp-api": ("OWASP/API-Security", ["editions/2023/en"]),
 }
 
+# Conjunto de DESARROLLO a nivel de proyecto: se usa para elegir variantes de la representación y el
+# umbral de decisión. No participa en el entrenamiento ni en la evaluación final.
+DESARROLLO = {
+    "NodeGoat": ("OWASP/NodeGoat", ["app", "config", "server.js", "package.json"]),
+    "pygoat": ("adeyosemanputra/pygoat", ["dockerized_labs", "pygoat/settings.py", "requirements.txt", "Dockerfile", "docker-compose.yml"]),
+}
+
 EVALUACION = {
     # Proyectos vulnerables con vulnerabilidades documentadas
     "crAPI": ("OWASP/crAPI", ["services", "deploy/docker"]),
@@ -77,7 +85,6 @@ EVALUACION = {
     "petclinic-microservices": ("spring-petclinic/spring-petclinic-microservices", None),
     "microservices-demo": ("GoogleCloudPlatform/microservices-demo", ["src", "docker-compose.yml"]),
     # Conjuntos de fragmentos para evaluación a nivel de código
-    "juice-shop": ("juice-shop/juice-shop", ["data/static/codefixes"]),
     "cheatsheets": ("OWASP/CheatSheetSeries", ["cheatsheets"]),
 }
 
@@ -115,14 +122,16 @@ def descargar_cwe():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--solo", choices=["entrenamiento", "evaluacion"])
+    ap.add_argument("--solo", choices=["entrenamiento", "evaluacion", "desarrollo"])
     args = ap.parse_args()
     archivo_versiones = BASE / "datos" / "versiones_fuentes.json"
     versiones = json.loads(archivo_versiones.read_text()) if archivo_versiones.exists() else {}
     grupos = []
-    if args.solo != "evaluacion":
+    if args.solo not in ("evaluacion", "desarrollo"):
         grupos.append(("entrenamiento", FUENTES, ENTRENAMIENTO))
-    if args.solo != "entrenamiento":
+    if args.solo in (None, "desarrollo"):
+        grupos.append(("desarrollo", BASE / "evaluacion" / "desarrollo", DESARROLLO))
+    if args.solo in (None, "evaluacion"):
         grupos.append(("evaluacion", PROYECTOS, EVALUACION))
     if args.solo != "evaluacion":
         descargar_cwe()

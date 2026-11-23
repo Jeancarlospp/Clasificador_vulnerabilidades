@@ -11,6 +11,7 @@ Fuentes (descargadas con scripts/descargar_fuentes.py):
   4. benchmark-python  OWASP Benchmark for Python v0.1.
   5. kics              pruebas positivas/negativas de consultas para Dockerfile, docker-compose y OpenAPI.
   6. securityeval      ejemplos Python inseguros etiquetados por CWE.
+  6b. juice-shop       retos de código de OWASP Juice Shop (variantes vulnerables y corrección correcta).
   7. casos-controlados casos de vulnerabilidades de API desarrollados para este proyecto
                        (datos/casos_controlados, generados con scripts/generar_casos_controlados.py).
   8. benigno           código de aplicaciones reales (FastAPI, NestJS, Express, Spring Boot, Flask).
@@ -364,6 +365,55 @@ def cargar_securityeval():
 
 
 # ---------------------------------------------------------------------------------------------
+# 6b. OWASP Juice Shop: retos de código (código real de producción en TypeScript)
+# ---------------------------------------------------------------------------------------------
+# Cada reto tiene varias propuestas de corrección: las incorrectas siguen siendo vulnerables y la
+# marcada como `_correct` no lo es. Se excluyen los retos de LLM (chatbot), Web3 y Solidity.
+JUICE_SHOP = {
+    "accessLogDisclosureChallenge": (548, ["API8:2023"]), "directoryListingChallenge": (548, ["API8:2023"]),
+    "adminSectionChallenge": (862, ["API5:2023"]), "changeProductChallenge": (862, ["API5:2023"]),
+    "dbSchemaChallenge": (89, []), "unionSqlInjectionChallenge": (89, []), "loginAdminChallenge": (89, []),
+    "loginBenderChallenge": (89, []), "loginJimChallenge": (89, []),
+    "exposedMetricsChallenge": (200, ["API8:2023"]), "forgedReviewChallenge": (639, ["API1:2023"]),
+    "localXssChallenge": (79, []), "restfulXssChallenge": (79, []), "xssBonusChallenge": (79, []),
+    "noSqlReviewsChallenge": (943, []), "passkeySignatureChallenge": (347, ["API2:2023"]),
+    "passkeyCredentialOverwriteChallenge": (287, ["API2:2023"]), "redirectChallenge": (601, []),
+    "redirectCryptoCurrencyChallenge": (601, []), "registerAdminChallenge": (915, ["API3:2023"]),
+    "resetPasswordBenderChallenge": (640, ["API2:2023"]), "resetPasswordBjoernChallenge": (640, ["API2:2023"]),
+    "resetPasswordBjoernOwaspChallenge": (640, ["API2:2023"]), "resetPasswordJimChallenge": (640, ["API2:2023"]),
+    "resetPasswordMortyChallenge": (640, ["API2:2023"]), "resetPasswordUvoginChallenge": (640, ["API2:2023"]),
+    "weakPasswordChallenge": (521, ["API2:2023"]),
+}
+
+
+def cargar_juice_shop():
+    carpeta = FUENTES / "juice-shop-codefixes" / "data" / "static" / "codefixes"
+    if not carpeta.exists():
+        return []
+    filas = []
+    for reto, (cwe, api) in JUICE_SHOP.items():
+        variantes = sorted(carpeta.glob(f"{reto}_*.ts"))
+        correctas = [v for v in variantes if v.stem.endswith("_correct")]
+        if not correctas:
+            continue
+        norm = lambda u: re.sub(r"\s+", " ", limpiar_codigo(u.texto)).strip()  # noqa: E731
+        unidades = {v: segmentar(v.name, leer(v), "typescript", "codigo") for v in variantes}
+        en_correcta = {norm(u) for v in correctas for u in unidades[v]}
+        en_incorrectas = {norm(u) for v in variantes if v not in correctas for u in unidades[v]}
+        for v in variantes:
+            correcta = v in correctas
+            for u in unidades[v]:
+                n = norm(u)
+                # solo cuentan las unidades que difieren entre la corrección correcta y las incorrectas
+                if correcta and n not in en_incorrectas:
+                    filas.append(registro("juice-shop", f"juice-shop:{reto}", v.name, u, 0, origen="corrección correcta del reto de código"))
+                elif not correcta and n not in en_correcta:
+                    filas.append(registro("juice-shop", f"juice-shop:{reto}", v.name, u, 1, {cwe}, api_explicitas=api,
+                                          origen="propuesta de corrección incorrecta (sigue vulnerable)"))
+    return filas
+
+
+# ---------------------------------------------------------------------------------------------
 # 7. Casos controlados
 # ---------------------------------------------------------------------------------------------
 def cargar_controlados():
@@ -417,7 +467,11 @@ def cargar_benigno(max_por_proyecto=600, max_config=150):
     raiz = FUENTES / "benigno"
     filas = []
     rng = np.random.default_rng(SEMILLA)
+    from desarrollo import PROYECTOS_BENIGNOS_DESARROLLO
+
     for proyecto in sorted(p for p in raiz.iterdir() if p.is_dir()):
+        if proyecto.name in PROYECTOS_BENIGNOS_DESARROLLO:
+            continue  # reservados para el conjunto de desarrollo
         candidatas = []
         for archivo in sorted(proyecto.rglob("*")):
             rel = str(archivo.relative_to(raiz))
@@ -537,7 +591,8 @@ def particionar(df, prop=(0.70, 0.15, 0.15)):
 
 def main():
     cargadores = [("semgrep", cargar_semgrep), ("codeql", cargar_codeql), ("benchmark", cargar_benchmark),
-                  ("kics", cargar_kics), ("securityeval", cargar_securityeval), ("controlados", cargar_controlados),
+                  ("kics", cargar_kics), ("securityeval", cargar_securityeval), ("juice-shop", cargar_juice_shop),
+                  ("controlados", cargar_controlados),
                   ("benigno", cargar_benigno)]
     filas = []
     for nombre, f in cargadores:

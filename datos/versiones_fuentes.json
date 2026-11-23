@@ -222,14 +222,6 @@
       "docker-compose.yml"
     ]
   },
-  "juice-shop": {
-    "repositorio": "https://github.com/juice-shop/juice-shop",
-    "commit": "c9f99228d9d56afb5f5ca7925376292f7fa44b13",
-    "uso": "evaluacion",
-    "carpetas": [
-      "data/static/codefixes"
-    ]
-  },
   "cheatsheets": {
     "repositorio": "https://github.com/OWASP/CheatSheetSeries",
     "commit": "c2a1e3e32cec12f27be0a3b1e771ce51288a363e",
@@ -462,6 +454,37 @@
     "uso": "entrenamiento",
     "carpetas": [
       "(todo)"
+    ]
+  },
+  "juice-shop-codefixes": {
+    "repositorio": "https://github.com/juice-shop/juice-shop",
+    "commit": "c9f99228d9d56afb5f5ca7925376292f7fa44b13",
+    "uso": "entrenamiento",
+    "carpetas": [
+      "data/static/codefixes"
+    ]
+  },
+  "NodeGoat": {
+    "repositorio": "https://github.com/OWASP/NodeGoat",
+    "commit": "c5cb68a7084e4ae7dcc60e6a98768720a81841e8",
+    "uso": "desarrollo",
+    "carpetas": [
+      "app",
+      "config",
+      "server.js",
+      "package.json"
+    ]
+  },
+  "pygoat": {
+    "repositorio": "https://github.com/adeyosemanputra/pygoat",
+    "commit": "2aa4cc14f251e4a780e94e200aed6b36a5b15c21",
+    "uso": "desarrollo",
+    "carpetas": [
+      "dockerized_labs",
+      "pygoat/settings.py",
+      "requirements.txt",
+      "Dockerfile",
+      "docker-compose.yml"
     ]
   }
 }
