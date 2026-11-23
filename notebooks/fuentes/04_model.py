@@ -65,8 +65,9 @@ pd.DataFrame([{"algoritmo": NOMBRES_ALGORITMO[a], "configuraciones": len(r), "re
 # variables que separan *fuentes* más que *vulnerabilidades* (por ejemplo, el estilo: el código de
 # producción tiene más condicionales y manejo de excepciones que las pruebas de reglas). Para elegir la
 # representación usé un **conjunto de desarrollo a nivel de proyecto**: vulnerabilidades documentadas de
-# aplicaciones reales (laboratorios de PyGoat y NodeGoat) frente a todas las unidades de tres proyectos
-# benignos reservados. Ninguno participa en el entrenamiento ni en la evaluación final.
+# aplicaciones reales (laboratorios de PyGoat y NodeGoat) frente a todas las unidades de cinco proyectos
+# benignos reservados (tres implementaciones de RealWorld en FastAPI, Spring Boot y NestJS, y los
+# microservicios Robot Shop y FTGO). Ninguno participa en el entrenamiento ni en la evaluación final.
 #
 # Las variantes cambian solo el bloque de características de seguridad: indicadores como log(1 + conteo) o
 # como presencia (0/1), y con o sin las métricas de estilo del código.
@@ -252,6 +253,10 @@ print("Umbrales por categoría (validación):", c["umbrales"])
 # El modelo final se reentrena con **entrenamiento + validación** usando la configuración y los umbrales
 # elegidos, y se guarda con `joblib` junto con el pipeline de representación en
 # `vulnminer/modelos/vulnminer.joblib`. La CLI lo carga y **no vuelve a entrenar** en cada ejecución.
+#
+# Después de la evaluación (notebook 05, secciones 6 y 7) se añadió al mismo archivo una **etapa de
+# combinación** ajustada con el conjunto de desarrollo (`scripts/combinar.py`): en el código de servidor,
+# la decisión considera también la cantidad de evidencia estática. El modelo base no se modifica.
 
 # %%
 ruta = BASE / "vulnminer" / "modelos" / "vulnminer.joblib"
@@ -259,6 +264,8 @@ print(f"Archivo: {ruta.relative_to(BASE)} ({ruta.stat().st_size / 1e6:.1f} MB)")
 print("Componentes:", type(modelo.representacion).__name__, "|", type(modelo.detector).__name__, "|",
       type(modelo.categorizador).__name__, "|", type(modelo.clasificador_cwe).__name__)
 print("Clases de CWE:", len(modelo.clasificador_cwe.classes_))
+print(f"Umbral del modelo base: {modelo.umbral} | combinación (código de servidor): p >= {modelo.umbral_base_codigo} "
+      f"o probabilidad combinada >= {modelo.umbral_combinado}")
 
 # %% [markdown]
 # ### Predicción con el pipeline serializado

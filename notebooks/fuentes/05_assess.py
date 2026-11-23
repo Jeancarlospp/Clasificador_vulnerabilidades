@@ -10,6 +10,8 @@
 # 4. **Sobreajuste** y generalización.
 # 5. Pruebas funcionales de la herramienta sobre **proyectos de microservicios** reales no vistos y sobre
 #    fragmentos externos (`scripts/evaluar.py`).
+# 6. **Contribución del modelo**: ablación frente a las reglas solas y comparación con Semgrep
+#    (`scripts/contribucion.py`).
 
 # %%
 import json
@@ -40,6 +42,10 @@ print(f"Prueba: {len(te):,} unidades de {te.proyecto.nunique()} grupos de origen
 
 # %% [markdown]
 # ## 1. Detector en la partición de prueba
+#
+# Las métricas de esta sección son las del **modelo base** (sección 4 del notebook 04). La última fila de la
+# tabla muestra la **decisión final** de la herramienta, que añade la etapa de combinación descrita en la
+# sección 7.
 
 # %%
 X = modelo.transformar(a_unidades(te))
@@ -51,7 +57,9 @@ mv = metricas["detector"]["prueba_umbral_validacion"]
 fila = lambda x: {"Umbral": x["umbral"], "Precisión": x["precision"], "Sensibilidad (recall)": x["recall"], "F1": x["f1"],  # noqa: E731
                   "Exactitud": x["accuracy"], "AUC-ROC": x["roc_auc"], "Precisión promedio (AP)": x["ap"],
                   "Tasa de falsos positivos": x["tasa_falsos_positivos"]}
-pd.DataFrame({"Umbral operativo (herramienta)": fila(m), "Umbral de validación (máximo F1)": fila(mv)}).round(3)
+mf = dict(metricas["combinacion"]["prueba"], umbral=f"{metricas['combinacion']['umbral_base_codigo']} / {metricas['combinacion']['umbral_combinado']}")
+pd.DataFrame({"Modelo base (umbral operativo)": fila(m), "Modelo base (umbral de validación)": fila(mv),
+              "Decisión final de la herramienta (con combinación)": fila(mf)}).T
 
 # %%
 fig, axes = plt.subplots(1, 3, figsize=(13, 3.9))
@@ -208,8 +216,9 @@ gen
 # %% [markdown]
 # ## 5. Prueba funcional sobre proyectos de microservicios no vistos
 #
-# La herramienta completa (`vulnminer scan`) se ejecutó sobre cuatro proyectos vulnerables con
-# vulnerabilidades documentadas (crAPI de OWASP, VAmPI, dvws-node y Damn Vulnerable RESTaurant) y sobre dos
+# La herramienta completa (`vulnminer scan`) se ejecutó sobre cinco proyectos vulnerables con
+# vulnerabilidades documentadas (crAPI de OWASP, VAmPI, dvws-node, Damn Vulnerable RESTaurant y
+# VRPlayground) y sobre dos
 # proyectos de referencia sin vulnerabilidades intencionales (Spring PetClinic Microservices y Online
 # Boutique de Google). Una vulnerabilidad documentada se cuenta como **detectada** si algún hallazgo cae en
 # la función que la contiene.
@@ -276,3 +285,164 @@ if web:
     w = pd.DataFrame(web["detalle"])
     w["acierto"] = w.vulnerable == w.prediccion
     display(w[["id", "tipo", "lenguaje", "vulnerable", "probabilidad", "prediccion", "acierto", "categorias", "owasp_esperado"]])
+
+# %% [markdown]
+# ## 6. Contribución del modelo de clasificación
+#
+# El enunciado permite usar reglas o herramientas existentes **siempre que se evidencie la contribución del
+# modelo**. Para medirla hice dos experimentos (`scripts/contribucion.py`):
+#
+# **a) Ablación.** Con el mismo algoritmo del detector final (SVM lineal calibrada, C = 1) y el mismo
+# protocolo (umbral de máximo F1 en validación y reentrenamiento con entrenamiento + validación) comparé:
+#
+# - **Reglas solas**: sin aprendizaje; una unidad es vulnerable si activa al menos *k* indicadores de operación
+#   peligrosa. Uso dos versiones: *k* elegido en validación (mismo criterio que el umbral del modelo) y *k*
+#   calibrado en el conjunto de desarrollo con 5 % de falsas alarmas (mismo criterio que el umbral operativo).
+# - **Solo indicadores** de análisis estático con el clasificador (y con Random Forest, por si las variables
+#   necesitaran un modelo no lineal).
+# - **Solo texto**: TF-IDF de tokens y de caracteres.
+# - **Modelo completo**: texto + indicadores (el modelo base de la herramienta).
+# - **Modelo completo + combinación**: la decisión final de la herramienta (sección 7).
+#
+# En los proyectos externos la comparación se hace a nivel de unidad: las 66 funciones con vulnerabilidades
+# documentadas frente a todas las unidades de los proyectos limpios (PetClinic y Online Boutique). Como cada
+# variante tiene su propio umbral, también informo la **sensibilidad con 5 % de falsas alarmas**, que compara
+# las variantes en el mismo punto de operación.
+
+# %%
+contrib = json.loads((BASE / "resultados" / "contribucion_modelo.json").read_text())
+abl = pd.DataFrame(contrib["ablacion"]).set_index("variante")
+tabla_abl = pd.DataFrame({
+    "Variables": abl.variables, "Umbral": abl.umbral,
+    "Prueba: precisión": abl.prueba_precision, "Prueba: sensibilidad": abl.prueba_recall, "Prueba: F1": abl.prueba_f1,
+    "Prueba: AUC": abl.prueba_roc_auc,
+    "Externo: detectadas": abl.ext_detectadas.astype(int).astype(str) + "/" + abl.ext_documentadas.astype(int).astype(str),
+    "Externo: falsas alarmas": abl.ext_falsas_alarmas, "Externo: AUC": abl.ext_auc,
+    "Externo: sensibilidad con 5 % FA": abl.ext_sensibilidad_con_5pct_falsas_alarmas,
+    "Demo: detectadas": abl.ext_demo_detectadas.astype(int).astype(str) + "/" + abl.ext_demo_sembradas.astype(int).astype(str)})
+tabla_abl.round(3)
+
+# %%
+cortos = {"reglas": "Reglas (k de validación)", "reglas_desarrollo": "Reglas (k de desarrollo)",
+          "indicadores": "Solo indicadores", "indicadores_rf": "Indicadores + RF", "tfidf": "Solo texto (TF-IDF)",
+          "completo": "Modelo completo", "herramienta": "Modelo + combinación"}
+a = pd.DataFrame(contrib["ablacion"]).set_index("clave").loc[list(cortos)]
+fig, axes = plt.subplots(1, 2, figsize=(12.5, 3.9))
+yy = np.arange(len(a))[::-1]
+colores = [E.NARANJA if k == "herramienta" else E.AZUL if k == "completo" else E.TEXTO_2 for k in a.index]
+for ax, col, titulo in ((axes[0], "prueba_f1", "F1 en la partición de prueba"),
+                        (axes[1], "ext_sensibilidad_con_5pct_falsas_alarmas",
+                         "Proyectos externos: sensibilidad con 5 % de falsas alarmas")):
+    barras = ax.barh(yy, a[col].astype(float), color=colores, alpha=0.9, height=0.6)
+    E.etiquetar_barras(ax, barras, "{:.2f}", horizontal=True)
+    ax.set_yticks(yy, [cortos[k] for k in a.index])
+    ax.set_xlim(0, 1.05)
+    ax.set_title(titulo)
+    ax.grid(axis="y", visible=False)
+fig.tight_layout()
+E.guardar(fig, "contribucion_ablacion")
+plt.show()
+
+# %% [markdown]
+# **Lectura de la ablación.**
+#
+# - En la partición de prueba, que mide si el modelo distingue un caso vulnerable de su versión corregida, el
+#   aprendizaje aporta mucho: las reglas y los indicadores solos quedan muy por debajo del texto y del modelo
+#   completo.
+# - En los proyectos reales ocurre algo distinto. Con *k* calibrado en desarrollo, las reglas solas detectan
+#   más vulnerabilidades que el modelo base con una tasa de falsas alarmas parecida. La razón es un **cambio de
+#   distribución**: en los datos de entrenamiento la versión vulnerable y la segura de un caso tienen casi las
+#   mismas operaciones peligrosas, por lo que el modelo aprendió a no dar peso a la *cantidad* de evidencia;
+#   en las aplicaciones reales, las funciones vulnerables suelen acumular varias operaciones peligrosas.
+#
+# Este resultado motivó una iteración Assess → Modify/Model: la etapa de combinación de la sección 7.
+
+# %% [markdown]
+# **b) Comparación con Semgrep.** Semgrep es un analizador estático por reglas muy usado. Lo ejecuté con las
+# reglas comunitarias de su repositorio (`semgrep-rules`, las mismas cuyos casos de prueba forman parte del
+# dataset) sobre los mismos proyectos y con el mismo criterio de acierto: un hallazgo dentro de la función
+# documentada. En los proyectos limpios cuento las unidades de análisis que contienen algún hallazgo.
+
+# %%
+sg = contrib["semgrep"]
+comp_sg = pd.DataFrame(sg["proyectos"]).set_index("proyecto")
+vul = comp_sg[comp_sg.tipo != "referencia"][["documentadas", "semgrep_detectadas", "vulnminer_detectadas",
+                                             "semgrep_hallazgos", "vulnminer_hallazgos"]].astype(int)
+ref = comp_sg[comp_sg.tipo == "referencia"][["unidades", "semgrep_unidades_marcadas", "vulnminer_unidades_marcadas",
+                                             "semgrep_hallazgos", "vulnminer_hallazgos"]].astype(int)
+print(f"Semgrep {sg['version']} — reglas: {sg['reglas']}")
+display(vul)
+display(ref)
+pd.Series(sg["resumen"]).to_frame("total")
+
+# %%
+fig, axes = plt.subplots(1, 2, figsize=(12.5, 3.9), gridspec_kw={"width_ratios": [2.2, 1]})
+x = np.arange(len(vul))
+b0 = axes[0].bar(x - 0.27, vul.documentadas, width=0.26, color=E.TEXTO_2, alpha=0.3, label="Documentadas")
+b1 = axes[0].bar(x, vul.semgrep_detectadas, width=0.26, color=E.AZUL, label="Semgrep")
+b2 = axes[0].bar(x + 0.27, vul.vulnminer_detectadas, width=0.26, color=E.NARANJA, label="vulnminer")
+for b in (b0, b1, b2):
+    E.etiquetar_barras(axes[0], b)
+axes[0].set_xticks(x, vul.index)
+axes[0].set_ylabel("Vulnerabilidades")
+axes[0].set_title("Vulnerabilidades documentadas detectadas")
+axes[0].legend()
+xr = np.arange(len(ref))
+t1 = axes[1].bar(xr - 0.18, 100 * ref.semgrep_unidades_marcadas / ref.unidades, width=0.34, color=E.AZUL, label="Semgrep")
+t2 = axes[1].bar(xr + 0.18, 100 * ref.vulnminer_unidades_marcadas / ref.unidades, width=0.34, color=E.NARANJA, label="vulnminer")
+for b in (t1, t2):
+    E.etiquetar_barras(axes[1], b, "{:.1f}")
+axes[1].set_xticks(xr, ["PetClinic", "Online Boutique"])
+axes[1].set_ylabel("% de unidades marcadas")
+axes[1].set_title("Proyectos limpios: unidades marcadas")
+fig.tight_layout()
+E.guardar(fig, "contribucion_semgrep")
+plt.show()
+
+# %%
+det_sg = pd.DataFrame(sg["detalle"])
+det_sg["resultado"] = np.select([det_sg.semgrep & det_sg.vulnminer, det_sg.vulnminer, det_sg.semgrep],
+                                ["ambas", "solo vulnminer", "solo Semgrep"], "ninguna")
+display(pd.crosstab(det_sg.proyecto, det_sg.resultado))
+det_sg[det_sg.resultado.isin(["solo vulnminer", "solo Semgrep"])][["proyecto", "id", "nombre", "categorias", "resultado", "reglas_semgrep"]]
+
+# %% [markdown]
+# ## 7. Iteración: etapa de combinación con la evidencia estática
+#
+# Con el conjunto de **desarrollo** (aplicaciones reales, separado del entrenamiento y de la evaluación) ajusté
+# una regresión logística de dos variables: el logit de la probabilidad del modelo base y el número de
+# indicadores de operación peligrosa activos (`scripts/combinar.py`). Se aplica solo al código de servidor,
+# porque el conjunto de desarrollo no tiene vulnerabilidades de configuración ni de frontend.
+#
+# En el código, una unidad es vulnerable si el modelo base está seguro (*p* ≥ u_base) **o** la probabilidad
+# combinada supera u_comb. Los umbrales se eligieron con predicciones fuera de pliegue (validación cruzada de
+# 5 pliegues) manteniendo 5 % de falsas alarmas: la mayor sensibilidad y, dentro de una tolerancia de una
+# vulnerabilidad, la opción que más respeta al modelo base.
+
+# %%
+comb = metricas["combinacion"]
+sel = pd.read_csv(BASE / "resultados" / "seleccion_combinacion.csv")
+print("Coeficientes:", comb["coeficientes"], "| intercepto:", round(comb["intercepto"], 3))
+print(f"Modelo base solo en desarrollo: sensibilidad {comb['desarrollo_modelo_base']['sensibilidad']:.2f}, "
+      f"falsas alarmas {comb['desarrollo_modelo_base']['falsas_alarmas']:.3f}")
+sel.round(3)
+
+# %%
+efecto = pd.DataFrame({
+    "Prueba: F1": [m["f1"], comb["prueba"]["f1"]],
+    "Prueba: precisión": [m["precision"], comb["prueba"]["precision"]],
+    "Prueba: sensibilidad": [m["recall"], comb["prueba"]["recall"]],
+    "Desarrollo: sensibilidad con 5 % FA": [comb["desarrollo_modelo_base"]["sensibilidad"],
+                                            comb["desarrollo_fuera_de_pliegue"]["sensibilidad"]],
+    "Externo (unidad): detectadas": [abl.loc["Modelo completo (TF-IDF + indicadores)", "ext_detectadas"],
+                                     abl.loc["Modelo completo + combinación (herramienta)", "ext_detectadas"]],
+    "Externo (unidad): falsas alarmas": [abl.loc["Modelo completo (TF-IDF + indicadores)", "ext_falsas_alarmas"],
+                                         abl.loc["Modelo completo + combinación (herramienta)", "ext_falsas_alarmas"]],
+}, index=["Modelo base", "Modelo base + combinación"])
+efecto.round(3)
+
+# %% [markdown]
+# La combinación sacrifica algo de F1 en la partición de prueba (casos de pruebas de reglas casi idénticos entre
+# sí) a cambio de una mejora clara en aplicaciones reales, que es el uso previsto de la herramienta. Los
+# resultados de la sección 5 ya corresponden a la herramienta con la combinación. Como los proyectos externos
+# se habían usado antes en los diagnósticos, esas cifras deben leerse como una estimación algo optimista.
