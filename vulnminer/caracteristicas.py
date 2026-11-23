@@ -444,6 +444,7 @@ COMPILADOS = [(ind, ind.compilar()) for ind in INDICADORES]
 NOMBRES_INDICADORES = [i.nombre for i in INDICADORES]
 INDICE = {n: k for k, n in enumerate(NOMBRES_INDICADORES)}
 DESCRIPCION = {i.nombre: i.descripcion for i in INDICADORES}
+FAMILIA = {i.nombre: i.familia for i in INDICADORES}
 
 # Indicadores que se evalúan también sobre el contexto (clase / archivo)
 CONTEXTO = ["guard_autenticacion", "verificacion_rol", "acceso_publico", "limite_frecuencia", "validacion_entrada"]

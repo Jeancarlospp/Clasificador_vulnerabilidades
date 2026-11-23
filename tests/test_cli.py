@@ -93,3 +93,13 @@ def test_cli_fragmento(ruta_modelo, capsys):
 def test_comando_instalado():
     r = subprocess.run([sys.executable, "-m", "vulnminer.cli", "--version"], capture_output=True, text=True)
     assert r.returncode == 0 and "vulnminer" in r.stdout
+
+
+def test_linea_reportada_es_la_operacion_peligrosa(ruta_modelo, tmp_path):
+    from vulnminer.analizador import analizar_unidades, cargar_modelo
+    from vulnminer.segmentacion import segmentar
+
+    codigo = ('@router.post("/draft/restore")\nasync def restore_draft(request: Request):\n'
+              '    data = base64.b64decode(request.cookies.get("draft", ""))\n    draft = pickle.loads(data)\n    return {"ok": True}\n')
+    d = analizar_unidades(cargar_modelo(ruta_modelo), segmentar("r.py", codigo))
+    assert d and d[0]["linea"] == 4

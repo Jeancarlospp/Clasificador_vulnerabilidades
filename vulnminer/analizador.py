@@ -18,10 +18,13 @@ from . import caracteristicas as C
 from .catalogo import (API2023, DESCRIPCION_CATEGORIA, DESCRIPCION_PATRON, OWASP2025, RECOMENDACION_CATEGORIA,
                        conocimiento, nombre_categoria, nombre_cwe)
 from .descubrimiento import descubrir, es_generado, resumen_servicio
+from .modelo import NOMBRES_ALGORITMO
 from .segmentacion import segmentar
 from .severidad import NIVELES, estado, estimar
 
 RUTA_MODELO = Path(__file__).with_name("modelos") / "vulnminer.joblib"
+# familias de indicadores que describen el contexto (fuentes, rutas, controles), no la operación peligrosa
+FAMILIAS_CONTEXTO = {"entrada", "rutas", "validacion", "auth"}
 
 
 @dataclass
@@ -107,11 +110,19 @@ def analizar_unidades(modelo, unidades, estandares=("owasp2025", "api2023"), umb
         vec = dict(zip(C.nombres_caracteristicas(), C.vector(u)))
         activos = {n for n, v in vec.items() if v > 0 and not n.startswith(("m_", "sub_", "len_", "ctx_"))}
         evid = C.evidencias(u)
-        lineas_rel = modelo.lineas_relevantes(u) if localizar else []
+        lineas_rel = modelo.lineas_relevantes(u, max_lineas=6) if localizar else []
         lineas_ind = {l for _, l, _ in evid}
-        # línea reportada: la más influyente según el modelo; si coincide con un indicador, mejor aún
-        linea = next((l for l, caida in lineas_rel if caida > 0 and l in lineas_ind), None)
-        linea = linea or next((l for l, caida in lineas_rel if caida > 0), None) or (evid[0][1] if evid else u.linea_inicio)
+        lineas_op = {l for n, l, _ in evid if C.FAMILIA[n] not in FAMILIAS_CONTEXTO}
+        # Línea reportada: entre las que más influyen en la predicción (oclusión), se prefiere la que contiene
+        # la operación peligrosa (consulta, deserialización, petición saliente...) antes que la fuente de entrada.
+        positivas = [l for l, caida in lineas_rel if caida > 0]
+        linea = (next((l for l in positivas if l in lineas_op), None)
+                 or next((l for _, l, _ in evid if l in lineas_op and l in {x for x, _ in lineas_rel}), None)
+                 or next((l for l in positivas if l in lineas_ind), None)
+                 or (positivas[0] if positivas else None)
+                 or (min(lineas_op) if lineas_op else None)
+                 or (evid[0][1] if evid else u.linea_inicio))
+        lineas_rel = lineas_rel[:3]
         resultados.append({"unidad": u, "prediccion": p, "t10": t10, "api": api, "categorias": categorias, "cwe": cwe,
                            "activos": activos, "evidencias": evid, "lineas_relevantes": lineas_rel, "linea": linea})
     return resultados
@@ -191,7 +202,8 @@ def analizar_proyecto(raiz, modelo=None, estandares=("owasp2025", "api2023"), um
     return {
         "herramienta": "vulnminer", "version": __version__, "fecha": datetime.now().isoformat(timespec="seconds"),
         "proyecto": raiz.name, "ruta": str(raiz), "estandares": list(estandares),
-        "modelo": {"detector": modelo.algoritmo_detector, "categorias": modelo.algoritmo_categorias,
+        "modelo": {"detector": NOMBRES_ALGORITMO.get(modelo.algoritmo_detector, modelo.algoritmo_detector),
+                   "categorias": NOMBRES_ALGORITMO.get(modelo.algoritmo_categorias, modelo.algoritmo_categorias),
                    "umbral": umbral if umbral is not None else modelo.umbral, **{k: v for k, v in modelo.metadatos.items()
                                                                                if k in ("version", "fecha", "detector_prueba")}},
         "resumen": {"microservicios": len([s for s in servicios if s.ruta != "."]) or len(servicios),
