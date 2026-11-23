@@ -19,6 +19,7 @@ Uso: python scripts/generar_casos_controlados.py
 
 import json
 import random
+import re
 import shutil
 from pathlib import Path
 
@@ -1446,6 +1447,14 @@ public class WebConfig implements WebMvcConfigurer {{
 """),
 ])
 
+# Casos en estilo de producción (scripts/casos_produccion.py)
+from casos_produccion import FAMILIAS_NUEVAS, NOMBRES_ARCHIVO_PRODUCCION, PRODUCCION  # noqa: E402
+
+for _familia, _plantillas in PRODUCCION.items():
+    if _familia not in F:
+        F[_familia] = dict(plantillas=[], **FAMILIAS_NUEVAS[_familia])
+    F[_familia]["plantillas"] = F[_familia]["plantillas"] + _plantillas
+
 COMENTARIOS = ["Endpoint del servicio de {ents}", "Ver ticket SEC-{n}{n}{n}", "Generado a partir del contrato v{n}",
                "Mantener sincronizado con el gateway", "Revisado en la iteracion {n}", "Modulo de {ent}s",
                "Handler principal", "Configuracion del entorno {n}", "Equipo de plataforma", "Ultima revision: sprint {n}"]
@@ -1469,9 +1478,11 @@ def variar(texto, ext, ctx):
         if original in texto:
             texto = texto.replace(original, random.choice(opciones))
     if ext in ("js", "ts", "py", "java"):
-        import re
+        import re  # noqa: F811
+        ctx["_renombres"] = {}
         for local, opciones in LOCALES.items():
             nuevo = random.choice(opciones)
+            ctx["_renombres"][local] = nuevo
             texto = re.sub(r"(?<![.\w'\"])" + local + r"(?![\w'\"])", nuevo, texto)
         prefijo = random.choice(["", "/api", "/api/v1", "/v2"])
         if prefijo and "('/api" not in texto:
@@ -1494,7 +1505,7 @@ def variar(texto, ext, ctx):
 NOMBRES_ARCHIVO = {"express": "routes.js", "nest": "controller.ts", "fastapi": "router.py", "flask": "views.py",
                    "spring": "Controller.java", "properties": "application.properties", "yaml": "application.yml",
                    "compose": "docker-compose.yml", "openapi": "openapi.yaml", "package": "package.json",
-                   "requirements": "requirements.txt", "pom": "pom.xml"}
+                   "requirements": "requirements.txt", "pom": "pom.xml", **NOMBRES_ARCHIVO_PRODUCCION}
 
 
 def main(instancias=12):
@@ -1507,6 +1518,8 @@ def main(instancias=12):
                 ctx = contexto()
                 texto = variar(plantilla.format(**ctx), ext, ctx)
                 ancla_txt = ancla.format(**ctx)
+                for local, nuevo in ctx.get("_renombres", {}).items():
+                    ancla_txt = re.sub(r"(?<![.\w'\"])" + local + r"(?![\w'\"])", nuevo, ancla_txt)
                 if ctx.get("_prefijo"):
                     ancla_txt = ancla_txt.replace("('/", f"('{ctx['_prefijo']}/")
                 linea = next((n + 1 for n, l in enumerate(texto.splitlines()) if ancla_txt in l), None)
