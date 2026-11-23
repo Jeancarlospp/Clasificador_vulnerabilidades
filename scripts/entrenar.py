@@ -41,20 +41,25 @@ from sklearn.metrics import (accuracy_score, average_precision_score, confusion_
                              recall_score, roc_auc_score)
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import MaxAbsScaler
 
 BASE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BASE))
 
 from vulnminer import __version__  # noqa: E402
 from vulnminer.catalogo import API2023, OWASP2025  # noqa: E402
-from vulnminer.modelo import (CATEGORIAS, NOMBRES_ALGORITMO, REJILLAS, ModeloVulnminer, a_unidades,  # noqa: E402
-                              crear_clasificador, probabilidades, representacion)
+from vulnminer.modelo import (CATEGORIAS, NOMBRES_ALGORITMO, REJILLAS, ModeloVulnminer, _caracteristicas,  # noqa: E402
+                              a_unidades, crear_clasificador, probabilidades, representacion)
+
+import desarrollo  # noqa: E402
 
 warnings.filterwarnings("ignore")
 RESULTADOS = BASE / "resultados"
 MIN_EJEMPLOS_CATEGORIA = 15
 MIN_EJEMPLOS_CWE = 10
 PESOS_SEGURIDAD = (1.0, 3.0)
+VARIANTES = {"log + estilo": (False, True), "binario + estilo": (True, True),
+             "log sin estilo": (False, False), "binario sin estilo": (True, False)}
 TOLERANCIA = 0.01
 TOLERANCIA_CAT = 0.02
 
@@ -142,6 +147,38 @@ def main():
     b_tr, b_va, b_te = bloques(R, u_tr), bloques(R, u_va), bloques(R, u_te)
     dims = {n: b.shape[1] for (n, _), b in zip(R.transformer_list, b_tr)}
     log(f"representación ajustada en {time.time() - t0:.0f}s: {dims}")
+
+    # ------------------------------------------------------------------ variante de la representación (desarrollo)
+    # Las variantes solo cambian el bloque de características de seguridad: indicadores como presencia
+    # (binario) o log(1 + conteo), y con o sin métricas de estilo del código. Se elige por la precisión
+    # promedio en el conjunto de DESARROLLO (aplicaciones reales), no en validación.
+    dev_pos, dev_neg = desarrollo.cargar()
+    u_dev = dev_pos + dev_neg
+    y_dev = np.r_[np.ones(len(dev_pos)), np.zeros(len(dev_neg))]
+    b_dev = bloques(R, u_dev)
+    log(f"desarrollo: {len(dev_pos)} unidades vulnerables documentadas, {len(dev_neg)} unidades de proyectos limpios")
+    filas_var, seguridad = [], {}
+    for nombre, (binario, estilo) in VARIANTES.items():
+        esc = MaxAbsScaler().fit(_caracteristicas(u_tr, binario, estilo))
+        seg = {k: esc.transform(_caracteristicas(u, binario, estilo)) for k, u in (("tr", u_tr), ("va", u_va), ("te", u_te), ("dev", u_dev))}
+        seguridad[nombre] = seg
+        for peso in PESOS_SEGURIDAD:
+            Xtr_v = sparse.hstack([b_tr[0], b_tr[1], seg["tr"] * peso]).tocsr()
+            m = crear_clasificador("regresion_logistica", C=2.0).fit(Xtr_v, tr.vulnerable)
+            p_va = m.predict_proba(sparse.hstack([b_va[0], b_va[1], seg["va"] * peso]).tocsr())[:, 1]
+            p_dev = m.predict_proba(sparse.hstack([b_dev[0], b_dev[1], seg["dev"] * peso]).tocsr())[:, 1]
+            md = desarrollo.metricas(p_dev[y_dev == 1], p_dev[y_dev == 0])
+            filas_var.append({"variante": nombre, "binario": binario, "estilo": estilo, "peso_seguridad": peso,
+                              "val_ap": average_precision_score(va.vulnerable, p_va), "dev_ap": md["ap"], "dev_auc": md["auc"],
+                              "dev_sensibilidad_5pct": md["sensibilidad"]})
+            log(f"variante {nombre:20s} peso={peso} AP val={filas_var[-1]['val_ap']:.3f} | desarrollo AP={md['ap']:.3f} "
+                f"AUC={md['auc']:.3f} sensibilidad con 5% de falsas alarmas={md['sensibilidad']:.2f}")
+    comp_var = pd.DataFrame(filas_var).sort_values(["dev_ap", "val_ap"], ascending=False)
+    comp_var.to_csv(RESULTADOS / "seleccion_variante.csv", index=False)
+    variante = comp_var.iloc[0]["variante"]
+    binario, estilo = VARIANTES[variante]
+    log(f"==> variante seleccionada: {variante} (AP desarrollo={comp_var.iloc[0]['dev_ap']:.3f})")
+    b_tr, b_va, b_te = ([b[0], b[1], seguridad[variante][k]] for b, k in ((b_tr, "tr"), (b_va, "va"), (b_te, "te")))
 
     # ------------------------------------------------------------------ detector
     filas = []
@@ -242,7 +279,7 @@ def main():
     log("reentrenando con entrenamiento + validación ...")
     trva = pd.concat([tr, va], ignore_index=True)
     u_trva = a_unidades(trva)
-    R_final = representacion(peso_caracteristicas=peso).fit(u_trva)
+    R_final = representacion(peso_caracteristicas=peso, binario=binario, estilo=estilo).fit(u_trva)
     X_final = R_final.transform(u_trva)
     vtv = (trva.vulnerable == 1).values
     det_final = crear_clasificador(alg_det, **params_det).fit(X_final, trva.vulnerable)
@@ -256,12 +293,31 @@ def main():
                              categorias=categorias, umbral=umbral, umbrales_categoria=umbrales_cat,
                              algoritmo_detector=alg_det, algoritmo_categorias=alg_cat, no_evaluadas=no_evaluadas)
 
+    # Umbral de operación: menor umbral con <= 5 % de falsas alarmas en los proyectos limpios de
+    # desarrollo. El umbral de validación (máximo F1) se conserva como referencia.
+    umbral_validacion = umbral
+    modelo.umbral_sin_categoria = umbral_validacion
+    X_dev = modelo.transformar(u_dev)
+    p_dev = modelo.probabilidad(X=X_dev)
+    Pc_dev = modelo.probabilidad_categorias(X=X_dev)
+    con_cat = (Pc_dev >= np.array([umbrales_cat[c] for c in categorias])).any(axis=1)
+    kw = dict(cat_pos=con_cat[y_dev == 1], cat_neg=con_cat[y_dev == 0], umbral_sin_categoria=umbral_validacion)
+    md_val = desarrollo.metricas(p_dev[y_dev == 1], p_dev[y_dev == 0], umbral_validacion, **kw)
+    md_dev = desarrollo.metricas(p_dev[y_dev == 1], p_dev[y_dev == 0], **kw)
+    umbral = min(round(md_dev["umbral"], 2), umbral_validacion)
+    modelo.umbral = umbral
+    log(f"umbral de validación={umbral_validacion} (desarrollo: sensibilidad {md_val['sensibilidad']:.2f}, falsas alarmas "
+        f"{md_val['falsas_alarmas']:.3f}) | umbral operativo={umbral} (sensibilidad {md_dev['sensibilidad']:.2f}, "
+        f"falsas alarmas {md_dev['falsas_alarmas']:.3f})")
+
     # ------------------------------------------------------------------ evaluación en prueba
     log("evaluando en la partición de prueba ...")
     X_te_f = R_final.transform(u_te)
     p_te = modelo.probabilidad(X=X_te_f)
     det_metricas = metricas_binarias(te.vulnerable, p_te, umbral)
     det_metricas["umbral"] = umbral
+    det_metricas_val = metricas_binarias(te.vulnerable, p_te, umbral_validacion)
+    det_metricas_val["umbral"] = umbral_validacion
     Pc = modelo.probabilidad_categorias(X=X_te_f)
     pred_cat = aplicar_umbrales(Pc, categorias, umbrales_cat)
     Yte = multihot(te.owasp2025, te.api2023, categorias)
@@ -304,8 +360,10 @@ def main():
     metricas = {
         "fecha": datetime.now().isoformat(timespec="seconds"), "version": __version__,
         "particiones": {"entrenamiento": len(tr), "validacion": len(va), "prueba": len(te)},
-        "representacion": {**dims, "peso_seguridad": peso},
+        "representacion": {**dims, "peso_seguridad": peso, "variante": variante, "binario": bool(binario), "estilo": bool(estilo)},
+        "desarrollo": {"umbral_validacion": umbral_validacion, "con_umbral_validacion": md_val, "con_umbral_operativo": md_dev},
         "detector": {"algoritmo": alg_det, "hiperparametros": params_det, "prueba": det_metricas,
+                     "prueba_umbral_validacion": det_metricas_val,
                      "por_fuente": por_grupo("fuente"), "por_lenguaje": por_grupo("lenguaje"), "por_subtipo": por_grupo("subtipo")},
         "categorias": {"algoritmo": alg_cat, "hiperparametros": params_cat, "evaluadas": categorias, "no_evaluadas": no_evaluadas,
                        "umbrales": umbrales_cat, "prueba": cat_metricas, "por_categoria": por_categoria},

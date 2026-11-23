@@ -164,6 +164,7 @@ class ModeloVulnminer:
     clasificador_cwe: object
     categorias: list                       # categorías con clasificador entrenado
     umbral: float = 0.5
+    umbral_sin_categoria: float = None    # un hallazgo sin categoría exige esta confianza mínima
     umbrales_categoria: dict = field(default_factory=dict)
     umbral_cwe: float = 0.35
     algoritmo_detector: str = ""
@@ -190,6 +191,7 @@ class ModeloVulnminer:
     def predecir(self, unidades, umbral=None):
         """Predicción completa para una lista de unidades."""
         umbral = self.umbral if umbral is None else umbral
+        umbral_sc = max(umbral, self.umbral_sin_categoria or umbral)
         if not unidades:
             return []
         X = self.transformar(unidades)
@@ -204,9 +206,13 @@ class ModeloVulnminer:
             cats.sort(key=lambda t: -t[1])
             j = int(np.argmax(pw[i]))
             cwe = clases_cwe[j] if pw[i, j] >= self.umbral_cwe else None
+            # Política de dos niveles: con categoría basta el umbral operativo; sin categoría (pendiente de
+            # revisión) se exige el umbral más estricto, porque ni el detector ni el categorizador tienen
+            # evidencia clara.
+            vulnerable = bool(p[i] >= umbral and (cats or p[i] >= umbral_sc))
             salida.append({
                 "probabilidad": float(p[i]),
-                "vulnerable": bool(p[i] >= umbral),
+                "vulnerable": vulnerable,
                 "owasp2025": [(c, q) for c, q in cats if c in OWASP2025],
                 "api2023": [(c, q) for c, q in cats if c in API2023],
                 "cwe": cwe, "probabilidad_cwe": float(pw[i, j]),

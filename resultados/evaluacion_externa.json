@@ -1,47 +1,47 @@
 {
-  "umbral": 0.49,
+  "umbral": 0.35,
   "resumen_proyectos_vulnerables": {
-    "vulnerabilidades_documentadas": 50,
-    "detectadas": 19,
-    "sensibilidad": 0.38,
-    "categoria_correcta": 16,
-    "categoria_correcta_sobre_detectadas": 0.842
+    "vulnerabilidades_documentadas": 66,
+    "detectadas": 40,
+    "sensibilidad": 0.606,
+    "categoria_correcta": 28,
+    "categoria_correcta_sobre_detectadas": 0.7
   },
   "por_categoria": {
     "A01:2025": {
-      "documentadas": 19,
-      "detectadas": 5,
-      "categoria_correcta": 4
+      "documentadas": 21,
+      "detectadas": 9,
+      "categoria_correcta": 7
     },
     "A02:2025": {
-      "documentadas": 3,
-      "detectadas": 2,
-      "categoria_correcta": 1
+      "documentadas": 4,
+      "detectadas": 3,
+      "categoria_correcta": 2
     },
     "A04:2025": {
       "documentadas": 4,
       "detectadas": 3,
-      "categoria_correcta": 1
+      "categoria_correcta": 3
     },
     "A05:2025": {
-      "documentadas": 9,
-      "detectadas": 5,
-      "categoria_correcta": 5
+      "documentadas": 19,
+      "detectadas": 16,
+      "categoria_correcta": 10
     },
     "A06:2025": {
-      "documentadas": 2,
-      "detectadas": 1,
+      "documentadas": 3,
+      "detectadas": 2,
       "categoria_correcta": 0
     },
     "A07:2025": {
       "documentadas": 6,
-      "detectadas": 1,
-      "categoria_correcta": 0
+      "detectadas": 2,
+      "categoria_correcta": 1
     },
     "A08:2025": {
-      "documentadas": 7,
-      "detectadas": 2,
-      "categoria_correcta": 2
+      "documentadas": 9,
+      "detectadas": 5,
+      "categoria_correcta": 4
     },
     "API10:2023": {
       "documentadas": 1,
@@ -50,23 +50,23 @@
     },
     "API1:2023": {
       "documentadas": 7,
-      "detectadas": 2,
-      "categoria_correcta": 0
+      "detectadas": 3,
+      "categoria_correcta": 1
     },
     "API2:2023": {
       "documentadas": 10,
-      "detectadas": 4,
-      "categoria_correcta": 4
+      "detectadas": 5,
+      "categoria_correcta": 3
     },
     "API3:2023": {
       "documentadas": 8,
-      "detectadas": 1,
+      "detectadas": 2,
       "categoria_correcta": 0
     },
     "API4:2023": {
-      "documentadas": 4,
-      "detectadas": 1,
-      "categoria_correcta": 0
+      "documentadas": 5,
+      "detectadas": 3,
+      "categoria_correcta": 1
     },
     "API5:2023": {
       "documentadas": 4,
@@ -74,8 +74,8 @@
       "categoria_correcta": 0
     },
     "API7:2023": {
-      "documentadas": 2,
-      "detectadas": 1,
+      "documentadas": 3,
+      "detectadas": 2,
       "categoria_correcta": 1
     },
     "API8:2023": {
@@ -90,15 +90,15 @@
       "microservicios": 1,
       "archivos": 15,
       "unidades": 66,
-      "hallazgos": 14,
-      "hallazgos_por_100_unidades": 21.21,
+      "hallazgos": 22,
+      "hallazgos_por_100_unidades": 33.33,
       "vulnerabilidades_documentadas": 9,
-      "detectadas": 1,
-      "sensibilidad": 0.111,
-      "categoria_correcta": 1,
-      "hallazgos_sobre_vulnerabilidades_documentadas": 1,
-      "hallazgos_adicionales": 13,
-      "duracion_segundos": 3.7,
+      "detectadas": 2,
+      "sensibilidad": 0.222,
+      "categoria_correcta": 0,
+      "hallazgos_sobre_vulnerabilidades_documentadas": 2,
+      "hallazgos_adicionales": 20,
+      "duracion_segundos": 5.3,
       "detalle": [
         {
           "id": "VAMPI-01",
@@ -125,14 +125,19 @@
           "nombre": "Cambio de contraseña de otro usuario",
           "archivo": "api_views/users.py",
           "linea": 187,
-          "detectada": false,
-          "hallazgos": [],
-          "confianza": 0.0,
+          "detectada": true,
+          "hallazgos": [
+            "VM-003"
+          ],
+          "confianza": 0.698,
           "categorias_esperadas": [
             "A01:2025",
             "API1:2023"
           ],
-          "categorias_predichas": [],
+          "categorias_predichas": [
+            "A07:2025",
+            "API2:2023"
+          ],
           "categoria_correcta": false,
           "top10_correcta": false,
           "api_correcta": false,
@@ -275,19 +280,17 @@
           "linea": 13,
           "detectada": true,
           "hallazgos": [
-            "VM-003"
+            "VM-012"
           ],
-          "confianza": 0.724,
+          "confianza": 0.715,
           "categorias_esperadas": [
             "A07:2025",
             "API2:2023"
           ],
-          "categorias_predichas": [
-            "API2:2023"
-          ],
-          "categoria_correcta": true,
+          "categorias_predichas": [],
+          "categoria_correcta": false,
           "top10_correcta": false,
-          "api_correcta": true,
+          "api_correcta": false,
           "lineas_unidad": [
             1,
             15
@@ -300,15 +303,15 @@
       "microservicios": 7,
       "archivos": 268,
       "unidades": 1385,
-      "hallazgos": 67,
-      "hallazgos_por_100_unidades": 4.84,
+      "hallazgos": 121,
+      "hallazgos_por_100_unidades": 8.74,
       "vulnerabilidades_documentadas": 14,
-      "detectadas": 3,
-      "sensibilidad": 0.214,
-      "categoria_correcta": 3,
-      "hallazgos_sobre_vulnerabilidades_documentadas": 2,
-      "hallazgos_adicionales": 65,
-      "duracion_segundos": 16.9,
+      "detectadas": 6,
+      "sensibilidad": 0.429,
+      "categoria_correcta": 5,
+      "hallazgos_sobre_vulnerabilidades_documentadas": 9,
+      "hallazgos_adicionales": 112,
+      "duracion_segundos": 29.4,
       "detalle": [
         {
           "id": "CRAPI-01",
@@ -317,20 +320,20 @@
           "linea": 122,
           "detectada": true,
           "hallazgos": [
-            "VM-007"
+            "VM-003"
           ],
-          "confianza": 0.559,
+          "confianza": 0.974,
           "categorias_esperadas": [
             "A01:2025",
             "API1:2023"
           ],
           "categorias_predichas": [
             "A01:2025",
-            "API2:2023"
+            "API1:2023"
           ],
           "categoria_correcta": true,
           "top10_correcta": true,
-          "api_correcta": false,
+          "api_correcta": true,
           "lineas_unidad": [
             109,
             165
@@ -362,15 +365,22 @@
           "nombre": "Inyección SQL al aplicar un cupón",
           "archivo": "services/workshop/crapi/shop/views.py",
           "linea": 389,
-          "detectada": false,
-          "hallazgos": [],
-          "confianza": 0.0,
+          "detectada": true,
+          "hallazgos": [
+            "VM-002",
+            "VM-015"
+          ],
+          "confianza": 0.979,
           "categorias_esperadas": [
             "A05:2025"
           ],
-          "categorias_predichas": [],
-          "categoria_correcta": false,
-          "top10_correcta": false,
+          "categorias_predichas": [
+            "A01:2025",
+            "A05:2025",
+            "API1:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
           "api_correcta": null,
           "lineas_unidad": [
             365,
@@ -382,17 +392,21 @@
           "nombre": "SSRF y repeticiones ilimitadas en contactar mecánico",
           "archivo": "services/workshop/crapi/merchant/views.py",
           "linea": 84,
-          "detectada": false,
-          "hallazgos": [],
-          "confianza": 0.0,
+          "detectada": true,
+          "hallazgos": [
+            "VM-006"
+          ],
+          "confianza": 0.861,
           "categorias_esperadas": [
             "A01:2025",
             "API4:2023",
             "API7:2023"
           ],
-          "categorias_predichas": [],
-          "categoria_correcta": false,
-          "top10_correcta": false,
+          "categorias_predichas": [
+            "A01:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
           "api_correcta": false,
           "lineas_unidad": [
             45,
@@ -509,14 +523,20 @@
           "nombre": "Asignación masiva de parámetros de conversión del video",
           "archivo": "services/identity/src/main/java/com/crapi/controller/ProfileController.java",
           "linea": 96,
-          "detectada": false,
-          "hallazgos": [],
-          "confianza": 0.0,
+          "detectada": true,
+          "hallazgos": [
+            "VM-014",
+            "VM-017"
+          ],
+          "confianza": 0.478,
           "categorias_esperadas": [
             "A08:2025",
             "API3:2023"
           ],
-          "categorias_predichas": [],
+          "categorias_predichas": [
+            "A01:2025",
+            "API1:2023"
+          ],
           "categoria_correcta": false,
           "top10_correcta": false,
           "api_correcta": false,
@@ -553,21 +573,22 @@
           "linea": 132,
           "detectada": true,
           "hallazgos": [
-            "VM-003"
+            "VM-005",
+            "VM-018"
           ],
-          "confianza": 0.923,
+          "confianza": 0.971,
           "categorias_esperadas": [
             "A04:2025",
             "API2:2023"
           ],
           "categorias_predichas": [
             "A01:2025",
-            "API2:2023",
+            "A04:2025",
             "API7:2023"
           ],
           "categoria_correcta": true,
-          "top10_correcta": false,
-          "api_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": false,
           "lineas_unidad": [
             130,
             148
@@ -580,20 +601,20 @@
           "linea": 126,
           "detectada": true,
           "hallazgos": [
-            "VM-003"
+            "VM-018",
+            "VM-023"
           ],
-          "confianza": 0.923,
+          "confianza": 0.971,
           "categorias_esperadas": [
             "A04:2025",
             "API2:2023"
           ],
           "categorias_predichas": [
-            "A01:2025",
-            "API2:2023",
-            "API7:2023"
+            "A04:2025",
+            "API2:2023"
           ],
           "categoria_correcta": true,
-          "top10_correcta": false,
+          "top10_correcta": true,
           "api_correcta": true,
           "lineas_unidad": [
             124,
@@ -628,15 +649,15 @@
       "microservicios": 1,
       "archivos": 62,
       "unidades": 271,
-      "hallazgos": 74,
-      "hallazgos_por_100_unidades": 27.31,
+      "hallazgos": 84,
+      "hallazgos_por_100_unidades": 31.0,
       "vulnerabilidades_documentadas": 21,
-      "detectadas": 14,
-      "sensibilidad": 0.667,
-      "categoria_correcta": 11,
-      "hallazgos_sobre_vulnerabilidades_documentadas": 14,
-      "hallazgos_adicionales": 60,
-      "duracion_segundos": 8.7,
+      "detectadas": 16,
+      "sensibilidad": 0.762,
+      "categoria_correcta": 13,
+      "hallazgos_sobre_vulnerabilidades_documentadas": 17,
+      "hallazgos_adicionales": 67,
+      "duracion_segundos": 12.3,
       "detalle": [
         {
           "id": "DVWS-01",
@@ -647,7 +668,7 @@
           "hallazgos": [
             "VM-001"
           ],
-          "confianza": 0.977,
+          "confianza": 0.988,
           "categorias_esperadas": [
             "A05:2025"
           ],
@@ -669,15 +690,16 @@
           "linea": 58,
           "detectada": true,
           "hallazgos": [
-            "VM-004"
+            "VM-003"
           ],
-          "confianza": 0.926,
+          "confianza": 0.985,
           "categorias_esperadas": [
             "A05:2025"
           ],
           "categorias_predichas": [
             "A05:2025",
-            "A10:2025"
+            "A10:2025",
+            "API8:2023"
           ],
           "categoria_correcta": true,
           "top10_correcta": true,
@@ -694,16 +716,14 @@
           "linea": 96,
           "detectada": true,
           "hallazgos": [
-            "VM-016"
+            "VM-006"
           ],
-          "confianza": 0.919,
+          "confianza": 0.911,
           "categorias_esperadas": [
             "A08:2025"
           ],
           "categorias_predichas": [
-            "A07:2025",
             "A08:2025",
-            "A10:2025",
             "API2:2023"
           ],
           "categoria_correcta": true,
@@ -723,7 +743,7 @@
           "hallazgos": [
             "VM-002"
           ],
-          "confianza": 0.947,
+          "confianza": 0.987,
           "categorias_esperadas": [
             "A05:2025"
           ],
@@ -745,14 +765,13 @@
           "linea": 81,
           "detectada": true,
           "hallazgos": [
-            "VM-025"
+            "VM-030"
           ],
-          "confianza": 0.799,
+          "confianza": 0.631,
           "categorias_esperadas": [
             "A05:2025"
           ],
           "categorias_predichas": [
-            "A01:2025",
             "A05:2025"
           ],
           "categoria_correcta": true,
@@ -770,15 +789,14 @@
           "linea": 166,
           "detectada": true,
           "hallazgos": [
-            "VM-032"
+            "VM-007"
           ],
-          "confianza": 0.648,
+          "confianza": 0.868,
           "categorias_esperadas": [
             "A05:2025"
           ],
           "categorias_predichas": [
-            "A05:2025",
-            "A10:2025"
+            "A05:2025"
           ],
           "categoria_correcta": true,
           "top10_correcta": true,
@@ -795,9 +813,9 @@
           "linea": 121,
           "detectada": true,
           "hallazgos": [
-            "VM-066"
+            "VM-056"
           ],
-          "confianza": 0.545,
+          "confianza": 0.722,
           "categorias_esperadas": [
             "A01:2025",
             "API1:2023"
@@ -821,17 +839,14 @@
           "linea": 219,
           "detectada": true,
           "hallazgos": [
-            "VM-067"
+            "VM-065"
           ],
-          "confianza": 0.513,
+          "confianza": 0.36,
           "categorias_esperadas": [
             "A02:2025",
             "API4:2023"
           ],
-          "categorias_predichas": [
-            "A10:2025",
-            "API2:2023"
-          ],
+          "categorias_predichas": [],
           "categoria_correcta": false,
           "top10_correcta": false,
           "api_correcta": false,
@@ -847,9 +862,9 @@
           "linea": 43,
           "detectada": true,
           "hallazgos": [
-            "VM-012"
+            "VM-013"
           ],
-          "confianza": 0.951,
+          "confianza": 0.98,
           "categorias_esperadas": [
             "A04:2025",
             "API2:2023"
@@ -873,16 +888,15 @@
           "linea": 14,
           "detectada": true,
           "hallazgos": [
-            "VM-010"
+            "VM-049"
           ],
-          "confianza": 0.969,
+          "confianza": 0.92,
           "categorias_esperadas": [
             "A02:2025",
             "API8:2023"
           ],
           "categorias_predichas": [
             "A02:2025",
-            "A06:2025",
             "A07:2025",
             "API8:2023"
           ],
@@ -921,16 +935,14 @@
           "linea": 50,
           "detectada": true,
           "hallazgos": [
-            "VM-026"
+            "VM-024"
           ],
-          "confianza": 0.787,
+          "confianza": 0.749,
           "categorias_esperadas": [
             "A06:2025"
           ],
           "categorias_predichas": [
-            "A01:2025",
-            "A10:2025",
-            "API2:2023"
+            "A01:2025"
           ],
           "categoria_correcta": false,
           "top10_correcta": false,
@@ -949,12 +961,11 @@
           "hallazgos": [
             "VM-014"
           ],
-          "confianza": 0.93,
+          "confianza": 0.951,
           "categorias_esperadas": [
             "A01:2025"
           ],
           "categorias_predichas": [
-            "A06:2025",
             "API2:2023"
           ],
           "categoria_correcta": false,
@@ -991,15 +1002,19 @@
           "nombre": "Path traversal en el reporte mensual",
           "archivo": "src/controllers/integrations.js",
           "linea": 139,
-          "detectada": false,
-          "hallazgos": [],
-          "confianza": 0.0,
+          "detectada": true,
+          "hallazgos": [
+            "VM-011"
+          ],
+          "confianza": 0.485,
           "categorias_esperadas": [
             "A01:2025"
           ],
-          "categorias_predichas": [],
-          "categoria_correcta": false,
-          "top10_correcta": false,
+          "categorias_predichas": [
+            "A01:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
           "api_correcta": null,
           "lineas_unidad": [
             129,
@@ -1013,9 +1028,9 @@
           "linea": 136,
           "detectada": true,
           "hallazgos": [
-            "VM-048"
+            "VM-051"
           ],
-          "confianza": 0.823,
+          "confianza": 0.898,
           "categorias_esperadas": [
             "A01:2025"
           ],
@@ -1037,18 +1052,16 @@
           "linea": 80,
           "detectada": true,
           "hallazgos": [
-            "VM-049"
+            "VM-055"
           ],
-          "confianza": 0.786,
+          "confianza": 0.795,
           "categorias_esperadas": [
             "A08:2025",
             "API3:2023"
           ],
           "categorias_predichas": [
-            "A07:2025",
             "A08:2025",
-            "A10:2025",
-            "API2:2023"
+            "A10:2025"
           ],
           "categoria_correcta": true,
           "top10_correcta": true,
@@ -1063,17 +1076,26 @@
           "nombre": "Enumeración de usuarios y registro sin neutralizar en el login",
           "archivo": "src/controllers/users.js",
           "linea": 150,
-          "detectada": false,
-          "hallazgos": [],
-          "confianza": 0.0,
+          "detectada": true,
+          "hallazgos": [
+            "VM-045",
+            "VM-046"
+          ],
+          "confianza": 0.384,
           "categorias_esperadas": [
             "A07:2025",
             "API2:2023"
           ],
-          "categorias_predichas": [],
-          "categoria_correcta": false,
-          "top10_correcta": false,
-          "api_correcta": false,
+          "categorias_predichas": [
+            "A01:2025",
+            "A04:2025",
+            "A06:2025",
+            "A07:2025",
+            "API2:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": true,
           "lineas_unidad": [
             143,
             186
@@ -1148,15 +1170,15 @@
       "microservicios": 1,
       "archivos": 61,
       "unidades": 170,
-      "hallazgos": 8,
-      "hallazgos_por_100_unidades": 4.71,
+      "hallazgos": 13,
+      "hallazgos_por_100_unidades": 7.65,
       "vulnerabilidades_documentadas": 6,
-      "detectadas": 1,
-      "sensibilidad": 0.167,
-      "categoria_correcta": 1,
-      "hallazgos_sobre_vulnerabilidades_documentadas": 1,
-      "hallazgos_adicionales": 7,
-      "duracion_segundos": 0.7,
+      "detectadas": 0,
+      "sensibilidad": 0.0,
+      "categoria_correcta": 0,
+      "hallazgos_sobre_vulnerabilidades_documentadas": 0,
+      "hallazgos_adicionales": 13,
+      "duracion_segundos": 1.0,
       "detalle": [
         {
           "id": "REST-00",
@@ -1248,22 +1270,17 @@
           "nombre": "SSRF al descargar la imagen del menú",
           "archivo": "app/apis/menu/utils.py",
           "linea": 10,
-          "detectada": true,
-          "hallazgos": [
-            "VM-003"
-          ],
-          "confianza": 0.644,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
           "categorias_esperadas": [
             "A01:2025",
             "API7:2023"
           ],
-          "categorias_predichas": [
-            "A01:2025",
-            "API7:2023"
-          ],
-          "categoria_correcta": true,
-          "top10_correcta": true,
-          "api_correcta": true,
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
           "lineas_unidad": [
             9,
             13
@@ -1291,20 +1308,436 @@
         }
       ]
     },
+    "VRPlayground": {
+      "tipo": "vulnerable",
+      "microservicios": 6,
+      "archivos": 38,
+      "unidades": 123,
+      "hallazgos": 61,
+      "hallazgos_por_100_unidades": 49.59,
+      "vulnerabilidades_documentadas": 16,
+      "detectadas": 16,
+      "sensibilidad": 1.0,
+      "categoria_correcta": 10,
+      "hallazgos_sobre_vulnerabilidades_documentadas": 16,
+      "hallazgos_adicionales": 45,
+      "duracion_segundos": 7.0,
+      "detalle": [
+        {
+          "id": "VRP-01",
+          "nombre": "Deserialización con pickle",
+          "archivo": "python-api/index.py",
+          "linea": 21,
+          "detectada": true,
+          "hallazgos": [
+            "VM-002"
+          ],
+          "confianza": 0.99,
+          "categorias_esperadas": [
+            "A08:2025"
+          ],
+          "categorias_predichas": [
+            "A08:2025",
+            "A10:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": null,
+          "lineas_unidad": [
+            15,
+            25
+          ]
+        },
+        {
+          "id": "VRP-02",
+          "nombre": "SSTI con Jinja",
+          "archivo": "python-api/index.py",
+          "linea": 33,
+          "detectada": true,
+          "hallazgos": [
+            "VM-009"
+          ],
+          "confianza": 0.922,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [
+            "A10:2025",
+            "API8:2023"
+          ],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": null,
+          "lineas_unidad": [
+            28,
+            37
+          ]
+        },
+        {
+          "id": "VRP-03",
+          "nombre": "Inyección SQL con format",
+          "archivo": "python-api/sql_injection/__init__.py",
+          "linea": 20,
+          "detectada": true,
+          "hallazgos": [
+            "VM-053"
+          ],
+          "confianza": 0.627,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [
+            "A08:2025",
+            "A10:2025"
+          ],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": null,
+          "lineas_unidad": [
+            14,
+            36
+          ]
+        },
+        {
+          "id": "VRP-04",
+          "nombre": "XSS en etiqueta",
+          "archivo": "python-api/xss/__init__.py",
+          "linea": 26,
+          "detectada": true,
+          "hallazgos": [
+            "VM-012"
+          ],
+          "confianza": 0.811,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [
+            "A10:2025",
+            "API8:2023"
+          ],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": null,
+          "lineas_unidad": [
+            21,
+            31
+          ]
+        },
+        {
+          "id": "VRP-05",
+          "nombre": "XSS en enlace",
+          "archivo": "python-api/xss/__init__.py",
+          "linea": 54,
+          "detectada": true,
+          "hallazgos": [
+            "VM-019"
+          ],
+          "confianza": 0.607,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [
+            "A10:2025",
+            "API8:2023"
+          ],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": null,
+          "lineas_unidad": [
+            49,
+            59
+          ]
+        },
+        {
+          "id": "VRP-06",
+          "nombre": "XSS en atributo de evento",
+          "archivo": "python-api/xss/__init__.py",
+          "linea": 82,
+          "detectada": true,
+          "hallazgos": [
+            "VM-022"
+          ],
+          "confianza": 0.466,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [
+            "A10:2025",
+            "API8:2023"
+          ],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": null,
+          "lineas_unidad": [
+            77,
+            87
+          ]
+        },
+        {
+          "id": "VRP-07",
+          "nombre": "XSS en bloque de código",
+          "archivo": "python-api/xss/__init__.py",
+          "linea": 113,
+          "detectada": true,
+          "hallazgos": [
+            "VM-018"
+          ],
+          "confianza": 0.635,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [
+            "A10:2025",
+            "API8:2023"
+          ],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": null,
+          "lineas_unidad": [
+            108,
+            118
+          ]
+        },
+        {
+          "id": "VRP-08",
+          "nombre": "Inyección de plantillas del cliente (Vue)",
+          "archivo": "python-api/csti/__init__.py",
+          "linea": 31,
+          "detectada": true,
+          "hallazgos": [
+            "VM-021"
+          ],
+          "confianza": 0.486,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [
+            "A05:2025",
+            "A10:2025",
+            "API8:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": null,
+          "lineas_unidad": [
+            26,
+            36
+          ]
+        },
+        {
+          "id": "VRP-09",
+          "nombre": "Inyección de plantillas del cliente (AngularJS)",
+          "archivo": "python-api/csti/__init__.py",
+          "linea": 60,
+          "detectada": true,
+          "hallazgos": [
+            "VM-015"
+          ],
+          "confianza": 0.721,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [
+            "A05:2025",
+            "A10:2025",
+            "API8:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": null,
+          "lineas_unidad": [
+            55,
+            65
+          ]
+        },
+        {
+          "id": "VRP-10",
+          "nombre": "Inyección de comandos",
+          "archivo": "nodejs-api/index.js",
+          "linea": 34,
+          "detectada": true,
+          "hallazgos": [
+            "VM-006"
+          ],
+          "confianza": 0.861,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [
+            "A05:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": null,
+          "lineas_unidad": [
+            24,
+            49
+          ]
+        },
+        {
+          "id": "VRP-11",
+          "nombre": "ReDoS",
+          "archivo": "nodejs-api/index.js",
+          "linea": 58,
+          "detectada": true,
+          "hallazgos": [
+            "VM-011"
+          ],
+          "confianza": 0.814,
+          "categorias_esperadas": [
+            "A06:2025",
+            "API4:2023"
+          ],
+          "categorias_predichas": [
+            "API4:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": false,
+          "api_correcta": true,
+          "lineas_unidad": [
+            55,
+            68
+          ]
+        },
+        {
+          "id": "VRP-12",
+          "nombre": "Path traversal",
+          "archivo": "nodejs-api/index.js",
+          "linea": 75,
+          "detectada": true,
+          "hallazgos": [
+            "VM-005"
+          ],
+          "confianza": 0.892,
+          "categorias_esperadas": [
+            "A01:2025"
+          ],
+          "categorias_predichas": [
+            "A01:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": null,
+          "lineas_unidad": [
+            70,
+            80
+          ]
+        },
+        {
+          "id": "VRP-13",
+          "nombre": "SSRF",
+          "archivo": "nodejs-api/index.js",
+          "linea": 87,
+          "detectada": true,
+          "hallazgos": [
+            "VM-004"
+          ],
+          "confianza": 0.907,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API7:2023"
+          ],
+          "categorias_predichas": [
+            "A01:2025",
+            "API7:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": true,
+          "lineas_unidad": [
+            82,
+            94
+          ]
+        },
+        {
+          "id": "VRP-14",
+          "nombre": "Inyección NoSQL",
+          "archivo": "nodejs-api/index.js",
+          "linea": 102,
+          "detectada": true,
+          "hallazgos": [
+            "VM-003"
+          ],
+          "confianza": 0.947,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [
+            "A05:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": null,
+          "lineas_unidad": [
+            96,
+            108
+          ]
+        },
+        {
+          "id": "VRP-15",
+          "nombre": "XXE",
+          "archivo": "java-api/src/main/java/com/vrplayground/java_api/JavaApiApplication.java",
+          "linea": 39,
+          "detectada": true,
+          "hallazgos": [
+            "VM-007"
+          ],
+          "confianza": 0.858,
+          "categorias_esperadas": [
+            "A02:2025"
+          ],
+          "categorias_predichas": [
+            "A02:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": null,
+          "lineas_unidad": [
+            27,
+            60
+          ]
+        },
+        {
+          "id": "VRP-16",
+          "nombre": "Deserialización con ObjectInputStream",
+          "archivo": "java-api/src/main/java/com/vrplayground/java_api/JavaApiApplication.java",
+          "linea": 72,
+          "detectada": true,
+          "hallazgos": [
+            "VM-001"
+          ],
+          "confianza": 0.994,
+          "categorias_esperadas": [
+            "A08:2025"
+          ],
+          "categorias_predichas": [
+            "A08:2025",
+            "A10:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": null,
+          "lineas_unidad": [
+            62,
+            84
+          ]
+        }
+      ]
+    },
     "petclinic-microservices": {
       "tipo": "referencia",
       "microservicios": 9,
       "archivos": 77,
       "unidades": 229,
-      "hallazgos": 4,
-      "hallazgos_por_100_unidades": 1.75,
+      "hallazgos": 8,
+      "hallazgos_por_100_unidades": 3.49,
       "vulnerabilidades_documentadas": 0,
       "detectadas": 0,
       "sensibilidad": null,
       "categoria_correcta": 0,
       "hallazgos_sobre_vulnerabilidades_documentadas": 0,
-      "hallazgos_adicionales": 4,
-      "duracion_segundos": 0.6,
+      "hallazgos_adicionales": 8,
+      "duracion_segundos": 1.2,
       "detalle": []
     },
     "microservices-demo": {
@@ -1312,535 +1745,513 @@
       "microservicios": 12,
       "archivos": 41,
       "unidades": 150,
-      "hallazgos": 21,
-      "hallazgos_por_100_unidades": 14.0,
+      "hallazgos": 24,
+      "hallazgos_por_100_unidades": 16.0,
       "vulnerabilidades_documentadas": 0,
       "detectadas": 0,
       "sensibilidad": null,
       "categoria_correcta": 0,
       "hallazgos_sobre_vulnerabilidades_documentadas": 0,
-      "hallazgos_adicionales": 21,
-      "duracion_segundos": 1.2,
+      "hallazgos_adicionales": 24,
+      "duracion_segundos": 2.0,
       "detalle": []
+    },
+    "proyecto-demo": {
+      "tipo": "demostracion",
+      "microservicios": 4,
+      "archivos": 19,
+      "unidades": 65,
+      "hallazgos": 17,
+      "hallazgos_por_100_unidades": 26.15,
+      "vulnerabilidades_documentadas": 19,
+      "detectadas": 13,
+      "sensibilidad": 0.684,
+      "categoria_correcta": 13,
+      "hallazgos_sobre_vulnerabilidades_documentadas": 13,
+      "hallazgos_adicionales": 4,
+      "duracion_segundos": 0.4,
+      "detalle": [
+        {
+          "id": "DEMO-01",
+          "nombre": "BOLA: pedidos de cualquier usuario por id",
+          "archivo": "user-service/src/users/users.controller.ts",
+          "linea": 27,
+          "detectada": true,
+          "hallazgos": [
+            "VM-010"
+          ],
+          "confianza": 0.589,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API1:2023"
+          ],
+          "categorias_predichas": [
+            "A01:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": false,
+          "lineas_unidad": [
+            24,
+            28
+          ]
+        },
+        {
+          "id": "DEMO-02",
+          "nombre": "Actualización de cualquier usuario por id con cuerpo arbitrario",
+          "archivo": "user-service/src/users/users.controller.ts",
+          "linea": 33,
+          "detectada": true,
+          "hallazgos": [
+            "VM-008"
+          ],
+          "confianza": 0.787,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API1:2023",
+            "API3:2023"
+          ],
+          "categorias_predichas": [
+            "A01:2025",
+            "API1:2023",
+            "API3:2023",
+            "API5:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": true,
+          "lineas_unidad": [
+            30,
+            34
+          ]
+        },
+        {
+          "id": "DEMO-03",
+          "nombre": "Asignación masiva con Object.assign",
+          "archivo": "user-service/src/users/users.service.ts",
+          "linea": 35,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A08:2025",
+            "API3:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            33,
+            37
+          ]
+        },
+        {
+          "id": "DEMO-04",
+          "nombre": "Login sin limitación de intentos",
+          "archivo": "user-service/src/auth/auth.controller.ts",
+          "linea": 17,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A07:2025",
+            "API2:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            14,
+            23
+          ]
+        },
+        {
+          "id": "DEMO-05",
+          "nombre": "JWT sin expiración y secreto fijo en el código",
+          "archivo": "user-service/src/auth/jwt.strategy.ts",
+          "linea": 12,
+          "detectada": true,
+          "hallazgos": [
+            "VM-009"
+          ],
+          "confianza": 0.6,
+          "categorias_esperadas": [
+            "A07:2025",
+            "API2:2023"
+          ],
+          "categorias_predichas": [
+            "A04:2025",
+            "A07:2025",
+            "API2:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": true,
+          "lineas_unidad": [
+            9,
+            15
+          ]
+        },
+        {
+          "id": "DEMO-06",
+          "nombre": "CORS que acepta cualquier origen con credenciales",
+          "archivo": "api-gateway/src/server.js",
+          "linea": 10,
+          "detectada": true,
+          "hallazgos": [
+            "VM-013"
+          ],
+          "confianza": 0.891,
+          "categorias_esperadas": [
+            "A02:2025",
+            "API8:2023"
+          ],
+          "categorias_predichas": [
+            "A02:2025",
+            "API8:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": true,
+          "lineas_unidad": [
+            1,
+            16
+          ]
+        },
+        {
+          "id": "DEMO-07",
+          "nombre": "Inyección SQL en la búsqueda de productos",
+          "archivo": "product-service/src/main/java/com/tienda/productos/ProductRepository.java",
+          "linea": 22,
+          "detectada": true,
+          "hallazgos": [
+            "VM-002"
+          ],
+          "confianza": 0.986,
+          "categorias_esperadas": [
+            "A05:2025"
+          ],
+          "categorias_predichas": [
+            "A05:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": null,
+          "lineas_unidad": [
+            21,
+            24
+          ]
+        },
+        {
+          "id": "DEMO-08",
+          "nombre": "Eliminación de productos sin control de rol",
+          "archivo": "product-service/src/main/java/com/tienda/productos/ProductController.java",
+          "linea": 43,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API5:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            41,
+            46
+          ]
+        },
+        {
+          "id": "DEMO-09",
+          "nombre": "Contraseña de base de datos en application.yml",
+          "archivo": "product-service/src/main/resources/application.yml",
+          "linea": 10,
+          "detectada": true,
+          "hallazgos": [
+            "VM-007"
+          ],
+          "confianza": 0.791,
+          "categorias_esperadas": [
+            "A07:2025",
+            "API2:2023"
+          ],
+          "categorias_predichas": [
+            "A02:2025",
+            "A07:2025",
+            "API2:2023",
+            "API8:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": true,
+          "lineas_unidad": [
+            4,
+            13
+          ]
+        },
+        {
+          "id": "DEMO-10",
+          "nombre": "Actuator expuesto y detalles de salud públicos",
+          "archivo": "product-service/src/main/resources/application.yml",
+          "linea": 19,
+          "detectada": true,
+          "hallazgos": [
+            "VM-011"
+          ],
+          "confianza": 0.985,
+          "categorias_esperadas": [
+            "A02:2025",
+            "API8:2023"
+          ],
+          "categorias_predichas": [
+            "A02:2025",
+            "API8:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": true,
+          "lineas_unidad": [
+            15,
+            22
+          ]
+        },
+        {
+          "id": "DEMO-11",
+          "nombre": "Imagen base sin versión y contenedor como root",
+          "archivo": "product-service/Dockerfile",
+          "linea": 7,
+          "detectada": true,
+          "hallazgos": [
+            "VM-014"
+          ],
+          "confianza": 0.493,
+          "categorias_esperadas": [
+            "A03:2025"
+          ],
+          "categorias_predichas": [
+            "A02:2025",
+            "A03:2025",
+            "API8:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": null,
+          "lineas_unidad": [
+            7,
+            11
+          ]
+        },
+        {
+          "id": "DEMO-12",
+          "nombre": "Dependencia sin versión fijada (LATEST)",
+          "archivo": "product-service/pom.xml",
+          "linea": 28,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A03:2025"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": null,
+          "lineas_unidad": [
+            4,
+            29
+          ]
+        },
+        {
+          "id": "DEMO-13",
+          "nombre": "Modo debug activo y CORS permisivo",
+          "archivo": "order-service/app/main.py",
+          "linea": 10,
+          "detectada": true,
+          "hallazgos": [
+            "VM-012"
+          ],
+          "confianza": 0.982,
+          "categorias_esperadas": [
+            "A02:2025",
+            "API8:2023"
+          ],
+          "categorias_predichas": [
+            "A02:2025",
+            "API8:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": true,
+          "lineas_unidad": [
+            1,
+            21
+          ]
+        },
+        {
+          "id": "DEMO-14",
+          "nombre": "Detalle de la excepción devuelto al cliente",
+          "archivo": "order-service/app/main.py",
+          "linea": 27,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A10:2025",
+            "API8:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            24,
+            27
+          ]
+        },
+        {
+          "id": "DEMO-15",
+          "nombre": "BOLA: pedido de otro usuario por id",
+          "archivo": "order-service/app/routers/orders.py",
+          "linea": 23,
+          "detectada": true,
+          "hallazgos": [
+            "VM-005"
+          ],
+          "confianza": 0.849,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API1:2023"
+          ],
+          "categorias_predichas": [
+            "A01:2025",
+            "API1:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": true,
+          "lineas_unidad": [
+            21,
+            26
+          ]
+        },
+        {
+          "id": "DEMO-16",
+          "nombre": "SSRF al importar un recibo desde una URL",
+          "archivo": "order-service/app/routers/receipts.py",
+          "linea": 19,
+          "detectada": true,
+          "hallazgos": [
+            "VM-004"
+          ],
+          "confianza": 0.876,
+          "categorias_esperadas": [
+            "A01:2025",
+            "API7:2023"
+          ],
+          "categorias_predichas": [
+            "A01:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": false,
+          "lineas_unidad": [
+            17,
+            20
+          ]
+        },
+        {
+          "id": "DEMO-17",
+          "nombre": "Deserialización insegura con pickle",
+          "archivo": "order-service/app/routers/receipts.py",
+          "linea": 26,
+          "detectada": true,
+          "hallazgos": [
+            "VM-001"
+          ],
+          "confianza": 0.987,
+          "categorias_esperadas": [
+            "A08:2025"
+          ],
+          "categorias_predichas": [
+            "A08:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": null,
+          "lineas_unidad": [
+            23,
+            27
+          ]
+        },
+        {
+          "id": "DEMO-18",
+          "nombre": "Dependencias sin versión fijada",
+          "archivo": "order-service/requirements.txt",
+          "linea": 1,
+          "detectada": true,
+          "hallazgos": [
+            "VM-016"
+          ],
+          "confianza": 0.427,
+          "categorias_esperadas": [
+            "A03:2025"
+          ],
+          "categorias_predichas": [
+            "A03:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": null,
+          "lineas_unidad": [
+            1,
+            6
+          ]
+        },
+        {
+          "id": "DEMO-19",
+          "nombre": "Secretos en el docker-compose",
+          "archivo": "docker-compose.yml",
+          "linea": 31,
+          "detectada": false,
+          "hallazgos": [],
+          "confianza": 0.0,
+          "categorias_esperadas": [
+            "A07:2025",
+            "API2:2023"
+          ],
+          "categorias_predichas": [],
+          "categoria_correcta": false,
+          "top10_correcta": false,
+          "api_correcta": false,
+          "lineas_unidad": [
+            28,
+            33
+          ]
+        }
+      ]
     }
   },
-  "juice_shop": {
-    "n": 98,
-    "vulnerables": 71,
-    "precision": 1.0,
-    "recall": 0.07042253521126761,
-    "f1": 0.13157894736842105,
-    "accuracy": 0.32653061224489793,
-    "roc_auc": 0.6129368805425144,
-    "TP": 5,
-    "FP": 0,
-    "TN": 27,
-    "FN": 66,
-    "detalle": [
-      {
-        "fragmento": "accessLogDisclosureChallenge_1_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.071
-      },
-      {
-        "fragmento": "accessLogDisclosureChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.067
-      },
-      {
-        "fragmento": "accessLogDisclosureChallenge_3",
-        "vulnerable": 1,
-        "probabilidad": 0.067
-      },
-      {
-        "fragmento": "accessLogDisclosureChallenge_4",
-        "vulnerable": 1,
-        "probabilidad": 0.068
-      },
-      {
-        "fragmento": "adminSectionChallenge_1_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.072
-      },
-      {
-        "fragmento": "adminSectionChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.094
-      },
-      {
-        "fragmento": "adminSectionChallenge_3",
-        "vulnerable": 1,
-        "probabilidad": 0.107
-      },
-      {
-        "fragmento": "adminSectionChallenge_4",
-        "vulnerable": 1,
-        "probabilidad": 0.094
-      },
-      {
-        "fragmento": "changeProductChallenge_1",
-        "vulnerable": 1,
-        "probabilidad": 0.187
-      },
-      {
-        "fragmento": "changeProductChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.19
-      },
-      {
-        "fragmento": "changeProductChallenge_3_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.186
-      },
-      {
-        "fragmento": "changeProductChallenge_4",
-        "vulnerable": 1,
-        "probabilidad": 0.187
-      },
-      {
-        "fragmento": "chatbotGreedyInjectionChallenge_1",
-        "vulnerable": 1,
-        "probabilidad": 0.037
-      },
-      {
-        "fragmento": "chatbotGreedyInjectionChallenge_2_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.04
-      },
-      {
-        "fragmento": "chatbotGreedyInjectionChallenge_3",
-        "vulnerable": 1,
-        "probabilidad": 0.033
-      },
-      {
-        "fragmento": "chatbotGreedyInjectionChallenge_4",
-        "vulnerable": 1,
-        "probabilidad": 0.039
-      },
-      {
-        "fragmento": "chatbotPromptInjectionChallenge_1",
-        "vulnerable": 1,
-        "probabilidad": 0.012
-      },
-      {
-        "fragmento": "chatbotPromptInjectionChallenge_2_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.0
-      },
-      {
-        "fragmento": "chatbotPromptInjectionChallenge_3",
-        "vulnerable": 1,
-        "probabilidad": 0.003
-      },
-      {
-        "fragmento": "chatbotPromptInjectionChallenge_4",
-        "vulnerable": 1,
-        "probabilidad": 0.006
-      },
-      {
-        "fragmento": "dbSchemaChallenge_1",
-        "vulnerable": 1,
-        "probabilidad": 0.825
-      },
-      {
-        "fragmento": "dbSchemaChallenge_2_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.182
-      },
-      {
-        "fragmento": "dbSchemaChallenge_3",
-        "vulnerable": 1,
-        "probabilidad": 0.457
-      },
-      {
-        "fragmento": "directoryListingChallenge_1_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.048
-      },
-      {
-        "fragmento": "directoryListingChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.052
-      },
-      {
-        "fragmento": "directoryListingChallenge_3",
-        "vulnerable": 1,
-        "probabilidad": 0.065
-      },
-      {
-        "fragmento": "directoryListingChallenge_4",
-        "vulnerable": 1,
-        "probabilidad": 0.07
-      },
-      {
-        "fragmento": "exposedMetricsChallenge_1",
-        "vulnerable": 1,
-        "probabilidad": 0.033
-      },
-      {
-        "fragmento": "exposedMetricsChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.033
-      },
-      {
-        "fragmento": "exposedMetricsChallenge_3_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.02
-      },
-      {
-        "fragmento": "forgedReviewChallenge_1",
-        "vulnerable": 1,
-        "probabilidad": 0.206
-      },
-      {
-        "fragmento": "forgedReviewChallenge_2_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.185
-      },
-      {
-        "fragmento": "forgedReviewChallenge_3",
-        "vulnerable": 1,
-        "probabilidad": 0.225
-      },
-      {
-        "fragmento": "localXssChallenge_1",
-        "vulnerable": 1,
-        "probabilidad": 0.117
-      },
-      {
-        "fragmento": "localXssChallenge_2_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.03
-      },
-      {
-        "fragmento": "localXssChallenge_3",
-        "vulnerable": 1,
-        "probabilidad": 0.129
-      },
-      {
-        "fragmento": "localXssChallenge_4",
-        "vulnerable": 1,
-        "probabilidad": 0.116
-      },
-      {
-        "fragmento": "loginAdminChallenge_1",
-        "vulnerable": 1,
-        "probabilidad": 0.53
-      },
-      {
-        "fragmento": "loginAdminChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.343
-      },
-      {
-        "fragmento": "loginAdminChallenge_3",
-        "vulnerable": 1,
-        "probabilidad": 0.063
-      },
-      {
-        "fragmento": "loginAdminChallenge_4_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.065
-      },
-      {
-        "fragmento": "loginBenderChallenge_1",
-        "vulnerable": 1,
-        "probabilidad": 0.53
-      },
-      {
-        "fragmento": "loginBenderChallenge_2_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.066
-      },
-      {
-        "fragmento": "loginBenderChallenge_3",
-        "vulnerable": 1,
-        "probabilidad": 0.328
-      },
-      {
-        "fragmento": "loginBenderChallenge_4",
-        "vulnerable": 1,
-        "probabilidad": 0.378
-      },
-      {
-        "fragmento": "loginJimChallenge_1_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.065
-      },
-      {
-        "fragmento": "loginJimChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.378
-      },
-      {
-        "fragmento": "loginJimChallenge_3",
-        "vulnerable": 1,
-        "probabilidad": 0.047
-      },
-      {
-        "fragmento": "loginJimChallenge_4",
-        "vulnerable": 1,
-        "probabilidad": 0.53
-      },
-      {
-        "fragmento": "noSqlReviewsChallenge_1",
-        "vulnerable": 1,
-        "probabilidad": 0.349
-      },
-      {
-        "fragmento": "noSqlReviewsChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.225
-      },
-      {
-        "fragmento": "noSqlReviewsChallenge_3_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.12
-      },
-      {
-        "fragmento": "passkeyCredentialOverwriteChallenge_1",
-        "vulnerable": 1,
-        "probabilidad": 0.0
-      },
-      {
-        "fragmento": "passkeyCredentialOverwriteChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.002
-      },
-      {
-        "fragmento": "passkeyCredentialOverwriteChallenge_3_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.001
-      },
-      {
-        "fragmento": "passkeySignatureChallenge_1",
-        "vulnerable": 1,
-        "probabilidad": 0.007
-      },
-      {
-        "fragmento": "passkeySignatureChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.007
-      },
-      {
-        "fragmento": "passkeySignatureChallenge_3_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.007
-      },
-      {
-        "fragmento": "redirectChallenge_1",
-        "vulnerable": 1,
-        "probabilidad": 0.124
-      },
-      {
-        "fragmento": "redirectChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.081
-      },
-      {
-        "fragmento": "redirectChallenge_3",
-        "vulnerable": 1,
-        "probabilidad": 0.073
-      },
-      {
-        "fragmento": "redirectChallenge_4_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.054
-      },
-      {
-        "fragmento": "redirectCryptoCurrencyChallenge_1",
-        "vulnerable": 1,
-        "probabilidad": 0.08
-      },
-      {
-        "fragmento": "redirectCryptoCurrencyChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.074
-      },
-      {
-        "fragmento": "redirectCryptoCurrencyChallenge_3_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.067
-      },
-      {
-        "fragmento": "redirectCryptoCurrencyChallenge_4",
-        "vulnerable": 1,
-        "probabilidad": 0.073
-      },
-      {
-        "fragmento": "registerAdminChallenge_1",
-        "vulnerable": 1,
-        "probabilidad": 0.006
-      },
-      {
-        "fragmento": "registerAdminChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.018
-      },
-      {
-        "fragmento": "registerAdminChallenge_3_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.009
-      },
-      {
-        "fragmento": "registerAdminChallenge_4",
-        "vulnerable": 1,
-        "probabilidad": 0.009
-      },
-      {
-        "fragmento": "resetPasswordMortyChallenge_1",
-        "vulnerable": 1,
-        "probabilidad": 0.01
-      },
-      {
-        "fragmento": "resetPasswordMortyChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.013
-      },
-      {
-        "fragmento": "resetPasswordMortyChallenge_3",
-        "vulnerable": 1,
-        "probabilidad": 0.012
-      },
-      {
-        "fragmento": "resetPasswordMortyChallenge_4_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.028
-      },
-      {
-        "fragmento": "restfulXssChallenge_1_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.006
-      },
-      {
-        "fragmento": "restfulXssChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.013
-      },
-      {
-        "fragmento": "restfulXssChallenge_3",
-        "vulnerable": 1,
-        "probabilidad": 0.033
-      },
-      {
-        "fragmento": "restfulXssChallenge_4",
-        "vulnerable": 1,
-        "probabilidad": 0.04
-      },
-      {
-        "fragmento": "scoreBoardChallenge_1_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.083
-      },
-      {
-        "fragmento": "scoreBoardChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.091
-      },
-      {
-        "fragmento": "scoreBoardChallenge_3",
-        "vulnerable": 1,
-        "probabilidad": 0.091
-      },
-      {
-        "fragmento": "tokenSaleChallenge_1",
-        "vulnerable": 1,
-        "probabilidad": 0.053
-      },
-      {
-        "fragmento": "tokenSaleChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.049
-      },
-      {
-        "fragmento": "tokenSaleChallenge_3_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.079
-      },
-      {
-        "fragmento": "unionSqlInjectionChallenge_1",
-        "vulnerable": 1,
-        "probabilidad": 0.564
-      },
-      {
-        "fragmento": "unionSqlInjectionChallenge_2_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.182
-      },
-      {
-        "fragmento": "unionSqlInjectionChallenge_3",
-        "vulnerable": 1,
-        "probabilidad": 0.336
-      },
-      {
-        "fragmento": "weakPasswordChallenge_1_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.024
-      },
-      {
-        "fragmento": "weakPasswordChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.019
-      },
-      {
-        "fragmento": "weakPasswordChallenge_3",
-        "vulnerable": 1,
-        "probabilidad": 0.025
-      },
-      {
-        "fragmento": "weakPasswordChallenge_4",
-        "vulnerable": 1,
-        "probabilidad": 0.026
-      },
-      {
-        "fragmento": "web3SandboxChallenge_1_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.08
-      },
-      {
-        "fragmento": "web3SandboxChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.09
-      },
-      {
-        "fragmento": "web3SandboxChallenge_3",
-        "vulnerable": 1,
-        "probabilidad": 0.088
-      },
-      {
-        "fragmento": "xssBonusChallenge_1_correct",
-        "vulnerable": 0,
-        "probabilidad": 0.03
-      },
-      {
-        "fragmento": "xssBonusChallenge_2",
-        "vulnerable": 1,
-        "probabilidad": 0.117
-      },
-      {
-        "fragmento": "xssBonusChallenge_3",
-        "vulnerable": 1,
-        "probabilidad": 0.112
-      },
-      {
-        "fragmento": "xssBonusChallenge_4",
-        "vulnerable": 1,
-        "probabilidad": 0.119
-      }
-    ]
+  "resumen_proyecto_demo": {
+    "vulnerabilidades_sembradas": 19,
+    "detectadas": 13,
+    "categoria_correcta": 13
   },
   "fragmentos_web": {
     "n": 30,
     "vulnerables": 19,
-    "precision": 0.6956521739130435,
-    "recall": 0.8421052631578947,
-    "f1": 0.7619047619047619,
-    "accuracy": 0.6666666666666666,
-    "roc_auc": 0.7511961722488039,
-    "TP": 16,
-    "FP": 7,
-    "TN": 4,
-    "FN": 3,
+    "precision": 0.7727272727272727,
+    "recall": 0.8947368421052632,
+    "f1": 0.8292682926829268,
+    "accuracy": 0.7666666666666667,
+    "roc_auc": 0.8660287081339713,
+    "TP": 17,
+    "FP": 5,
+    "TN": 6,
+    "FN": 2,
     "detalle": [
       {
         "id": "W02",
@@ -1848,7 +2259,7 @@
         "lenguaje": "java",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.955,
+        "probabilidad": 0.978,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -1862,7 +2273,7 @@
         "lenguaje": "javascript",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.964,
+        "probabilidad": 0.906,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -1876,7 +2287,7 @@
         "lenguaje": "python",
         "vulnerable": 1,
         "owasp_esperado": "A08:2025",
-        "probabilidad": 0.966,
+        "probabilidad": 0.986,
         "prediccion": 1,
         "categorias": [
           "A08:2025"
@@ -1890,7 +2301,7 @@
         "lenguaje": "javascript",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.989,
+        "probabilidad": 0.99,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -1904,7 +2315,7 @@
         "lenguaje": "java",
         "vulnerable": 0,
         "owasp_esperado": "",
-        "probabilidad": 0.294,
+        "probabilidad": 0.016,
         "prediccion": 0,
         "categorias": [
           "A05:2025"
@@ -1918,7 +2329,7 @@
         "lenguaje": "python",
         "vulnerable": 0,
         "owasp_esperado": "",
-        "probabilidad": 0.397,
+        "probabilidad": 0.134,
         "prediccion": 0,
         "categorias": [
           "A05:2025"
@@ -1932,9 +2343,11 @@
         "lenguaje": "python",
         "vulnerable": 0,
         "owasp_esperado": "",
-        "probabilidad": 0.505,
-        "prediccion": 1,
-        "categorias": [],
+        "probabilidad": 0.135,
+        "prediccion": 0,
+        "categorias": [
+          "A05:2025"
+        ],
         "categoria_correcta": null,
         "fuente": "Documentación oficial de Flask - Quickstart, HTML Escaping"
       },
@@ -1944,8 +2357,8 @@
         "lenguaje": "java",
         "vulnerable": 0,
         "owasp_esperado": "",
-        "probabilidad": 0.672,
-        "prediccion": 1,
+        "probabilidad": 0.095,
+        "prediccion": 0,
         "categorias": [
           "A01:2025"
         ],
@@ -1958,7 +2371,7 @@
         "lenguaje": "javascript",
         "vulnerable": 0,
         "owasp_esperado": "",
-        "probabilidad": 0.931,
+        "probabilidad": 0.805,
         "prediccion": 1,
         "categorias": [
           "A06:2025",
@@ -1973,7 +2386,7 @@
         "lenguaje": "java",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.599,
+        "probabilidad": 0.515,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -1987,7 +2400,7 @@
         "lenguaje": "javascript",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.912,
+        "probabilidad": 0.904,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2001,7 +2414,7 @@
         "lenguaje": "javascript",
         "vulnerable": 0,
         "owasp_esperado": "",
-        "probabilidad": 0.561,
+        "probabilidad": 0.36,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2015,7 +2428,7 @@
         "lenguaje": "python",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.663,
+        "probabilidad": 0.451,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2029,7 +2442,7 @@
         "lenguaje": "javascript",
         "vulnerable": 0,
         "owasp_esperado": "",
-        "probabilidad": 0.919,
+        "probabilidad": 0.786,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2043,7 +2456,7 @@
         "lenguaje": "java",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.892,
+        "probabilidad": 0.963,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2057,7 +2470,7 @@
         "lenguaje": "java",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.939,
+        "probabilidad": 0.976,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2071,7 +2484,7 @@
         "lenguaje": "java",
         "vulnerable": 1,
         "owasp_esperado": "A01:2025",
-        "probabilidad": 0.693,
+        "probabilidad": 0.567,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2085,12 +2498,12 @@
         "lenguaje": "javascript",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.065,
-        "prediccion": 0,
+        "probabilidad": 0.439,
+        "prediccion": 1,
         "categorias": [
           "A05:2025"
         ],
-        "categoria_correcta": null,
+        "categoria_correcta": true,
         "fuente": "OWASP NodeGoat - app/data/allocations-dao.js"
       },
       {
@@ -2099,7 +2512,7 @@
         "lenguaje": "javascript",
         "vulnerable": 1,
         "owasp_esperado": "A01:2025",
-        "probabilidad": 0.927,
+        "probabilidad": 0.847,
         "prediccion": 1,
         "categorias": [
           "A01:2025"
@@ -2113,12 +2526,9 @@
         "lenguaje": "javascript",
         "vulnerable": 1,
         "owasp_esperado": "A09:2025",
-        "probabilidad": 0.254,
+        "probabilidad": 0.156,
         "prediccion": 0,
-        "categorias": [
-          "A06:2025",
-          "A09:2025"
-        ],
+        "categorias": [],
         "categoria_correcta": null,
         "fuente": "OWASP NodeGoat - app/routes/session.js"
       },
@@ -2128,11 +2538,10 @@
         "lenguaje": "javascript",
         "vulnerable": 0,
         "owasp_esperado": "",
-        "probabilidad": 0.543,
+        "probabilidad": 0.467,
         "prediccion": 1,
         "categorias": [
-          "A06:2025",
-          "A09:2025"
+          "A05:2025"
         ],
         "categoria_correcta": null,
         "fuente": "OWASP NodeGoat - corrección documentada en session.js"
@@ -2143,12 +2552,10 @@
         "lenguaje": "python",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.966,
+        "probabilidad": 0.956,
         "prediccion": 1,
         "categorias": [
-          "A05:2025",
-          "A07:2025",
-          "API2:2023"
+          "A05:2025"
         ],
         "categoria_correcta": true,
         "fuente": "OWASP PyGoat - sql_injection_lab/app.py"
@@ -2159,7 +2566,7 @@
         "lenguaje": "python",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.967,
+        "probabilidad": 0.964,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2173,7 +2580,7 @@
         "lenguaje": "python",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.98,
+        "probabilidad": 0.993,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2187,7 +2594,7 @@
         "lenguaje": "python",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.949,
+        "probabilidad": 0.957,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2201,7 +2608,7 @@
         "lenguaje": "python",
         "vulnerable": 0,
         "owasp_esperado": "",
-        "probabilidad": 0.114,
+        "probabilidad": 0.012,
         "prediccion": 0,
         "categorias": [
           "A05:2025"
@@ -2215,12 +2622,10 @@
         "lenguaje": "python",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.799,
+        "probabilidad": 0.839,
         "prediccion": 1,
         "categorias": [
-          "A05:2025",
-          "A08:2025",
-          "API3:2023"
+          "A05:2025"
         ],
         "categoria_correcta": true,
         "fuente": "Documentación oficial Django - Performing raw SQL queries"
@@ -2231,10 +2636,10 @@
         "lenguaje": "python",
         "vulnerable": 0,
         "owasp_esperado": "",
-        "probabilidad": 0.431,
+        "probabilidad": 0.289,
         "prediccion": 0,
         "categorias": [
-          "A08:2025"
+          "A05:2025"
         ],
         "categoria_correcta": null,
         "fuente": "Documentación oficial Django - Performing raw SQL queries"
@@ -2245,7 +2650,7 @@
         "lenguaje": "python",
         "vulnerable": 0,
         "owasp_esperado": "",
-        "probabilidad": 0.927,
+        "probabilidad": 0.68,
         "prediccion": 1,
         "categorias": [
           "A06:2025"
@@ -2259,7 +2664,7 @@
         "lenguaje": "python",
         "vulnerable": 1,
         "owasp_esperado": "A07:2025",
-        "probabilidad": 0.252,
+        "probabilidad": 0.101,
         "prediccion": 0,
         "categorias": [
           "A04:2025",
