@@ -502,5 +502,21 @@
     "carpetas": [
       "(todo)"
     ]
+  },
+  "robot-shop": {
+    "repositorio": "https://github.com/instana/robot-shop",
+    "commit": "55292e2199f2fb00a165b1f7d3045fe7f8922038",
+    "uso": "desarrollo",
+    "carpetas": [
+      "(todo)"
+    ]
+  },
+  "ftgo-application": {
+    "repositorio": "https://github.com/microservices-patterns/ftgo-application",
+    "commit": "558dfc53b11d30a5f1d995c0c6d58d5106c28189",
+    "uso": "desarrollo",
+    "carpetas": [
+      "(todo)"
+    ]
   }
 }

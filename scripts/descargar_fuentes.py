@@ -73,6 +73,8 @@ ENTRENAMIENTO = {
 # umbral de decisión. No participa en el entrenamiento ni en la evaluación final.
 DESARROLLO = {
     "NodeGoat": ("OWASP/NodeGoat", ["app", "config", "server.js", "package.json"]),
+    "robot-shop": ("instana/robot-shop", None),
+    "ftgo-application": ("microservices-patterns/ftgo-application", None),
     "pygoat": ("adeyosemanputra/pygoat", ["dockerized_labs", "pygoat/settings.py", "requirements.txt", "Dockerfile", "docker-compose.yml"]),
 }
 

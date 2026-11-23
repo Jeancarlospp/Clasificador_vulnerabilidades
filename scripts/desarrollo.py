@@ -54,16 +54,29 @@ def cargar(ruta=BASE / "evaluacion" / "desarrollo.json"):
     return positivas, negativas
 
 
-def umbral_operativo(p_neg, maximo=FALSAS_ALARMAS_MAX):
-    """Menor umbral con tasa de falsas alarmas <= maximo en los proyectos limpios de desarrollo."""
-    return float(np.quantile(p_neg, 1 - maximo)) if len(p_neg) else 0.5
+def _marcadas(p, con_categoria, umbral, umbral_sin_categoria):
+    p = np.asarray(p)
+    if con_categoria is None:
+        return p >= umbral
+    return (p >= umbral) & (np.asarray(con_categoria) | (p >= max(umbral, umbral_sin_categoria)))
 
 
-def metricas(p_pos, p_neg, umbral=None):
+def umbral_operativo(p_neg, maximo=FALSAS_ALARMAS_MAX, cat_neg=None, umbral_sin_categoria=1.0):
+    """Menor umbral con tasa de falsas alarmas <= maximo en los proyectos limpios de desarrollo
+    (aplicando la política de dos niveles si se indican las categorías)."""
+    if not len(p_neg):
+        return 0.5
+    for u in np.round(np.arange(0.05, 0.951, 0.01), 2):
+        if _marcadas(p_neg, cat_neg, u, umbral_sin_categoria).mean() <= maximo:
+            return float(u)
+    return 0.95
+
+
+def metricas(p_pos, p_neg, umbral=None, cat_pos=None, cat_neg=None, umbral_sin_categoria=1.0):
     y = np.r_[np.ones(len(p_pos)), np.zeros(len(p_neg))]
     p = np.r_[p_pos, p_neg]
-    u = umbral_operativo(p_neg) if umbral is None else umbral
+    u = umbral_operativo(p_neg, cat_neg=cat_neg, umbral_sin_categoria=umbral_sin_categoria) if umbral is None else umbral
     return {"positivas": int(len(p_pos)), "negativas": int(len(p_neg)), "ap": float(average_precision_score(y, p)),
             "auc": float(roc_auc_score(y, p)), "umbral": round(u, 4),
-            "sensibilidad": float((np.asarray(p_pos) >= u).mean()),
-            "falsas_alarmas": float((np.asarray(p_neg) >= u).mean())}
+            "sensibilidad": float(_marcadas(p_pos, cat_pos, u, umbral_sin_categoria).mean()),
+            "falsas_alarmas": float(_marcadas(p_neg, cat_neg, u, umbral_sin_categoria).mean())}

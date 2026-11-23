@@ -465,6 +465,16 @@
    "ruta": "fuentes/benigno/nestjs-realworld",
    "tipo": "referencia",
    "vulnerabilidades": []
+  },
+  "robot-shop": {
+   "ruta": "evaluacion/desarrollo/robot-shop",
+   "tipo": "referencia",
+   "vulnerabilidades": []
+  },
+  "ftgo-application": {
+   "ruta": "evaluacion/desarrollo/ftgo-application",
+   "tipo": "referencia",
+   "vulnerabilidades": []
   }
  }
 }
