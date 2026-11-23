@@ -1,0 +1,1359 @@
+{
+  "fecha": "2026-11-23T11:32:14",
+  "semgrep": {
+    "version": "1.186.0",
+    "reglas": "semgrep-rules (python, java, javascript, typescript, dockerfile, yaml, generic, json)",
+    "proyectos": [
+      {
+        "proyecto": "VAmPI",
+        "tipo": "vulnerable",
+        "semgrep_hallazgos": 17,
+        "semgrep_segundos": 12.0,
+        "vulnminer_hallazgos": 22,
+        "vulnminer_segundos": 5.3,
+        "documentadas": 9.0,
+        "semgrep_detectadas": 1.0,
+        "vulnminer_detectadas": 2.0,
+        "unidades": NaN,
+        "semgrep_unidades_marcadas": NaN,
+        "vulnminer_unidades_marcadas": NaN
+      },
+      {
+        "proyecto": "crAPI",
+        "tipo": "vulnerable",
+        "semgrep_hallazgos": 257,
+        "semgrep_segundos": 13.7,
+        "vulnminer_hallazgos": 121,
+        "vulnminer_segundos": 29.4,
+        "documentadas": 14.0,
+        "semgrep_detectadas": 2.0,
+        "vulnminer_detectadas": 6.0,
+        "unidades": NaN,
+        "semgrep_unidades_marcadas": NaN,
+        "vulnminer_unidades_marcadas": NaN
+      },
+      {
+        "proyecto": "dvws-node",
+        "tipo": "vulnerable",
+        "semgrep_hallazgos": 104,
+        "semgrep_segundos": 13.3,
+        "vulnminer_hallazgos": 84,
+        "vulnminer_segundos": 12.3,
+        "documentadas": 21.0,
+        "semgrep_detectadas": 11.0,
+        "vulnminer_detectadas": 16.0,
+        "unidades": NaN,
+        "semgrep_unidades_marcadas": NaN,
+        "vulnminer_unidades_marcadas": NaN
+      },
+      {
+        "proyecto": "restaurant-api",
+        "tipo": "vulnerable",
+        "semgrep_hallazgos": 26,
+        "semgrep_segundos": 13.3,
+        "vulnminer_hallazgos": 13,
+        "vulnminer_segundos": 1.0,
+        "documentadas": 6.0,
+        "semgrep_detectadas": 2.0,
+        "vulnminer_detectadas": 0.0,
+        "unidades": NaN,
+        "semgrep_unidades_marcadas": NaN,
+        "vulnminer_unidades_marcadas": NaN
+      },
+      {
+        "proyecto": "VRPlayground",
+        "tipo": "vulnerable",
+        "semgrep_hallazgos": 58,
+        "semgrep_segundos": 14.2,
+        "vulnminer_hallazgos": 61,
+        "vulnminer_segundos": 7.0,
+        "documentadas": 16.0,
+        "semgrep_detectadas": 11.0,
+        "vulnminer_detectadas": 16.0,
+        "unidades": NaN,
+        "semgrep_unidades_marcadas": NaN,
+        "vulnminer_unidades_marcadas": NaN
+      },
+      {
+        "proyecto": "petclinic-microservices",
+        "tipo": "referencia",
+        "semgrep_hallazgos": 28,
+        "semgrep_segundos": 15.0,
+        "vulnminer_hallazgos": 8,
+        "vulnminer_segundos": 1.2,
+        "documentadas": NaN,
+        "semgrep_detectadas": NaN,
+        "vulnminer_detectadas": NaN,
+        "unidades": 229.0,
+        "semgrep_unidades_marcadas": 4.0,
+        "vulnminer_unidades_marcadas": 8.0
+      },
+      {
+        "proyecto": "microservices-demo",
+        "tipo": "referencia",
+        "semgrep_hallazgos": 80,
+        "semgrep_segundos": 15.1,
+        "vulnminer_hallazgos": 24,
+        "vulnminer_segundos": 2.0,
+        "documentadas": NaN,
+        "semgrep_detectadas": NaN,
+        "vulnminer_detectadas": NaN,
+        "unidades": 150.0,
+        "semgrep_unidades_marcadas": 39.0,
+        "vulnminer_unidades_marcadas": 24.0
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "tipo": "demostracion",
+        "semgrep_hallazgos": 18,
+        "semgrep_segundos": 14.8,
+        "vulnminer_hallazgos": 17,
+        "vulnminer_segundos": 0.4,
+        "documentadas": 19.0,
+        "semgrep_detectadas": 8.0,
+        "vulnminer_detectadas": 13.0,
+        "unidades": NaN,
+        "semgrep_unidades_marcadas": NaN,
+        "vulnminer_unidades_marcadas": NaN
+      }
+    ],
+    "detalle": [
+      {
+        "proyecto": "VAmPI",
+        "id": "VAMPI-01",
+        "nombre": "Inyección SQL en la búsqueda de usuario",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "VAmPI",
+        "id": "VAMPI-02",
+        "nombre": "Cambio de contraseña de otro usuario",
+        "categorias": [
+          "A01:2025",
+          "API1:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "VAmPI",
+        "id": "VAMPI-03",
+        "nombre": "BOLA en la consulta de libros",
+        "categorias": [
+          "A01:2025",
+          "API1:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "VAmPI",
+        "id": "VAMPI-04",
+        "nombre": "Asignación masiva del atributo admin en el registro",
+        "categorias": [
+          "A08:2025",
+          "API3:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "VAmPI",
+        "id": "VAMPI-05",
+        "nombre": "Exposición excesiva de datos en el endpoint de depuración",
+        "categorias": [
+          "A01:2025",
+          "API3:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "VAmPI",
+        "id": "VAMPI-06",
+        "nombre": "Enumeración de usuarios y contraseñas en el login",
+        "categorias": [
+          "A07:2025",
+          "API2:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "VAmPI",
+        "id": "VAMPI-07",
+        "nombre": "ReDoS en la actualización del correo",
+        "categorias": [
+          "A06:2025",
+          "API4:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "VAmPI",
+        "id": "VAMPI-08",
+        "nombre": "Login sin limitación de intentos",
+        "categorias": [
+          "A07:2025",
+          "API2:2023",
+          "API4:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "VAmPI",
+        "id": "VAMPI-09",
+        "nombre": "Clave de firma JWT débil escrita en el código",
+        "categorias": [
+          "A07:2025",
+          "API2:2023"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "avoid_hardcoded_config_SECRET_KEY"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "crAPI",
+        "id": "CRAPI-01",
+        "nombre": "Pedido consultable sin autenticación ni verificación de propietario",
+        "categorias": [
+          "A01:2025",
+          "API1:2023"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "disabled-cert-validation"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "crAPI",
+        "id": "CRAPI-02",
+        "nombre": "Asignación masiva del estado del pedido (reembolso)",
+        "categorias": [
+          "A08:2025",
+          "API3:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "crAPI",
+        "id": "CRAPI-03",
+        "nombre": "Inyección SQL al aplicar un cupón",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "sqlalchemy-execute-raw-query",
+          "tainted-sql-string"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "crAPI",
+        "id": "CRAPI-04",
+        "nombre": "SSRF y repeticiones ilimitadas en contactar mecánico",
+        "categorias": [
+          "A01:2025",
+          "API4:2023",
+          "API7:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "crAPI",
+        "id": "CRAPI-05",
+        "nombre": "BOLA en el reporte del mecánico",
+        "categorias": [
+          "A01:2025",
+          "API1:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "crAPI",
+        "id": "CRAPI-06",
+        "nombre": "Vista administrativa de usuarios sin verificación de rol",
+        "categorias": [
+          "A01:2025",
+          "API5:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "crAPI",
+        "id": "CRAPI-07",
+        "nombre": "BOLA en la ubicación del vehículo",
+        "categorias": [
+          "A01:2025",
+          "API1:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "crAPI",
+        "id": "CRAPI-08",
+        "nombre": "Verificación de OTP (v2) sin límite de intentos",
+        "categorias": [
+          "A07:2025",
+          "API2:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "crAPI",
+        "id": "CRAPI-09",
+        "nombre": "Eliminación de videos por endpoint administrativo accesible a usuarios",
+        "categorias": [
+          "A01:2025",
+          "API5:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "crAPI",
+        "id": "CRAPI-10",
+        "nombre": "Asignación masiva de parámetros de conversión del video",
+        "categorias": [
+          "A08:2025",
+          "API3:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "crAPI",
+        "id": "CRAPI-11",
+        "nombre": "Validación del JWT acepta algoritmos inseguros",
+        "categorias": [
+          "A04:2025",
+          "API2:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "crAPI",
+        "id": "CRAPI-12",
+        "nombre": "Clave del JWT obtenida de la URL jku del propio token",
+        "categorias": [
+          "A04:2025",
+          "API2:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "crAPI",
+        "id": "CRAPI-13",
+        "nombre": "Lectura del usuario del JWT sin verificar la firma",
+        "categorias": [
+          "A04:2025",
+          "API2:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "crAPI",
+        "id": "CRAPI-14",
+        "nombre": "Secretos y contraseñas en el docker-compose",
+        "categorias": [
+          "A07:2025",
+          "API2:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-01",
+        "nombre": "Inyección SQL al guardar la passphrase",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "express-sequelize-injection",
+          "tainted-sql-string"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-02",
+        "nombre": "Inyección SQL al consultar la passphrase",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "direct-response-write",
+          "express-sequelize-injection",
+          "no-stringify-keys",
+          "tainted-sql-string"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-03",
+        "nombre": "Deserialización insegura (node-serialize)",
+        "categorias": [
+          "A08:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "express-third-party-object-deserialization"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-04",
+        "nombre": "Inyección de comandos en sysinfo",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "detect-child-process"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-05",
+        "nombre": "Inyección XPath",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-06",
+        "nombre": "Inyección NoSQL en la búsqueda de notas",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "direct-response-write"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-07",
+        "nombre": "IDOR al leer una nota",
+        "categorias": [
+          "A01:2025",
+          "API1:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-08",
+        "nombre": "XML bomb / XXE al importar notas",
+        "categorias": [
+          "A02:2025",
+          "API4:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-09",
+        "nombre": "JWT con algoritmo 'none' aceptado",
+        "categorias": [
+          "A04:2025",
+          "API2:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-10",
+        "nombre": "CORS que refleja el origen con credenciales",
+        "categorias": [
+          "A02:2025",
+          "API8:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-11",
+        "nombre": "Contaminación de prototipo en merge",
+        "categorias": [
+          "A08:2025"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-12",
+        "nombre": "Subida de archivos sin restricción",
+        "categorias": [
+          "A06:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "detect-non-literal-fs-filename"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-13",
+        "nombre": "Path traversal en la descarga de archivos",
+        "categorias": [
+          "A01:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "detect-non-literal-fs-filename"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-14",
+        "nombre": "Carga de YAML que ejecuta funciones",
+        "categorias": [
+          "A08:2025",
+          "API10:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-15",
+        "nombre": "Path traversal en el reporte mensual",
+        "categorias": [
+          "A01:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "detect-non-literal-fs-filename",
+          "express-path-join-resolve-traversal",
+          "path-join-resolve-traversal"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-16",
+        "nombre": "Redirección abierta en el logout",
+        "categorias": [
+          "A01:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "express-open-redirect"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-17",
+        "nombre": "Asignación masiva en el registro de usuarios",
+        "categorias": [
+          "A08:2025",
+          "API3:2023"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "direct-response-write"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-18",
+        "nombre": "Enumeración de usuarios y registro sin neutralizar en el login",
+        "categorias": [
+          "A07:2025",
+          "API2:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-19",
+        "nombre": "Inyección LDAP",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-20",
+        "nombre": "Exposición de datos del perfil según rol",
+        "categorias": [
+          "A01:2025",
+          "API3:2023"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "direct-response-write"
+        ],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "dvws-node",
+        "id": "DVWS-21",
+        "nombre": "Listado de usuarios con hashes de contraseña",
+        "categorias": [
+          "A01:2025",
+          "API3:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "restaurant-api",
+        "id": "REST-00",
+        "nombre": "Detalles de la tecnología expuestos en cabeceras HTTP",
+        "categorias": [
+          "A02:2025",
+          "API8:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "restaurant-api",
+        "id": "REST-01",
+        "nombre": "Eliminación de elementos del menú sin control de rol",
+        "categorias": [
+          "A01:2025",
+          "API5:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "restaurant-api",
+        "id": "REST-02",
+        "nombre": "IDOR en la actualización del perfil",
+        "categorias": [
+          "A01:2025",
+          "API1:2023",
+          "API3:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "restaurant-api",
+        "id": "REST-03",
+        "nombre": "Escalada de privilegios al actualizar roles",
+        "categorias": [
+          "A01:2025",
+          "API5:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "restaurant-api",
+        "id": "REST-04",
+        "nombre": "SSRF al descargar la imagen del menú",
+        "categorias": [
+          "A01:2025",
+          "API7:2023"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "use-raise-for-status",
+          "use-timeout"
+        ],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "restaurant-api",
+        "id": "REST-05",
+        "nombre": "Ejecución remota de comandos en estadísticas de disco",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "dangerous-subprocess-use-audit",
+          "subprocess-shell-true"
+        ],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "VRPlayground",
+        "id": "VRP-01",
+        "nombre": "Deserialización con pickle",
+        "categorias": [
+          "A08:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "avoid-pickle",
+          "insecure-deserialization"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "VRPlayground",
+        "id": "VRP-02",
+        "nombre": "SSTI con Jinja",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "VRPlayground",
+        "id": "VRP-03",
+        "nombre": "Inyección SQL con format",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "sqlalchemy-execute-raw-query"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "VRPlayground",
+        "id": "VRP-04",
+        "nombre": "XSS en etiqueta",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "raw-html-format"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "VRPlayground",
+        "id": "VRP-05",
+        "nombre": "XSS en enlace",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "raw-html-format"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "VRPlayground",
+        "id": "VRP-06",
+        "nombre": "XSS en atributo de evento",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "raw-html-format"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "VRPlayground",
+        "id": "VRP-07",
+        "nombre": "XSS en bloque de código",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "raw-html-format"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "VRPlayground",
+        "id": "VRP-08",
+        "nombre": "Inyección de plantillas del cliente (Vue)",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "make-response-with-unknown-content",
+          "raw-html-format"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "VRPlayground",
+        "id": "VRP-09",
+        "nombre": "Inyección de plantillas del cliente (AngularJS)",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "make-response-with-unknown-content",
+          "raw-html-format"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "VRPlayground",
+        "id": "VRP-10",
+        "nombre": "Inyección de comandos",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "VRPlayground",
+        "id": "VRP-11",
+        "nombre": "ReDoS",
+        "categorias": [
+          "A06:2025",
+          "API4:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "VRPlayground",
+        "id": "VRP-12",
+        "nombre": "Path traversal",
+        "categorias": [
+          "A01:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "express-path-join-resolve-traversal",
+          "path-join-resolve-traversal"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "VRPlayground",
+        "id": "VRP-13",
+        "nombre": "SSRF",
+        "categorias": [
+          "A01:2025",
+          "API7:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "VRPlayground",
+        "id": "VRP-14",
+        "nombre": "Inyección NoSQL",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "VRPlayground",
+        "id": "VRP-15",
+        "nombre": "XXE",
+        "categorias": [
+          "A02:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "xmlinputfactory-external-entities-enabled"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "VRPlayground",
+        "id": "VRP-16",
+        "nombre": "Deserialización con ObjectInputStream",
+        "categorias": [
+          "A08:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "object-deserialization"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "id": "DEMO-01",
+        "nombre": "BOLA: pedidos de cualquier usuario por id",
+        "categorias": [
+          "A01:2025",
+          "API1:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "id": "DEMO-02",
+        "nombre": "Actualización de cualquier usuario por id con cuerpo arbitrario",
+        "categorias": [
+          "A01:2025",
+          "API1:2023",
+          "API3:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "id": "DEMO-03",
+        "nombre": "Asignación masiva con Object.assign",
+        "categorias": [
+          "A08:2025",
+          "API3:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "id": "DEMO-04",
+        "nombre": "Login sin limitación de intentos",
+        "categorias": [
+          "A07:2025",
+          "API2:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "id": "DEMO-05",
+        "nombre": "JWT sin expiración y secreto fijo en el código",
+        "categorias": [
+          "A07:2025",
+          "API2:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "id": "DEMO-06",
+        "nombre": "CORS que acepta cualquier origen con credenciales",
+        "categorias": [
+          "A02:2025",
+          "API8:2023"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "express-check-csurf-middleware-usage"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "id": "DEMO-07",
+        "nombre": "Inyección SQL en la búsqueda de productos",
+        "categorias": [
+          "A05:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "spring-sqli"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "id": "DEMO-08",
+        "nombre": "Eliminación de productos sin control de rol",
+        "categorias": [
+          "A01:2025",
+          "API5:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "id": "DEMO-09",
+        "nombre": "Contraseña de base de datos en application.yml",
+        "categorias": [
+          "A07:2025",
+          "API2:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "id": "DEMO-10",
+        "nombre": "Actuator expuesto y detalles de salud públicos",
+        "categorias": [
+          "A02:2025",
+          "API8:2023"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "spring-actuator-fully-enabled-yaml"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "id": "DEMO-11",
+        "nombre": "Imagen base sin versión y contenedor como root",
+        "categorias": [
+          "A03:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "avoid-latest-version",
+          "dockerfile-source-not-pinned",
+          "missing-user-entrypoint"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "id": "DEMO-12",
+        "nombre": "Dependencia sin versión fijada (LATEST)",
+        "categorias": [
+          "A03:2025"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "id": "DEMO-13",
+        "nombre": "Modo debug activo y CORS permisivo",
+        "categorias": [
+          "A02:2025",
+          "API8:2023"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "wildcard-cors"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "id": "DEMO-14",
+        "nombre": "Detalle de la excepción devuelto al cliente",
+        "categorias": [
+          "A10:2025",
+          "API8:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": false
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "id": "DEMO-15",
+        "nombre": "BOLA: pedido de otro usuario por id",
+        "categorias": [
+          "A01:2025",
+          "API1:2023"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "id": "DEMO-16",
+        "nombre": "SSRF al importar un recibo desde una URL",
+        "categorias": [
+          "A01:2025",
+          "API7:2023"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "ssrf-requests",
+          "use-raise-for-status"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "id": "DEMO-17",
+        "nombre": "Deserialización insegura con pickle",
+        "categorias": [
+          "A08:2025"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "avoid-insecure-deserialization",
+          "avoid-pickle"
+        ],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "id": "DEMO-18",
+        "nombre": "Dependencias sin versión fijada",
+        "categorias": [
+          "A03:2025"
+        ],
+        "semgrep": false,
+        "reglas_semgrep": [],
+        "vulnminer": true
+      },
+      {
+        "proyecto": "proyecto-demo",
+        "id": "DEMO-19",
+        "nombre": "Secretos en el docker-compose",
+        "categorias": [
+          "A07:2025",
+          "API2:2023"
+        ],
+        "semgrep": true,
+        "reglas_semgrep": [
+          "stripe-access-token"
+        ],
+        "vulnminer": false
+      }
+    ],
+    "resumen": {
+      "documentadas": 66,
+      "semgrep_detectadas": 27,
+      "vulnminer_detectadas": 40,
+      "solo_vulnminer": 16,
+      "solo_semgrep": 3,
+      "ambas": 24,
+      "union": 43,
+      "unidades_limpias": 379,
+      "semgrep_unidades_limpias_marcadas": 43,
+      "vulnminer_unidades_limpias_marcadas": 32
+    }
+  },
+  "ablacion": [
+    {
+      "variante": "Reglas solas (indicadores, sin aprendizaje)",
+      "clave": "reglas",
+      "umbral": 1.0,
+      "variables": 99,
+      "prueba_precision": 0.5190476190476191,
+      "prueba_recall": 0.7965895249695494,
+      "prueba_f1": 0.628543969245555,
+      "prueba_accuracy": 0.6486363636363637,
+      "prueba_roc_auc": 0.7052578303930808,
+      "prueba_ap": 0.5290156376865348,
+      "prueba_tasa_falsos_positivos": 0.43944887599709936,
+      "prueba_TP": 654,
+      "prueba_FP": 606,
+      "prueba_TN": 773,
+      "prueba_FN": 167,
+      "ext_detectadas": 64,
+      "ext_documentadas": 66,
+      "ext_sensibilidad": 0.9696969696969697,
+      "ext_falsas_alarmas": 0.5224274406332454,
+      "ext_unidades_limpias_marcadas": 198,
+      "ext_unidades_limpias": 379,
+      "ext_auc": 0.9268409690573279,
+      "ext_ap": 0.8180354857100309,
+      "ext_sensibilidad_con_5pct_falsas_alarmas": 0.7727272727272727,
+      "ext_demo_detectadas": 18,
+      "ext_demo_sembradas": 19,
+      "segundos": 12.9
+    },
+    {
+      "variante": "Solo indicadores de análisis estático",
+      "clave": "indicadores",
+      "umbral": 0.27,
+      "variables": 149,
+      "prueba_precision": 0.5586734693877551,
+      "prueba_recall": 0.8002436053593179,
+      "prueba_f1": 0.657986980470706,
+      "prueba_accuracy": 0.6895454545454546,
+      "prueba_roc_auc": 0.8021965112674103,
+      "prueba_ap": 0.7468337433850303,
+      "prueba_tasa_falsos_positivos": 0.3763596809282089,
+      "prueba_TP": 657,
+      "prueba_FP": 519,
+      "prueba_TN": 860,
+      "prueba_FN": 164,
+      "ext_detectadas": 46,
+      "ext_documentadas": 66,
+      "ext_sensibilidad": 0.696969696969697,
+      "ext_falsas_alarmas": 0.45118733509234826,
+      "ext_unidades_limpias_marcadas": 171,
+      "ext_unidades_limpias": 379,
+      "ext_auc": 0.700847525385784,
+      "ext_ap": 0.4594529461311574,
+      "ext_sensibilidad_con_5pct_falsas_alarmas": 0.3787878787878788,
+      "ext_demo_detectadas": 13,
+      "ext_demo_sembradas": 19,
+      "segundos": 91.0
+    },
+    {
+      "variante": "Solo indicadores con Random Forest",
+      "clave": "indicadores_rf",
+      "umbral": 0.34,
+      "variables": 149,
+      "prueba_precision": 0.6111587982832618,
+      "prueba_recall": 0.8672350791717418,
+      "prueba_f1": 0.7170191339375629,
+      "prueba_accuracy": 0.7445454545454545,
+      "prueba_roc_auc": 0.8412705282561901,
+      "prueba_ap": 0.7701825331564371,
+      "prueba_tasa_falsos_positivos": 0.32849891225525746,
+      "prueba_TP": 712,
+      "prueba_FP": 453,
+      "prueba_TN": 926,
+      "prueba_FN": 109,
+      "ext_detectadas": 56,
+      "ext_documentadas": 66,
+      "ext_sensibilidad": 0.8484848484848485,
+      "ext_falsas_alarmas": 0.38786279683377306,
+      "ext_unidades_limpias_marcadas": 147,
+      "ext_unidades_limpias": 379,
+      "ext_auc": 0.7858799072519389,
+      "ext_ap": 0.3414599616753212,
+      "ext_sensibilidad_con_5pct_falsas_alarmas": 0.15151515151515152,
+      "ext_demo_detectadas": 14,
+      "ext_demo_sembradas": 19,
+      "segundos": 94.0
+    },
+    {
+      "variante": "Solo texto (TF-IDF de tokens y caracteres)",
+      "clave": "tfidf",
+      "umbral": 0.33,
+      "variables": 120000,
+      "prueba_precision": 0.8069544364508393,
+      "prueba_recall": 0.8197320341047503,
+      "prueba_f1": 0.8132930513595166,
+      "prueba_accuracy": 0.8595454545454545,
+      "prueba_roc_auc": 0.9218404835363232,
+      "prueba_ap": 0.8509968609750541,
+      "prueba_tasa_falsos_positivos": 0.116751269035533,
+      "prueba_TP": 673,
+      "prueba_FP": 161,
+      "prueba_TN": 1218,
+      "prueba_FN": 148,
+      "ext_detectadas": 40,
+      "ext_documentadas": 66,
+      "ext_sensibilidad": 0.6060606060606061,
+      "ext_falsas_alarmas": 0.0633245382585752,
+      "ext_unidades_limpias_marcadas": 24,
+      "ext_unidades_limpias": 379,
+      "ext_auc": 0.8466858559206845,
+      "ext_ap": 0.5618657283348831,
+      "ext_sensibilidad_con_5pct_falsas_alarmas": 0.5454545454545454,
+      "ext_demo_detectadas": 11,
+      "ext_demo_sembradas": 19,
+      "segundos": 95.3
+    },
+    {
+      "variante": "Modelo completo (TF-IDF + indicadores)",
+      "clave": "completo",
+      "umbral": 0.35,
+      "variables": 120149,
+      "prueba_precision": 0.8439803439803439,
+      "prueba_recall": 0.8367844092570037,
+      "prueba_f1": 0.8403669724770643,
+      "prueba_accuracy": 0.8813636363636363,
+      "prueba_roc_auc": 0.9292590528362182,
+      "prueba_ap": 0.8720757913754341,
+      "prueba_tasa_falsos_positivos": 0.09209572153734591,
+      "prueba_TP": 687,
+      "prueba_FP": 127,
+      "prueba_TN": 1252,
+      "prueba_FN": 134,
+      "ext_detectadas": 38,
+      "ext_documentadas": 66,
+      "ext_sensibilidad": 0.5757575757575758,
+      "ext_falsas_alarmas": 0.08443271767810026,
+      "ext_unidades_limpias_marcadas": 32,
+      "ext_unidades_limpias": 379,
+      "ext_auc": 0.8379307587750859,
+      "ext_ap": 0.5645498202330942,
+      "ext_sensibilidad_con_5pct_falsas_alarmas": 0.5151515151515151,
+      "ext_demo_detectadas": 13,
+      "ext_demo_sembradas": 19,
+      "segundos": 101.2
+    }
+  ]
+}

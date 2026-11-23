@@ -98,7 +98,7 @@
       "categoria_correcta": 0,
       "hallazgos_sobre_vulnerabilidades_documentadas": 2,
       "hallazgos_adicionales": 20,
-      "duracion_segundos": 5.3,
+      "duracion_segundos": 5.4,
       "detalle": [
         {
           "id": "VAMPI-01",
@@ -311,7 +311,7 @@
       "categoria_correcta": 5,
       "hallazgos_sobre_vulnerabilidades_documentadas": 9,
       "hallazgos_adicionales": 112,
-      "duracion_segundos": 29.4,
+      "duracion_segundos": 30.3,
       "detalle": [
         {
           "id": "CRAPI-01",
@@ -1321,7 +1321,7 @@
       "categoria_correcta": 10,
       "hallazgos_sobre_vulnerabilidades_documentadas": 16,
       "hallazgos_adicionales": 45,
-      "duracion_segundos": 7.0,
+      "duracion_segundos": 6.9,
       "detalle": [
         {
           "id": "VRP-01",

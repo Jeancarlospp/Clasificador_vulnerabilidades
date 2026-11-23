@@ -15,7 +15,7 @@ vulnminer scan . --standards owasp2025,api2023 --format json,html --output ./rep
 
 ## Instalación
 
-Requisitos: Python 3.10 o superior (probado con 3.12) y `git`.
+Requisitos: Python 3.11 o superior (probado con 3.12 y 3.14) y `git`.
 
 ```bash
 git clone https://github.com/Jeancarlospp/Clasificador_vulnerabilidades.git

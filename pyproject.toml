@@ -7,10 +7,10 @@ name = "vulnminer"
 version = "1.0.0"
 description = "Clasificador de posibles vulnerabilidades en proyectos de microservicios (OWASP Top 10:2025 y OWASP API Security Top 10:2023) basado en minería de datos"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 authors = [{ name = "Jeancarlo Santi" }]
 dependencies = [
-    "scikit-learn>=1.5",
+    "scikit-learn>=1.9.1,<1.10",  # versión con la que se serializó el modelo
     "numpy>=1.26",
     "scipy>=1.11",
     "pandas>=2.0",
