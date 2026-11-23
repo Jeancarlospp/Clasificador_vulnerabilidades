@@ -35,6 +35,7 @@ ENTRENAMIENTO = {
     "kics": ("Checkmarx/kics", ["assets/queries/dockerfile", "assets/queries/dockerCompose", "assets/queries/openAPI"]),
     "securityeval": ("s2e-lab/SecurityEval", ["Testcases_Insecure_Code", "dataset.jsonl"]),
     "juice-shop-codefixes": ("juice-shop/juice-shop", ["data/static/codefixes"]),
+    "vulnerableapp": ("SasanLabs/VulnerableApp", ["src/main/java/org/sasanlabs/service/vulnerability"]),
     # Código de aplicaciones reales (clase no vulnerable)
     "benigno/full-stack-fastapi-template": ("tiangolo/full-stack-fastapi-template", ["backend", "package.json", "Dockerfile", "docker-compose.yml", "docker-compose.yaml", "pom.xml", "requirements.txt", "build.gradle"]),
     "benigno/fastapi-realworld": ("nsidnev/fastapi-realworld-example-app", ["app"]),
@@ -81,6 +82,7 @@ EVALUACION = {
     "VAmPI": ("erev0s/VAmPI", None),
     "dvws-node": ("snoopysecurity/dvws-node", None),
     "restaurant-api": ("theowni/Damn-Vulnerable-RESTaurant-API-Game", None),
+    "VRPlayground": ("f5devcentral/VRPlayground", None),
     # Proyectos de microservicios de referencia (sin vulnerabilidades intencionales)
     "petclinic-microservices": ("spring-petclinic/spring-petclinic-microservices", None),
     "microservices-demo": ("GoogleCloudPlatform/microservices-demo", ["src", "docker-compose.yml"]),
