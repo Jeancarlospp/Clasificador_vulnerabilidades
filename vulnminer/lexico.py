@@ -52,7 +52,7 @@ APIS_PERMITIDAS = {
     "session_cookie_secure", "csrf_cookie_secure", "secure_proxy_ssl_header", "issecure", "is_secure",
     "secure_compare", "status_ok", "http_ok", "ok", "okhttp", "okhttpclient", "isok", "is_ok", "res_ok",
 }
-PARTES_MARCA = {"bad", "good", "safe", "unsafe", "insecure", "secure", "vuln", "vulnerable", "noncompliant",
+PARTES_MARCA = {"bad", "good", "safe", "unsafe", "insecure", "secure", "vuln", "vulnerable", "vulnerability", "vulnerabilities", "noncompliant",
                 "compliant", "positive", "negative", "benign", "malicious", "evil", "tainted", "untainted",
                 "sanitized", "benchmark", "exploit", "attack", "attacker", "hacker", "pwn", "pwned"}
 _IDENT = re.compile(r"(?<![\w$])(\$?)([A-Za-z_][A-Za-z0-9_]*)")

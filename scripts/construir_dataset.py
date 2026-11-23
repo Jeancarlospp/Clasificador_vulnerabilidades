@@ -12,6 +12,7 @@ Fuentes (descargadas con scripts/descargar_fuentes.py):
   5. kics              pruebas positivas/negativas de consultas para Dockerfile, docker-compose y OpenAPI.
   6. securityeval      ejemplos Python inseguros etiquetados por CWE.
   6b. juice-shop       retos de código de OWASP Juice Shop (variantes vulnerables y corrección correcta).
+  6c. vulnerableapp    OWASP VulnerableApp: niveles vulnerables y variantes seguras en Spring Boot.
   7. casos-controlados casos de vulnerabilidades de API desarrollados para este proyecto
                        (datos/casos_controlados, generados con scripts/generar_casos_controlados.py).
   8. benigno           código de aplicaciones reales (FastAPI, NestJS, Express, Spring Boot, Flask).
@@ -110,6 +111,16 @@ def lenguaje_y_subtipo(ruta):
 # ---------------------------------------------------------------------------------------------
 # 1. semgrep-rules
 # ---------------------------------------------------------------------------------------------
+# Correcciones de metadatos de Semgrep: reglas cuyo CWE declarado no corresponde a la vulnerabilidad que
+# detectan (verificado comparando el id y la descripción de cada regla con su CWE).
+CORRECCIONES_SEMGREP = {
+    "tainted-sql-string": {89}, "node-postgres-sqli": {89},                 # declaraban CWE-704 / CWE-915
+    "jwt-none-alg": {347}, "jwt-python-none-alg": {347}, "jjwt-none-alg": {347}, "java-jwt-none-alg": {347},  # CWE-327
+    "cors-regex-wildcard": {942}, "nestjs-header-cors-any": {942}, "permissive-cors": {942},              # CWE-183
+    "puppeteer-evaluate-code-injection": {94}, "puppeteer-evaluate-arg-injection": {94},                   # CWE-918
+    "playwright-evaluate-code-injection": {94}, "playwright-evaluate-arg-injection": {94},
+}
+
 ANOTACION_SEMGREP = re.compile(r"(todoruleid|ruleid|todook|deepok|deepruleid|ok)\s*:\s*([\w.\-, ]+)")
 
 
@@ -133,6 +144,9 @@ def cargar_semgrep():
                 continue
             cwes = meta.get("cwe", [])
             cwes = cwes if isinstance(cwes, list) else [cwes]
+            if r.get("id") in CORRECCIONES_SEMGREP:
+                reglas[r.get("id")] = set(CORRECCIONES_SEMGREP[r.get("id")])
+                continue
             reglas[r.get("id")] = {c for c in (numero_cwe(re.search(r"CWE-\d+", str(x)).group(0)) if re.search(r"CWE-\d+", str(x)) else None
                                                for x in cwes) if c}
         if not reglas:
@@ -153,8 +167,6 @@ def cargar_semgrep():
                     cwes = set()
                     for rid in ids:
                         cwes |= reglas.get(rid, reglas.get(rid.split(".")[-1], set()))
-                    if etiqueta and not cwes:
-                        cwes = set().union(*reglas.values())
                     pendiente = (etiqueta, cwes)
                     continue
                 if pendiente and linea.strip() and not COMENTARIO_LINEA.match(linea):
@@ -414,6 +426,70 @@ def cargar_juice_shop():
 
 
 # ---------------------------------------------------------------------------------------------
+# 6c. OWASP VulnerableApp (SasanLabs): niveles vulnerables y variantes seguras en Spring Boot
+# ---------------------------------------------------------------------------------------------
+# Cada vulnerabilidad tiene varios niveles; los marcados con `variant = Variant.SECURE` son seguros.
+# Las anotaciones propias del proyecto (@AttackVector, @VulnerableAppRequestMapping...) y los nombres
+# `...Level3` delatan la etiqueta, por lo que se eliminan conservando el número de líneas.
+VULNERABLEAPP = {
+    "sqlInjection": (89, []), "commandInjection": (78, []), "ldapInjection": (90, []), "xss": (79, []),
+    "xxe": (611, []), "pathTraversal": (22, []), "ssrf": (918, ["API7:2023"]), "openRedirect": (601, []),
+    "idor": (639, ["API1:2023"]), "jwt": (347, ["API2:2023"]), "deserialization": (502, []),
+    "fileupload": (434, []), "cryptographicFailures": (327, []), "passwordReset": (640, ["API2:2023"]),
+    "sessionManagement": (384, ["API2:2023"]), "otp": (307, ["API2:2023"]), "authentication": (287, ["API2:2023"]),
+}
+
+
+def _quitar_anotacion(texto, nombre, marcas=None):
+    while True:
+        m = re.search(r"@" + nombre + r"\s*\(", texto)
+        if not m:
+            return texto
+        i, profundidad = m.end(), 1
+        while profundidad and i < len(texto):
+            profundidad += {"(": 1, ")": -1}.get(texto[i], 0)
+            i += 1
+        bloque = texto[m.start():i]
+        if marcas is not None:
+            marcas.append((texto[:m.start()].count("\n") + 1, "Variant.SECURE" in bloque))
+            reemplazo = '@GetMapping("/consulta")' + "\n" * bloque.count("\n")
+        else:
+            reemplazo = "\n" * bloque.count("\n")
+        texto = texto[:m.start()] + reemplazo + texto[i:]
+
+
+def cargar_vulnerableapp():
+    raiz = FUENTES / "vulnerableapp" / "src" / "main" / "java" / "org" / "sasanlabs" / "service" / "vulnerability"
+    if not raiz.exists():
+        return []
+    filas = []
+    for paquete, (cwe, api) in VULNERABLEAPP.items():
+        for archivo in sorted((raiz / paquete).rglob("*.java")):
+            texto = leer(archivo)
+            if "VulnerableAppRequestMapping" not in texto:
+                continue
+            marcas = []
+            texto = _quitar_anotacion(texto, "AttackVector")
+            texto = _quitar_anotacion(texto, "ChallengeCard")
+            texto = _quitar_anotacion(texto, "VulnerableAppRestController")
+            texto = _quitar_anotacion(texto, "VulnerableAppRequestMapping", marcas)
+            texto = re.sub(r"(?<=\w)Level\d+\b", "Handler", texto)
+            texto = re.sub(r"\bLEVEL_\d+\b", "NIVEL", texto)
+            rel = str(archivo.relative_to(raiz))
+            unidades = segmentar(rel, texto, "java", "codigo")
+            for linea, seguro in marcas:
+                u = next((u for u in unidades if linea in u.lineas), None)
+                if u is None:
+                    continue
+                if seguro:
+                    filas.append(registro("vulnerableapp", f"vulnerableapp:{rel}", rel, u, 0, origen="variante segura del laboratorio"))
+                else:
+                    filas.append(registro("vulnerableapp", f"vulnerableapp:{rel}", rel, u, 1, {cwe}, api_explicitas=api,
+                                          origen="nivel vulnerable del laboratorio"))
+    return filas
+
+
+# ---------------------------------------------------------------------------------------------
 # 7. Casos controlados
 # ---------------------------------------------------------------------------------------------
 def cargar_controlados():
@@ -592,6 +668,7 @@ def particionar(df, prop=(0.70, 0.15, 0.15)):
 def main():
     cargadores = [("semgrep", cargar_semgrep), ("codeql", cargar_codeql), ("benchmark", cargar_benchmark),
                   ("kics", cargar_kics), ("securityeval", cargar_securityeval), ("juice-shop", cargar_juice_shop),
+                  ("vulnerableapp", cargar_vulnerableapp),
                   ("controlados", cargar_controlados),
                   ("benigno", cargar_benigno)]
     filas = []
