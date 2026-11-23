@@ -288,7 +288,8 @@ INDICADORES = [
               "Usa directamente datos devueltos por otra API"),
     # --- Datos y propiedades --------------------------------------------------------------------
     Indicador("asignacion_masiva", "datos",
-              r"Object\.assign\s*\(\s*\w+\s*,\s*req\.body|\{\s*\.\.\.req\.body|new\s+\w+\s*\(\s*req\.body\s*\)|\.(create|update|updateOne|"
+              r"Object\.assign\s*\(\s*\w+\s*,\s*(req\.body|body|dto|data|payload|input|changes|update\w*|attrs|params)\s*\)|"
+              r"\{\s*\.\.\.\w+\s*,\s*\.\.\.(req\.body|body|dto|data|payload|input)\s*\}|\{\s*\.\.\.req\.body|new\s+\w+\s*\(\s*req\.body\s*\)|\.(create|update|updateOne|"
               r"findByIdAndUpdate|findOneAndUpdate|save|insert|build|set)\s*\(\s*([\w{},:\s]+,\s*)?req\.body\s*\)|\*\*\s*(request\.(json|"
               r"get_json\(\)|form|data)|data|payload|body|kwargs|update_data|item\.dict\(\)|\w+\.(dict|model_dump)\(\))|"
               r"setattr\s*\(\s*\w+\s*,\s*(key|k|attr|field)|BeanUtils\.copyProperties|\.update\(\s*request\.|modelMapper\.map\s*\(|"
@@ -418,9 +419,9 @@ INDICADORES = [
               r"<version>\s*(LATEST|RELEASE|\[[^\]]*,\s*\))\s*</version>|-SNAPSHOT</version>",
               "Dependencia o paquete sin versión fijada"),
     Indicador("puerto_sensible", "config",
-              r"['\"]?\s*-?\s*['\"]?(0\.0\.0\.0:)?(5432|3306|27017|6379|9200|5005|9229|8000|11211|2375|2376|5672|15672|9092|22)\s*:\s*\d+|"
-              r"^\s*EXPOSE\s+(22|2375|5005|9229)\b|bind\s*[:=]\s*['\"]?0\.0\.0\.0|--host\s*[= ]0\.0\.0\.0|host\s*=\s*['\"]0\.0\.0\.0",
-              "Servicio interno o de depuración expuesto en la red"),
+              r"^\s*-\s*['\"]?(0\.0\.0\.0:)?(5432|3306|27017|6379|9200|5005|9229|11211|2375|2376|5672|15672|9092|22):\d+['\"]?\s*$|"
+              r"^\s*EXPOSE\s+(22|2375|5005|9229)\b",
+              "Base de datos, broker o puerto de depuración publicado fuera del contenedor"),
     Indicador("sin_limites_recursos", "config",
               r"mem_limit|cpus\s*:|resources\s*:\s*\n\s*limits|pids_limit|ulimits|deploy\s*:\s*\n\s*resources|memory\s*:\s*\d|healthcheck\s*:|HEALTHCHECK",
               "Define límites de recursos o comprobaciones de salud"),
@@ -550,8 +551,17 @@ def nombres_caracteristicas():
             [f"sub_{s}" for s in SUBTIPOS] + [f"len_{l}" for l in LENGUAJES])
 
 
-def vector(unidad):
-    """Vector numérico de características de una unidad."""
+# Métricas que describen el estilo del código (no la seguridad); pueden desactivarse.
+METRICAS_ESTILO = ["m_cadenas", "m_llamadas", "m_condicionales", "m_retornos", "m_profundidad", "m_longitud_media"]
+_IDX_ESTILO = [NOMBRES_METRICAS.index(n) for n in METRICAS_ESTILO]
+
+
+def vector(unidad, binario=False, estilo=True):
+    """Vector numérico de características de una unidad.
+
+    binario: indicadores como presencia (0/1) en lugar de log(1 + número de apariciones).
+    estilo:  incluir las métricas de estilo del código; si es False se fijan en 0 (misma dimensión).
+    """
     from .lexico import limpiar_codigo
 
     texto = limpiar_codigo(unidad.texto)
@@ -560,10 +570,13 @@ def vector(unidad):
     ctx = np.array([len(COMPILADOS[INDICE[n]][1].findall(ctx_txt)) for n in CONTEXTO], dtype=float)
     d = _derivadas(c, ctx, unidad.subtipo)
     m = _metricas(texto)
+    if not estilo:
+        m[_IDX_ESTILO] = 0.0
     a = _por_archivo(unidad)
     sub = np.array([float(unidad.subtipo == s) for s in SUBTIPOS])
     leng = np.array([float(unidad.lenguaje == l) for l in LENGUAJES])
-    return np.concatenate([np.log1p(c), np.log1p(ctx), d, m, a, sub, leng])
+    transformar = (lambda x: (x > 0).astype(float)) if binario else np.log1p
+    return np.concatenate([transformar(c), transformar(ctx), d, m, a, sub, leng])
 
 
 def evidencias(unidad, nombres=None, max_por_indicador=3):

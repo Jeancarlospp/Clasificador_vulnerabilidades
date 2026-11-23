@@ -120,3 +120,22 @@ def test_cors_de_la_clase_no_es_contexto():
 def test_aleatorio_debil_solo_es_sensible_con_secretos():
     assert "x_aleatorio_sensible" in activos("token = str(random.randint(0, 999999))")
     assert "x_aleatorio_sensible" not in activos("producto = random.choice(productos)")
+
+
+def test_variantes_de_vector_mantienen_dimension():
+    u = unidad("cursor.execute('SELECT * FROM t WHERE a = ' + x)\ncursor.execute('SELECT * FROM t WHERE b = ' + y)")
+    base, binario, sin_estilo = C.vector(u), C.vector(u, binario=True), C.vector(u, estilo=False)
+    assert len(base) == len(binario) == len(sin_estilo)
+    i = C.nombres_caracteristicas().index("sql_dinamico")
+    assert binario[i] == 1.0 and base[i] > 1.0
+    j = C.nombres_caracteristicas().index("m_llamadas")
+    assert sin_estilo[j] == 0.0 and base[j] > 0
+
+
+def test_escuchar_en_todas_las_interfaces_no_es_puerto_sensible():
+    assert "puerto_sensible" not in activos("uvicorn.run(app, host='0.0.0.0', port=8000)")
+    assert "puerto_sensible" in activos('    ports:\n      - "5432:5432"', lenguaje="config", subtipo="compose")
+
+
+def test_object_assign_con_cuerpo_generico():
+    assert "asignacion_masiva" in activos("Object.assign(user, body);", lenguaje="typescript")

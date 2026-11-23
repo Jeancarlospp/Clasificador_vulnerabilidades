@@ -65,8 +65,8 @@ def _textos(X):
     return [preparar(u.texto) for u in a_unidades(X)]
 
 
-def _caracteristicas(X):
-    return sparse.csr_matrix(np.vstack([C.vector(u) for u in a_unidades(X)]))
+def _caracteristicas(X, binario=False, estilo=True):
+    return sparse.csr_matrix(np.vstack([C.vector(u, binario=binario, estilo=estilo) for u in a_unidades(X)]))
 
 
 class Textos(BaseEstimator, TransformerMixin):
@@ -79,7 +79,7 @@ class Textos(BaseEstimator, TransformerMixin):
         return _textos(X)
 
 
-def representacion(max_tokens=60000, max_caracteres=60000, peso_caracteristicas=1.0):
+def representacion(max_tokens=60000, max_caracteres=60000, peso_caracteristicas=1.0, binario=False, estilo=True):
     tokens = Pipeline([("texto", Textos()),
                        ("tfidf", TfidfVectorizer(tokenizer=tokenizar_preparado, token_pattern=None, lowercase=False,
                                                  ngram_range=(1, 2), min_df=2, max_df=0.9, max_features=max_tokens,
@@ -87,7 +87,8 @@ def representacion(max_tokens=60000, max_caracteres=60000, peso_caracteristicas=
     caracteres = Pipeline([("texto", Textos()),
                            ("tfidf", TfidfVectorizer(analyzer="char_wb", ngram_range=(3, 5), min_df=3, max_df=0.9,
                                                      max_features=max_caracteres, sublinear_tf=True, dtype=np.float32))])
-    seguridad = Pipeline([("indicadores", FunctionTransformer(_caracteristicas, validate=False)),
+    seguridad = Pipeline([("indicadores", FunctionTransformer(_caracteristicas, validate=False,
+                                                              kw_args={"binario": binario, "estilo": estilo})),
                           ("escala", MaxAbsScaler())])
     return FeatureUnion([("tokens", tokens), ("caracteres", caracteres), ("seguridad", seguridad)],
                         transformer_weights={"tokens": 1.0, "caracteres": 1.0, "seguridad": peso_caracteristicas})
