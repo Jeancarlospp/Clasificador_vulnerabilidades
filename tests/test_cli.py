@@ -134,3 +134,22 @@ def test_umbral_fuera_de_rango_y_modelo_inexistente(tmp_path, capsys):
     assert main(["scan", str(tmp_path), "--modelo", str(tmp_path / "no.joblib"), "-q"]) == 2
     err = capsys.readouterr().err
     assert "umbral" in err and "No se encontró el modelo" in err
+
+
+def test_combinacion_solo_en_codigo_de_servidor(ruta_modelo):
+    import numpy as np
+    from vulnminer.analizador import cargar_modelo
+    from vulnminer.segmentacion import segmentar
+
+    m = cargar_modelo(ruta_modelo)
+    servidor = segmentar("s.py", "def f(request):\n    os.system('ping ' + request.args['h'])\n")
+    config = segmentar("Dockerfile", "FROM python:latest\nUSER root\n")
+    navegador = segmentar("v.tsx", "export function f(id) { return fetch('/api/' + id) }\n")
+    for u in navegador:
+        u.meta["frontend"] = True
+    unidades = servidor + config + navegador
+    p = m.probabilidad(unidades)
+    vulnerable, confianza, q = m.decision(unidades, p)
+    assert len(vulnerable) == len(unidades) and np.all(confianza >= p - 1e-12)
+    if m.combinador is not None:
+        assert not np.isnan(q[0]) and np.isnan(q[len(servidor)]) and np.isnan(q[-1])

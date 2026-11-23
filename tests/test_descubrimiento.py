@@ -51,3 +51,16 @@ def test_es_binario():
     assert es_binario(b"\x89PNG\r\n\x1a\n\x00\x00")
     assert not es_binario("const nombre = 'añadir ñandú';".encode())
     assert not es_binario(b"")
+
+
+def test_frontend_se_distingue_del_servidor(tmp_path):
+    from vulnminer.descubrimiento import descubrir, es_frontend
+    (tmp_path / "web").mkdir()
+    (tmp_path / "web" / "package.json").write_text('{"dependencies": {"react": "18", "react-dom": "18"}}')
+    (tmp_path / "web" / "app.js").write_text("fetch('/api/' + id)")
+    (tmp_path / "api").mkdir()
+    (tmp_path / "api" / "package.json").write_text('{"dependencies": {"express": "4", "react": "18"}}')
+    (tmp_path / "api" / "server.js").write_text("app.get('/', (req, res) => res.send('ok'))")
+    servicios = {s.nombre: s for s in descubrir(tmp_path)[0]}
+    assert es_frontend(servicios["web"]) and not es_frontend(servicios["api"])
+    assert es_frontend(servicios["api"], "api/src/Vista.tsx")

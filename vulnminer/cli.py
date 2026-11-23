@@ -125,11 +125,19 @@ def comando_info(args):
     m = cargar_modelo(args.modelo)
     md = m.metadatos
     print(f"vulnminer {__version__}")
-    print(f"Detector: {m.algoritmo_detector} (umbral {m.umbral}) | Categorías: {m.algoritmo_categorias}")
+    from .modelo import NOMBRES_ALGORITMO
+    print(f"Detector: {NOMBRES_ALGORITMO.get(m.algoritmo_detector, m.algoritmo_detector)} (umbral {m.umbral}) | "
+          f"Categorías: {NOMBRES_ALGORITMO.get(m.algoritmo_categorias, m.algoritmo_categorias)}")
     print(f"Entrenado: {md.get('fecha')} | particiones: {md.get('particiones')}")
     d = md.get("detector_prueba", {})
     if d:
-        print(f"Prueba (detector): precision={d['precision']:.3f} recall={d['recall']:.3f} f1={d['f1']:.3f} auc={d['roc_auc']:.3f}")
+        print(f"Prueba (modelo base): precision={d['precision']:.3f} recall={d['recall']:.3f} f1={d['f1']:.3f} auc={d['roc_auc']:.3f}")
+    if m.combinador is not None:
+        print(f"Combinación con la evidencia estática (código de servidor): vulnerable si p >= {m.umbral_base_codigo} "
+              f"o probabilidad combinada >= {m.umbral_combinado}")
+        f = md.get("detector_prueba_final", {})
+        if f:
+            print(f"Prueba (decisión final): precision={f['precision']:.3f} recall={f['recall']:.3f} f1={f['f1']:.3f}")
     print("\nCategorías:")
     for c in CATEGORIAS:
         if c in m.categorias:

@@ -580,6 +580,18 @@ def vector(unidad, binario=False, estilo=True):
     return np.concatenate([transformar(c), transformar(ctx), d, m, a, sub, leng])
 
 
+# Familias que describen el contexto (fuentes de entrada, rutas, validación, autenticación) y no una
+# operación peligrosa.
+FAMILIAS_CONTEXTO = {"entrada", "rutas", "validacion", "auth"}
+_MASCARA_EVIDENCIA = np.array([(n in FAMILIA and FAMILIA[n] not in FAMILIAS_CONTEXTO) or n.startswith("x_")
+                               for n in nombres_caracteristicas()])
+
+
+def puntaje_evidencia(unidad):
+    """Cantidad de indicadores de operación peligrosa y de patrones combinados activos en la unidad."""
+    return float((vector(unidad, binario=True, estilo=False)[_MASCARA_EVIDENCIA] > 0).sum())
+
+
 def evidencias(unidad, nombres=None, max_por_indicador=3):
     """Líneas donde se activan los indicadores: [(indicador, línea, texto)]."""
     salida = []

@@ -18,14 +18,12 @@ from . import __version__
 from . import caracteristicas as C
 from .catalogo import (API2023, DESCRIPCION_CATEGORIA, DESCRIPCION_PATRON, OWASP2025, RECOMENDACION_CATEGORIA,
                        conocimiento, nombre_categoria, nombre_cwe)
-from .descubrimiento import descubrir, es_generado, leer_texto, resumen_servicio
+from .descubrimiento import descubrir, es_generado, leer_texto, marcar_frontend, resumen_servicio
 from .modelo import NOMBRES_ALGORITMO
 from .segmentacion import segmentar
 from .severidad import NIVELES, estado, estimar
 
 RUTA_MODELO = Path(__file__).with_name("modelos") / "vulnminer.joblib"
-# familias de indicadores que describen el contexto (fuentes, rutas, controles), no la operación peligrosa
-FAMILIAS_CONTEXTO = {"entrada", "rutas", "validacion", "auth"}
 
 
 @dataclass
@@ -113,7 +111,7 @@ def analizar_unidades(modelo, unidades, estandares=("owasp2025", "api2023"), umb
         evid = C.evidencias(u)
         lineas_rel = modelo.lineas_relevantes(u, max_lineas=6) if localizar else []
         lineas_ind = {l for _, l, _ in evid}
-        lineas_op = {l for n, l, _ in evid if C.FAMILIA[n] not in FAMILIAS_CONTEXTO}
+        lineas_op = {l for n, l, _ in evid if C.FAMILIA[n] not in C.FAMILIAS_CONTEXTO}
         # Línea reportada: entre las que más influyen en la predicción (oclusión), se prefiere la que contiene
         # la operación peligrosa (consulta, deserialización, petición saliente...) antes que la fuente de entrada.
         positivas = [l for l, caida in lineas_rel if caida > 0]
@@ -145,7 +143,7 @@ def analizar_proyecto(raiz, modelo=None, estandares=("owasp2025", "api2023"), um
             if es_generado(rel, texto):
                 continue
             textos[rel] = texto.replace("\r\n", "\n").replace("\t", "    ").splitlines()
-            for u in segmentar(rel, texto):
+            for u in marcar_frontend(segmentar(rel, texto), s, rel):
                 unidades.append(u)
                 origen.append(s)
     if progreso:
@@ -182,7 +180,10 @@ def analizar_proyecto(raiz, modelo=None, estandares=("owasp2025", "api2023"), um
             descripcion=_descripcion(cwe, d["categorias"], u, d["activos"]),
             evidencia={"fragmento": _fragmento(textos.get(u.archivo, []), d["linea"]),
                        "lineas_influyentes": [{"linea": l, "aporte": round(c, 3)} for l, c in d["lineas_relevantes"] if c > 0],
-                       "indicadores": indicadores[:8], "patrones_combinados": derivadas},
+                       "indicadores": indicadores[:8], "patrones_combinados": derivadas,
+                       "probabilidad_modelo_base": round(p["probabilidad_base"], 3),
+                       "probabilidad_combinada": None if p["probabilidad_combinada"] is None
+                       else round(p["probabilidad_combinada"], 3)},
             owasp_top10=[{"codigo": c, "nombre": nombre_categoria(c), "probabilidad": round(q, 3)} for c, q in d["t10"]],
             owasp_api=[{"codigo": c, "nombre": nombre_categoria(c), "probabilidad": round(q, 3)} for c, q in d["api"]],
             cwe={"id": cwe, "nombre": nombre_cwe(cwe)} if cwe else {},
@@ -205,7 +206,10 @@ def analizar_proyecto(raiz, modelo=None, estandares=("owasp2025", "api2023"), um
         "proyecto": raiz.name, "ruta": str(raiz), "estandares": list(estandares),
         "modelo": {"detector": NOMBRES_ALGORITMO.get(modelo.algoritmo_detector, modelo.algoritmo_detector),
                    "categorias": NOMBRES_ALGORITMO.get(modelo.algoritmo_categorias, modelo.algoritmo_categorias),
-                   "umbral": umbral if umbral is not None else modelo.umbral, **{k: v for k, v in modelo.metadatos.items()
+                   "umbral": umbral if umbral is not None else modelo.umbral,
+                   "combinacion": ({"umbral_base_codigo": umbral if umbral is not None else modelo.umbral_base_codigo,
+                                    "umbral_combinado": modelo.umbral_combinado} if modelo.combinador is not None else None),
+                   **{k: v for k, v in modelo.metadatos.items()
                                                                                if k in ("version", "fecha", "detector_prueba")}},
         "resumen": {"microservicios": len([s for s in servicios if s.ruta != "."]) or len(servicios),
                     "archivos_analizados": total, "unidades_analizadas": len(unidades), "hallazgos": len(hallazgos),

@@ -153,6 +153,12 @@ def probabilidades(modelo, X):
     return p
 
 
+def entradas_combinador(p, unidades):
+    """Variables de la etapa de combinación: logit de la probabilidad del modelo y evidencia estática."""
+    p = np.clip(np.asarray(p, dtype=float), 1e-4, 1 - 1e-4)
+    return np.c_[np.log(p / (1 - p)), [C.puntaje_evidencia(u) for u in unidades]]
+
+
 # ---------------------------------------------------------------------------------------------
 # Modelo completo
 # ---------------------------------------------------------------------------------------------
@@ -171,6 +177,11 @@ class ModeloVulnminer:
     algoritmo_categorias: str = ""
     no_evaluadas: dict = field(default_factory=dict)   # categoría -> motivo
     metadatos: dict = field(default_factory=dict)
+    # Etapa de combinación (scripts/combinar.py): regresión logística sobre [logit(p), evidencia estática],
+    # ajustada con aplicaciones reales del conjunto de desarrollo. Solo se aplica a unidades de código.
+    combinador: object = None
+    umbral_base_codigo: float = None      # en código: vulnerable si p >= umbral_base_codigo ...
+    umbral_combinado: float = None        # ... o si la probabilidad combinada >= umbral_combinado
 
     # ----- inferencia -----
     def transformar(self, unidades):
@@ -188,14 +199,39 @@ class ModeloVulnminer:
         X = self.transformar(unidades) if X is None else X
         return self.clasificador_cwe.predict_proba(X)
 
+    def probabilidad_combinada(self, unidades, p):
+        """Probabilidad de la etapa de combinación para el código de servidor (NaN en configuración y frontend)."""
+        q = np.full(len(unidades), np.nan)
+        if self.combinador is None:
+            return q
+        idx = [i for i, u in enumerate(unidades) if u.subtipo == "codigo" and not (u.meta or {}).get("frontend")]
+        if idx:
+            q[idx] = self.combinador.predict_proba(entradas_combinador(p[idx], [unidades[i] for i in idx]))[:, 1]
+        return q
+
+    def decision(self, unidades, p, umbral=None):
+        """(vulnerable, confianza, q) del detector, sin la política de categorías.
+
+        Configuración: p >= umbral. Código (si hay etapa de combinación): p >= umbral_base_codigo o
+        q >= umbral_combinado. Un umbral explícito reemplaza los umbrales del modelo base.
+        """
+        q = self.probabilidad_combinada(unidades, p)
+        u_conf = self.umbral if umbral is None else umbral
+        u_cod = (self.umbral_base_codigo or u_conf) if umbral is None else umbral
+        es_cod = ~np.isnan(q)
+        q0 = np.nan_to_num(q, nan=0.0)
+        vulnerable = np.where(es_cod, (p >= u_cod) | (q0 >= (self.umbral_combinado or 1.1)), p >= u_conf)
+        confianza = np.where(es_cod, np.maximum(p, q0), p)
+        return vulnerable, confianza, q
+
     def predecir(self, unidades, umbral=None):
         """Predicción completa para una lista de unidades."""
-        umbral = self.umbral if umbral is None else umbral
-        umbral_sc = max(umbral, self.umbral_sin_categoria or umbral)
+        umbral_sc = max(self.umbral if umbral is None else umbral, self.umbral_sin_categoria or 0.0)
         if not unidades:
             return []
         X = self.transformar(unidades)
         p = self.probabilidad(X=X)
+        detectada, confianza, q = self.decision(unidades, p, umbral)
         pc = self.probabilidad_categorias(X=X)
         pw = self.probabilidad_cwe(X=X)
         clases_cwe = list(self.clasificador_cwe.classes_)
@@ -209,9 +245,11 @@ class ModeloVulnminer:
             # Política de dos niveles: con categoría basta el umbral operativo; sin categoría (pendiente de
             # revisión) se exige el umbral más estricto, porque ni el detector ni el categorizador tienen
             # evidencia clara.
-            vulnerable = bool(p[i] >= umbral and (cats or p[i] >= umbral_sc))
+            vulnerable = bool(detectada[i] and (cats or p[i] >= umbral_sc))
             salida.append({
-                "probabilidad": float(p[i]),
+                "probabilidad": float(confianza[i]),
+                "probabilidad_base": float(p[i]),
+                "probabilidad_combinada": None if np.isnan(q[i]) else float(q[i]),
                 "vulnerable": vulnerable,
                 "owasp2025": [(c, q) for c, q in cats if c in OWASP2025],
                 "api2023": [(c, q) for c, q in cats if c in API2023],

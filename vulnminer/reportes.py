@@ -221,7 +221,7 @@ def escribir_html(resultado, ruta):
 <title>vulnminer · {_e(resultado['proyecto'])}</title><style>{CSS}</style></head>
 <body><header><h1>Reporte de seguridad · {_e(resultado['proyecto'])}</h1>
 <div class="sub">vulnminer {_e(resultado['version'])} · {_e(resultado['fecha'])} · Estándares: OWASP Top 10:2025, OWASP API Security Top 10:2023 ·
-Modelo: {_e(modelo.get('detector'))} (umbral {modelo.get('umbral')})</div>
+Modelo: {_e(modelo.get('detector'))} (umbral {modelo.get('umbral')}){' + combinación con la evidencia estática' if modelo.get('combinacion') else ''}</div>
 <div class="tarjetas">
  <div class="tarjeta"><span>Microservicios</span><b>{r['microservicios']}</b></div>
  <div class="tarjeta"><span>Archivos analizados</span><b>{r['archivos_analizados']}</b></div>

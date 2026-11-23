@@ -21,7 +21,7 @@ from sklearn.metrics import average_precision_score, roc_auc_score
 BASE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BASE))
 
-from vulnminer.descubrimiento import descubrir, es_generado  # noqa: E402
+from vulnminer.descubrimiento import descubrir, es_generado, marcar_frontend  # noqa: E402
 from vulnminer.segmentacion import segmentar  # noqa: E402
 
 FALSAS_ALARMAS_MAX = 0.05
@@ -50,7 +50,7 @@ def cargar(ruta=BASE / "evaluacion" / "desarrollo.json"):
                 for rel in s.archivos:
                     texto = (raiz / rel).read_text(encoding="utf-8", errors="ignore")
                     if not es_generado(rel, texto):
-                        negativas.extend(segmentar(rel, texto))
+                        negativas.extend(marcar_frontend(segmentar(rel, texto), s, rel))
     return positivas, negativas
 
 

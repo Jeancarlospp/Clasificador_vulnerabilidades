@@ -58,6 +58,24 @@ def leer_texto(ruta):
     return datos.decode("utf-8", errors="ignore"), None
 
 
+FRONTEND = {"React", "Angular", "Vue"}
+SERVIDOR_JS = {"NestJS", "Express", "Fastify", "Koa", "Next.js"}
+
+
+def es_frontend(servicio, archivo=""):
+    """Código que se ejecuta en el navegador: componentes .jsx/.tsx o un servicio cuyo package.json es de un
+    framework de interfaz (React, Angular, Vue) sin un framework de servidor."""
+    tecnologias = set(servicio.tecnologias)
+    return archivo.endswith((".jsx", ".tsx")) or bool(tecnologias & FRONTEND and not tecnologias & SERVIDOR_JS)
+
+
+def marcar_frontend(unidades, servicio, archivo):
+    if es_frontend(servicio, archivo):
+        for u in unidades:
+            u.meta = {**(u.meta or {}), "frontend": True}
+    return unidades
+
+
 def es_generado(nombre, texto):
     """Archivos producidos por generadores de código (gRPC, OpenAPI, ORM...): no los escribe el equipo."""
     return bool(OTROS_EXCLUIDOS.search(nombre) or GENERADO.search(texto[:600]))
@@ -72,6 +90,7 @@ FRAMEWORKS = [
     ("Next.js", "package.json", r"\"next\""),
     ("React", "package.json", r"\"react\""),
     ("Angular", "package.json", r"\"@angular/core\""),
+    ("Vue", "package.json", r"\"vue\""),
     ("Spring Boot", "pom.xml", r"spring-boot"),
     ("Spring Boot", "build.gradle", r"spring-boot|org\.springframework\.boot"),
     ("Spring Boot", "build.gradle.kts", r"spring-boot|org\.springframework\.boot"),
