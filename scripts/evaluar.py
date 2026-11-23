@@ -5,9 +5,9 @@
    vulnerabilidades conocidas se detectan (sensibilidad) y si la categoría asignada coincide.
 2. Proyectos de referencia sin vulnerabilidades intencionales: densidad de hallazgos
    (hallazgos por cada 100 unidades analizadas) como estimación de falsas alarmas.
-3. Fragmentos externos:
-   - OWASP Juice Shop: variantes vulnerables y la corrección correcta de cada reto de código.
-   - Fragmentos de foros y documentación oficial (Stack Overflow, OWASP, Flask, Django...).
+3. Proyecto de demostración con la estructura del enunciado (vulnerabilidades sembradas; se informa aparte
+   porque lo escribió el mismo autor del modelo).
+4. Fragmentos de foros y documentación oficial (Stack Overflow, OWASP, Flask, Django...).
 
 Salidas: resultados/evaluacion_externa.json y resultados/hallazgos_proyectos.csv
 
@@ -102,23 +102,6 @@ def metricas(y, p, umbral):
             "TP": int(tp), "FP": int(fp), "TN": int(tn), "FN": int(fn)}
 
 
-def evaluar_juice_shop(modelo):
-    carpeta = BASE / "evaluacion" / "proyectos" / "juice-shop" / "data" / "static" / "codefixes"
-    if not carpeta.exists():
-        return None
-    unidades, y, ids = [], [], []
-    for f in sorted(carpeta.glob("*.ts")):
-        texto = f.read_text(encoding="utf-8", errors="ignore")
-        lineas = texto.splitlines()
-        unidades.append(Unidad(f.name, "typescript", "codigo", f.stem, list(range(1, len(lineas) + 1)), texto))
-        y.append(0 if f.stem.endswith("_correct") else 1)
-        ids.append(f.stem)
-    p = modelo.probabilidad(unidades)
-    m = metricas(y, p, modelo.umbral)
-    m["detalle"] = [{"fragmento": i, "vulnerable": int(t), "probabilidad": round(float(q), 3)} for i, t, q in zip(ids, y, p)]
-    return m
-
-
 def evaluar_fragmentos_web(modelo):
     ruta = BASE / "evaluacion" / "fragmentos_web.csv"
     if not ruta.exists():
@@ -160,11 +143,13 @@ def main():
             por_categoria[c]["documentadas"] += 1
             por_categoria[c]["detectadas"] += int(d["detectada"])
             por_categoria[c]["categoria_correcta"] += int(c in d["categorias_predichas"])
-    juice = evaluar_juice_shop(modelo)
     web = evaluar_fragmentos_web(modelo)
+    demo = [d for p in proyectos.values() if p["tipo"] == "demostracion" for d in p["detalle"]]
+    resumen_demo = {"vulnerabilidades_sembradas": len(demo), "detectadas": sum(d["detectada"] for d in demo),
+                    "categoria_correcta": sum(d["categoria_correcta"] for d in demo)}
     salida = {"umbral": modelo.umbral, "resumen_proyectos_vulnerables": resumen,
               "por_categoria": dict(sorted(por_categoria.items())), "proyectos": proyectos,
-              "juice_shop": juice, "fragmentos_web": web}
+              "resumen_proyecto_demo": resumen_demo, "fragmentos_web": web}
     (RESULTADOS / "evaluacion_externa.json").write_text(json.dumps(salida, indent=2, ensure_ascii=False))
     if filas:
         with (RESULTADOS / "hallazgos_proyectos.csv").open("w", newline="", encoding="utf-8") as f:
@@ -173,7 +158,9 @@ def main():
             w.writerows(filas)
     print(f"\nVulnerabilidades documentadas detectadas: {resumen['detectadas']}/{resumen['vulnerabilidades_documentadas']} "
           f"(sensibilidad {resumen['sensibilidad']:.2f}); categoría correcta en {resumen['categoria_correcta']}")
-    for nombre, m in (("Juice Shop", juice), ("Fragmentos web", web)):
+    print(f"Proyecto de demostración: {resumen_demo['detectadas']}/{resumen_demo['vulnerabilidades_sembradas']} detectadas, "
+          f"categoría correcta en {resumen_demo['categoria_correcta']}")
+    for nombre, m in (("Fragmentos web", web),):
         if m:
             print(f"{nombre:15s} n={m['n']} P={m['precision']:.2f} R={m['recall']:.2f} F1={m['f1']:.2f} "
                   f"acc={m['accuracy']:.2f} AUC={m['roc_auc'] or 0:.2f}")

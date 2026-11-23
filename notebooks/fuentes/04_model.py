@@ -29,6 +29,7 @@ from sklearn.metrics import average_precision_score, f1_score, precision_recall_
 BASE = Path.cwd().parent if Path.cwd().name == "notebooks" else Path.cwd()
 sys.path.insert(0, str(BASE))
 sys.path.insert(0, str(BASE / "notebooks"))
+sys.path.insert(0, str(BASE / "scripts"))
 import estilo as E  # noqa: E402
 from vulnminer.modelo import NOMBRES_ALGORITMO, REJILLAS, ModeloVulnminer, a_unidades, crear_clasificador, representacion  # noqa: E402
 
@@ -58,7 +59,29 @@ pd.DataFrame([{"algoritmo": NOMBRES_ALGORITMO[a], "configuraciones": len(r), "re
               for a, r in REJILLAS.items()])
 
 # %% [markdown]
-# ## 2. Comparación experimental del detector (validación)
+# ## 2. Variante de la representación (conjunto de desarrollo)
+#
+# La partición de validación proviene de las mismas fuentes que el entrenamiento, por lo que favorece
+# variables que separan *fuentes* más que *vulnerabilidades* (por ejemplo, el estilo: el código de
+# producción tiene más condicionales y manejo de excepciones que las pruebas de reglas). Para elegir la
+# representación usé un **conjunto de desarrollo a nivel de proyecto**: vulnerabilidades documentadas de
+# aplicaciones reales (laboratorios de PyGoat y NodeGoat) frente a todas las unidades de tres proyectos
+# benignos reservados. Ninguno participa en el entrenamiento ni en la evaluación final.
+#
+# Las variantes cambian solo el bloque de características de seguridad: indicadores como log(1 + conteo) o
+# como presencia (0/1), y con o sin las métricas de estilo del código.
+
+# %%
+var = pd.read_csv(BASE / "resultados" / "seleccion_variante.csv")
+var[["variante", "peso_seguridad", "val_ap", "dev_ap", "dev_auc", "dev_sensibilidad_5pct"]].round(3).rename(columns={
+    "variante": "Variante", "peso_seguridad": "Peso", "val_ap": "AP validación", "dev_ap": "AP desarrollo",
+    "dev_auc": "AUC desarrollo", "dev_sensibilidad_5pct": "Sensibilidad con 5 % de falsas alarmas"})
+
+# %%
+print("Variante seleccionada:", metricas["representacion"]["variante"])
+
+# %% [markdown]
+# ## 3. Comparación experimental del detector (validación)
 #
 # Criterio de selección: **precisión promedio (AP)**, el área bajo la curva precisión–sensibilidad. No
 # depende del umbral y es adecuada con clases desbalanceadas. Se informan también F1, precisión,
@@ -96,13 +119,14 @@ E.guardar(fig, "modelo_comparacion_detector")
 plt.show()
 
 # %% [markdown]
-# ## 3. Reentrenamiento de los cuatro algoritmos con su mejor configuración
+# ## 4. Reentrenamiento de los cuatro algoritmos con su mejor configuración
 #
 # Reproducción de la comparación: cada algoritmo se entrena con la partición de entrenamiento y se evalúa en
 # validación. Las curvas precisión–sensibilidad muestran el compromiso de cada uno.
 
 # %%
-R = representacion().fit(a_unidades(tr))
+rp = metricas["representacion"]
+R = representacion(binario=rp["binario"], estilo=rp["estilo"]).fit(a_unidades(tr))
 from scipy import sparse  # noqa: E402
 
 bl_tr = [t.transform(a_unidades(tr)) for _, t in R.transformer_list]
@@ -137,7 +161,7 @@ E.guardar(fig, "modelo_curvas_pr")
 plt.show()
 
 # %% [markdown]
-# ## 4. Comparación del categorizador multietiqueta (validación)
+# ## 5. Comparación del categorizador multietiqueta (validación)
 #
 # Se entrena con las unidades vulnerables de entrenamiento y se mide en las vulnerables de validación.
 # Criterio de selección: **F1 macro**, el promedio de F1 entre categorías, para que las categorías escasas
@@ -165,7 +189,7 @@ E.guardar(fig, "modelo_comparacion_categorias")
 plt.show()
 
 # %% [markdown]
-# ## 5. Selección del modelo y justificación
+# ## 6. Selección del modelo y justificación
 
 # %%
 d, c = metricas["detector"], metricas["categorias"]
@@ -185,35 +209,45 @@ print(f"Categorías con clasificador: {len(c['evaluadas'])} | no evaluadas: {c['
 # - Entrena en segundos y predice en milisegundos, lo que permite analizar proyectos completos en la CLI.
 
 # %% [markdown]
-# ## 6. Umbral de decisión
+# ## 7. Umbral de decisión
 #
-# El umbral se elige en validación para maximizar F1 con el detector seleccionado. En prueba se usa ese
-# mismo umbral, sin reajustarlo.
+# Calculé dos umbrales:
+#
+# - **Umbral de validación:** maximiza F1 en la partición de validación. Es apropiado para fragmentos
+#   parecidos a los de entrenamiento.
+# - **Umbral operativo:** el menor umbral cuya tasa de falsas alarmas en los proyectos limpios del conjunto
+#   de desarrollo es de 5 % o menos. Fija un "presupuesto de ruido" para el análisis de proyectos completos y
+#   maximiza la detección dentro de ese presupuesto. **Es el umbral que usa la herramienta.**
 
 # %%
-mejor = mejores.iloc[0]
-p = curvas[mejor["nombre"]]
-umbrales = np.arange(0.1, 0.91, 0.01)
-f1s = [f1_score(va.vulnerable, p >= u) for u in umbrales]
-precs = [((p >= u) & (va.vulnerable == 1)).sum() / max((p >= u).sum(), 1) for u in umbrales]
-recs = [((p >= u) & (va.vulnerable == 1)).sum() / va.vulnerable.sum() for u in umbrales]
+dv = metricas["desarrollo"]
+pd.DataFrame({"Umbral de validación": dv["con_umbral_validacion"], "Umbral operativo": dv["con_umbral_operativo"]}).T[
+    ["umbral", "sensibilidad", "falsas_alarmas", "ap", "auc"]].round(3)
+
+# %%
+import desarrollo  # noqa: E402
+
+modelo = ModeloVulnminer.cargar(BASE / "vulnminer" / "modelos" / "vulnminer.joblib")
+dev_pos, dev_neg = desarrollo.cargar()
+p_pos, p_neg = modelo.probabilidad(dev_pos), modelo.probabilidad(dev_neg)
+umbrales = np.arange(0.05, 0.96, 0.01)
 fig, ax = plt.subplots(figsize=(7, 3.6))
-for serie, nombre, color in ((f1s, "F1", E.SERIES[0]), (precs, "Precisión", E.SERIES[1]), (recs, "Sensibilidad", E.SERIES[2])):
-    ax.plot(umbrales, serie, color=color, linewidth=2, label=nombre)
-ax.axvline(d["prueba"]["umbral"], color=E.TEXTO_2, linestyle="--", linewidth=1)
-ax.annotate(f"umbral elegido = {d['prueba']['umbral']:.2f}", (d["prueba"]["umbral"], 0.05), xytext=(4, 0), textcoords="offset points",
-            fontsize=8, color=E.TEXTO_2)
+ax.plot(umbrales, [(p_pos >= u).mean() for u in umbrales], color=E.NARANJA, linewidth=2, label="Sensibilidad (vulnerabilidades reales)")
+ax.plot(umbrales, [(p_neg >= u).mean() for u in umbrales], color=E.AZUL, linewidth=2, label="Falsas alarmas (proyectos limpios)")
+for u, nombre in ((dv["umbral_validacion"], "validación"), (modelo.umbral, "operativo")):
+    ax.axvline(u, color=E.TEXTO_2, linestyle="--", linewidth=1)
+    ax.annotate(f"{nombre} = {u:.2f}", (u, 0.92), xytext=(4, 0), textcoords="offset points", fontsize=8, color=E.TEXTO_2)
 ax.set_xlabel("Umbral de probabilidad")
 ax.set_ylim(0, 1.02)
-ax.set_title("Elección del umbral del detector (validación)")
-ax.legend(loc="lower left")
+ax.set_title("Umbral del detector en el conjunto de desarrollo")
+ax.legend(loc="center right", fontsize=8)
 fig.tight_layout()
 E.guardar(fig, "modelo_umbral")
 plt.show()
-print("Umbrales por categoría:", c["umbrales"])
+print("Umbrales por categoría (validación):", c["umbrales"])
 
 # %% [markdown]
-# ## 7. Modelo final serializado
+# ## 8. Modelo final serializado
 #
 # El modelo final se reentrena con **entrenamiento + validación** usando la configuración y los umbrales
 # elegidos, y se guarda con `joblib` junto con el pipeline de representación en
@@ -221,7 +255,6 @@ print("Umbrales por categoría:", c["umbrales"])
 
 # %%
 ruta = BASE / "vulnminer" / "modelos" / "vulnminer.joblib"
-modelo = ModeloVulnminer.cargar(ruta)
 print(f"Archivo: {ruta.relative_to(BASE)} ({ruta.stat().st_size / 1e6:.1f} MB)")
 print("Componentes:", type(modelo.representacion).__name__, "|", type(modelo.detector).__name__, "|",
       type(modelo.categorizador).__name__, "|", type(modelo.clasificador_cwe).__name__)

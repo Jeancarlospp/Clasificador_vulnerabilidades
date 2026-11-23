@@ -47,9 +47,11 @@ p = modelo.probabilidad(X=X)
 y = te.vulnerable.values
 yp = (p >= modelo.umbral).astype(int)
 m = metricas["detector"]["prueba"]
-pd.Series({"Umbral": modelo.umbral, "Precisión": m["precision"], "Sensibilidad (recall)": m["recall"], "F1": m["f1"],
-           "Exactitud": m["accuracy"], "AUC-ROC": m["roc_auc"], "Precisión promedio (AP)": m["ap"],
-           "Tasa de falsos positivos": m["tasa_falsos_positivos"]}).round(3).to_frame("prueba")
+mv = metricas["detector"]["prueba_umbral_validacion"]
+fila = lambda x: {"Umbral": x["umbral"], "Precisión": x["precision"], "Sensibilidad (recall)": x["recall"], "F1": x["f1"],  # noqa: E731
+                  "Exactitud": x["accuracy"], "AUC-ROC": x["roc_auc"], "Precisión promedio (AP)": x["ap"],
+                  "Tasa de falsos positivos": x["tasa_falsos_positivos"]}
+pd.DataFrame({"Umbral operativo (herramienta)": fila(m), "Umbral de validación (máximo F1)": fila(mv)}).round(3)
 
 # %%
 fig, axes = plt.subplots(1, 3, figsize=(13, 3.9))
@@ -192,11 +194,9 @@ filas = {
     "Datos de ajuste (entren. + valid.)": [f1_score(muestra.vulnerable, pe >= modelo.umbral), roc_auc_score(muestra.vulnerable, pe)],
     "Prueba (grupos no vistos)": [m["f1"], m["roc_auc"]],
 }
-juice, web = externa.get("juice_shop"), externa.get("fragmentos_web")
+web = externa.get("fragmentos_web")
 if web:
     filas["Fragmentos de foros y documentación"] = [web["f1"], web["roc_auc"]]
-if juice:
-    filas["OWASP Juice Shop (retos de código)"] = [juice["f1"], juice["roc_auc"]]
 gen = pd.DataFrame(filas, index=["F1", "AUC-ROC"]).T.round(3)
 gen
 
@@ -238,7 +238,7 @@ porcat
 
 # %%
 fig, ax = plt.subplots(figsize=(9, 4.2))
-pv = proy[proy.tipo == "vulnerable"]
+pv = proy[proy.tipo.isin(["vulnerable", "demostracion"])]
 x = np.arange(len(pv))
 b1 = ax.bar(x - 0.2, pv.vulnerabilidades_documentadas.astype(int), width=0.38, color=E.TEXTO_2, alpha=0.35, label="Documentadas")
 b2 = ax.bar(x + 0.2, pv.detectadas.astype(int), width=0.38, color=E.NARANJA, label="Detectadas")
@@ -253,11 +253,19 @@ E.guardar(fig, "evaluacion_proyectos")
 plt.show()
 
 # %% [markdown]
+# El proyecto de demostración (estructura del enunciado: gateway, NestJS, Spring Boot y FastAPI) lo escribí
+# para el laboratorio con vulnerabilidades sembradas; se informa aparte porque comparte autor con los casos
+# controlados y, por tanto, es una estimación optimista.
+
+# %%
+externa["resumen_proyecto_demo"]
+
+# %% [markdown]
 # ### Fragmentos externos
 
 # %%
 filas = []
-for nombre, mm in (("Fragmentos de foros y documentación", web), ("OWASP Juice Shop (retos de código)", juice)):
+for nombre, mm in (("Fragmentos de foros y documentación", web),):
     if mm:
         filas.append({"conjunto": nombre, "n": mm["n"], "vulnerables": mm["vulnerables"], "precision": mm["precision"],
                       "recall": mm["recall"], "f1": mm["f1"], "accuracy": mm["accuracy"], "auc": mm["roc_auc"]})
