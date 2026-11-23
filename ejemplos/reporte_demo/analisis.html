@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>vulnminer · proyecto-microservicios</title><style>
+:root{--bg:#f6f7f9;--panel:#fff;--txt:#1d2430;--sub:#5b6475;--borde:#dfe3ea;--acento:#1f5fbf;--code:#f2f4f7;
+--critica:#8e1b1b;--alta:#c2410c;--media:#a16207;--baja:#3f6212;--marca:#fff3bf}
+@media (prefers-color-scheme:dark){:root{--bg:#12151b;--panel:#1b2029;--txt:#e6e9ef;--sub:#9aa3b2;--borde:#2c3340;
+--acento:#7aa7f0;--code:#151a22;--critica:#f87171;--alta:#fb923c;--media:#facc15;--baja:#a3e635;--marca:#3b3315}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:24px 32px;border-bottom:1px solid var(--borde);background:var(--panel)}
+h1{margin:0 0 4px;font-size:22px}h2{font-size:17px;margin:28px 0 12px}.sub{color:var(--sub)}
+main{max-width:1200px;margin:0 auto;padding:8px 32px 48px}
+.tarjetas{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:20px}
+.tarjeta{background:var(--panel);border:1px solid var(--borde);border-radius:8px;padding:14px 16px}
+.tarjeta b{display:block;font-size:24px}.tarjeta span{color:var(--sub);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--borde);border-radius:8px;overflow:hidden}
+th,td{padding:7px 10px;border-bottom:1px solid var(--borde);text-align:left;vertical-align:top}th{font-size:12px;color:var(--sub);font-weight:600}
+td.n{text-align:center;font-variant-numeric:tabular-nums}td.cero{color:var(--borde)}.tabla-scroll{overflow-x:auto}
+.filtros{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 16px}select,input{background:var(--panel);color:var(--txt);border:1px solid var(--borde);border-radius:6px;padding:6px 8px;font:inherit}
+.hallazgo{background:var(--panel);border:1px solid var(--borde);border-left:4px solid var(--sub);border-radius:8px;padding:14px 18px;margin-bottom:12px}
+.hallazgo[data-sev=Crítica]{border-left-color:var(--critica)}.hallazgo[data-sev=Alta]{border-left-color:var(--alta)}
+.hallazgo[data-sev=Media]{border-left-color:var(--media)}.hallazgo[data-sev=Baja]{border-left-color:var(--baja)}
+.cab{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;justify-content:space-between}.cab h3{margin:0;font-size:15px}
+.chip{display:inline-block;border:1px solid var(--borde);border-radius:12px;padding:1px 9px;font-size:12px;margin:2px 4px 2px 0}
+.chip.t10{border-color:var(--acento);color:var(--acento)}.sev{font-weight:700}.sev.Crítica{color:var(--critica)}.sev.Alta{color:var(--alta)}
+.sev.Media{color:var(--media)}.sev.Baja{color:var(--baja)}
+dl{display:grid;grid-template-columns:170px 1fr;gap:4px 12px;margin:10px 0}dt{color:var(--sub)}dd{margin:0}
+pre{background:var(--code);border:1px solid var(--borde);border-radius:6px;padding:8px 0;overflow-x:auto;margin:6px 0;font-size:12.5px}
+pre .l{display:block;padding:0 12px;white-space:pre}pre .l.r{background:var(--marca)}pre .num{color:var(--sub);display:inline-block;width:46px;user-select:none}
+details summary{cursor:pointer;color:var(--acento)}.oculto{display:none}footer{color:var(--sub);font-size:12px;margin-top:32px}
+</style></head>
+<body><header><h1>Reporte de seguridad · proyecto-microservicios</h1>
+<div class="sub">vulnminer 1.0.0 · 2026-11-23T11:55:50 · Estándares: OWASP Top 10:2025, OWASP API Security Top 10:2023 ·
+Modelo: SVM lineal (calibrada) (umbral 0.35) + combinación con la evidencia estática</div>
+<div class="tarjetas">
+ <div class="tarjeta"><span>Microservicios</span><b>4</b></div>
+ <div class="tarjeta"><span>Archivos analizados</span><b>19</b></div>
+ <div class="tarjeta"><span>Unidades analizadas</span><b>65</b></div>
+ <div class="tarjeta"><span>Hallazgos potenciales</span><b>17</b></div>
+ <div class="tarjeta"><span>Crítica</span><b class="sev Crítica">2</b></div><div class="tarjeta"><span>Alta</span><b class="sev Alta">8</b></div><div class="tarjeta"><span>Media</span><b class="sev Media">7</b></div><div class="tarjeta"><span>Baja</span><b class="sev Baja">0</b></div>
+</div></header>
+<main>
+<p class="sub">Los hallazgos son <b>potenciales</b>: los produce un modelo de minería de datos sobre el código y la configuración, y
+deben verificarse. La confianza del modelo no equivale a la severidad.</p>
+<h2>Hallazgos por microservicio y categoría</h2>
+<div class="tabla-scroll"><table><thead><tr><th>Microservicio</th><th title="Pérdida de control de acceso">A01</th><th title="Configuración de seguridad incorrecta">A02</th><th title="Fallas en la cadena de suministro de software">A03</th><th title="Fallas criptográficas">A04</th><th title="Inyección">A05</th><th title="Diseño inseguro">A06</th><th title="Fallas de autenticación">A07</th><th title="Fallas en la integridad del software o de los datos">A08</th><th title="Fallas en el registro, alerta y monitoreo de seguridad">A09</th><th title="Manejo inadecuado de condiciones excepcionales">A10</th><th title="Autorización incorrecta a nivel de objeto">API1</th><th title="Autenticación incorrecta">API2</th><th title="Autorización incorrecta a nivel de propiedades del objeto">API3</th><th title="Consumo ilimitado de recursos">API4</th><th title="Autorización incorrecta a nivel de función">API5</th><th title="Acceso ilimitado a flujos de negocio sensibles">API6</th><th title="Falsificación de solicitudes del lado del servidor">API7</th><th title="Configuración de seguridad incorrecta">API8</th><th title="Gestión inadecuada del inventario de API">API9</th><th title="Consumo inseguro de API">API10</th><th title="pendiente">pendiente</th><th>Total</th></tr></thead><tbody><tr><td>(raíz del proyecto)</td><td class="n cero" data-filtro="(raíz del proyecto)|A01:2025">·</td><td class="n" data-filtro="(raíz del proyecto)|A02:2025">1</td><td class="n cero" data-filtro="(raíz del proyecto)|A03:2025">·</td><td class="n cero" data-filtro="(raíz del proyecto)|A04:2025">·</td><td class="n cero" data-filtro="(raíz del proyecto)|A05:2025">·</td><td class="n cero" data-filtro="(raíz del proyecto)|A06:2025">·</td><td class="n" data-filtro="(raíz del proyecto)|A07:2025">1</td><td class="n cero" data-filtro="(raíz del proyecto)|A08:2025">·</td><td class="n cero" data-filtro="(raíz del proyecto)|A09:2025">·</td><td class="n cero" data-filtro="(raíz del proyecto)|A10:2025">·</td><td class="n cero" data-filtro="(raíz del proyecto)|API1:2023">·</td><td class="n cero" data-filtro="(raíz del proyecto)|API2:2023">·</td><td class="n cero" data-filtro="(raíz del proyecto)|API3:2023">·</td><td class="n cero" data-filtro="(raíz del proyecto)|API4:2023">·</td><td class="n cero" data-filtro="(raíz del proyecto)|API5:2023">·</td><td class="n cero" data-filtro="(raíz del proyecto)|API6:2023">·</td><td class="n cero" data-filtro="(raíz del proyecto)|API7:2023">·</td><td class="n" data-filtro="(raíz del proyecto)|API8:2023">1</td><td class="n cero" data-filtro="(raíz del proyecto)|API9:2023">·</td><td class="n cero" data-filtro="(raíz del proyecto)|API10:2023">·</td><td class="n cero" data-filtro="(raíz del proyecto)|pendiente">·</td><td class='n'><b>1</b></td></tr><tr><td>api-gateway</td><td class="n cero" data-filtro="api-gateway|A01:2025">·</td><td class="n" data-filtro="api-gateway|A02:2025">1</td><td class="n cero" data-filtro="api-gateway|A03:2025">·</td><td class="n cero" data-filtro="api-gateway|A04:2025">·</td><td class="n cero" data-filtro="api-gateway|A05:2025">·</td><td class="n cero" data-filtro="api-gateway|A06:2025">·</td><td class="n cero" data-filtro="api-gateway|A07:2025">·</td><td class="n cero" data-filtro="api-gateway|A08:2025">·</td><td class="n cero" data-filtro="api-gateway|A09:2025">·</td><td class="n cero" data-filtro="api-gateway|A10:2025">·</td><td class="n cero" data-filtro="api-gateway|API1:2023">·</td><td class="n cero" data-filtro="api-gateway|API2:2023">·</td><td class="n cero" data-filtro="api-gateway|API3:2023">·</td><td class="n cero" data-filtro="api-gateway|API4:2023">·</td><td class="n cero" data-filtro="api-gateway|API5:2023">·</td><td class="n cero" data-filtro="api-gateway|API6:2023">·</td><td class="n cero" data-filtro="api-gateway|API7:2023">·</td><td class="n" data-filtro="api-gateway|API8:2023">1</td><td class="n cero" data-filtro="api-gateway|API9:2023">·</td><td class="n cero" data-filtro="api-gateway|API10:2023">·</td><td class="n cero" data-filtro="api-gateway|pendiente">·</td><td class='n'><b>1</b></td></tr><tr><td>order-service</td><td class="n" data-filtro="order-service|A01:2025">2</td><td class="n" data-filtro="order-service|A02:2025">1</td><td class="n" data-filtro="order-service|A03:2025">1</td><td class="n cero" data-filtro="order-service|A04:2025">·</td><td class="n cero" data-filtro="order-service|A05:2025">·</td><td class="n cero" data-filtro="order-service|A06:2025">·</td><td class="n cero" data-filtro="order-service|A07:2025">·</td><td class="n" data-filtro="order-service|A08:2025">1</td><td class="n cero" data-filtro="order-service|A09:2025">·</td><td class="n cero" data-filtro="order-service|A10:2025">·</td><td class="n" data-filtro="order-service|API1:2023">1</td><td class="n cero" data-filtro="order-service|API2:2023">·</td><td class="n cero" data-filtro="order-service|API3:2023">·</td><td class="n cero" data-filtro="order-service|API4:2023">·</td><td class="n cero" data-filtro="order-service|API5:2023">·</td><td class="n cero" data-filtro="order-service|API6:2023">·</td><td class="n cero" data-filtro="order-service|API7:2023">·</td><td class="n" data-filtro="order-service|API8:2023">1</td><td class="n cero" data-filtro="order-service|API9:2023">·</td><td class="n cero" data-filtro="order-service|API10:2023">·</td><td class="n cero" data-filtro="order-service|pendiente">·</td><td class='n'><b>5</b></td></tr><tr><td>product-service</td><td class="n cero" data-filtro="product-service|A01:2025">·</td><td class="n" data-filtro="product-service|A02:2025">3</td><td class="n" data-filtro="product-service|A03:2025">1</td><td class="n cero" data-filtro="product-service|A04:2025">·</td><td class="n" data-filtro="product-service|A05:2025">1</td><td class="n cero" data-filtro="product-service|A06:2025">·</td><td class="n" data-filtro="product-service|A07:2025">1</td><td class="n cero" data-filtro="product-service|A08:2025">·</td><td class="n cero" data-filtro="product-service|A09:2025">·</td><td class="n cero" data-filtro="product-service|A10:2025">·</td><td class="n cero" data-filtro="product-service|API1:2023">·</td><td class="n" data-filtro="product-service|API2:2023">1</td><td class="n cero" data-filtro="product-service|API3:2023">·</td><td class="n cero" data-filtro="product-service|API4:2023">·</td><td class="n cero" data-filtro="product-service|API5:2023">·</td><td class="n cero" data-filtro="product-service|API6:2023">·</td><td class="n cero" data-filtro="product-service|API7:2023">·</td><td class="n" data-filtro="product-service|API8:2023">3</td><td class="n cero" data-filtro="product-service|API9:2023">·</td><td class="n cero" data-filtro="product-service|API10:2023">·</td><td class="n" data-filtro="product-service|pendiente">1</td><td class='n'><b>5</b></td></tr><tr><td>user-service</td><td class="n" data-filtro="user-service|A01:2025">3</td><td class="n cero" data-filtro="user-service|A02:2025">·</td><td class="n cero" data-filtro="user-service|A03:2025">·</td><td class="n" data-filtro="user-service|A04:2025">1</td><td class="n cero" data-filtro="user-service|A05:2025">·</td><td class="n cero" data-filtro="user-service|A06:2025">·</td><td class="n" data-filtro="user-service|A07:2025">2</td><td class="n cero" data-filtro="user-service|A08:2025">·</td><td class="n cero" data-filtro="user-service|A09:2025">·</td><td class="n cero" data-filtro="user-service|A10:2025">·</td><td class="n" data-filtro="user-service|API1:2023">1</td><td class="n" data-filtro="user-service|API2:2023">2</td><td class="n" data-filtro="user-service|API3:2023">2</td><td class="n cero" data-filtro="user-service|API4:2023">·</td><td class="n" data-filtro="user-service|API5:2023">3</td><td class="n cero" data-filtro="user-service|API6:2023">·</td><td class="n cero" data-filtro="user-service|API7:2023">·</td><td class="n cero" data-filtro="user-service|API8:2023">·</td><td class="n cero" data-filtro="user-service|API9:2023">·</td><td class="n cero" data-filtro="user-service|API10:2023">·</td><td class="n cero" data-filtro="user-service|pendiente">·</td><td class='n'><b>5</b></td></tr></tbody></table></div>
+<p class="sub">Haga clic en una celda para filtrar la lista.</p>
+<h2 id="lista">Hallazgos</h2>
+<div class="filtros">
+ <select id="f-servicio"><option value="">Todos los microservicios</option><option value="(raíz del proyecto)">(raíz del proyecto)</option><option value="api-gateway">api-gateway</option><option value="order-service">order-service</option><option value="product-service">product-service</option><option value="user-service">user-service</option></select>
+ <select id="f-categoria"><option value="">Todas las categorías</option><option value="A01:2025">A01:2025 Pérdida de control de acceso</option><option value="A02:2025">A02:2025 Configuración de seguridad incorrecta</option><option value="A03:2025">A03:2025 Fallas en la cadena de suministro de software</option><option value="A04:2025">A04:2025 Fallas criptográficas</option><option value="A05:2025">A05:2025 Inyección</option><option value="A06:2025">A06:2025 Diseño inseguro</option><option value="A07:2025">A07:2025 Fallas de autenticación</option><option value="A08:2025">A08:2025 Fallas en la integridad del software o de los datos</option><option value="A09:2025">A09:2025 Fallas en el registro, alerta y monitoreo de seguridad</option><option value="A10:2025">A10:2025 Manejo inadecuado de condiciones excepcionales</option><option value="API1:2023">API1:2023 Autorización incorrecta a nivel de objeto</option><option value="API2:2023">API2:2023 Autenticación incorrecta</option><option value="API3:2023">API3:2023 Autorización incorrecta a nivel de propiedades del objeto</option><option value="API4:2023">API4:2023 Consumo ilimitado de recursos</option><option value="API5:2023">API5:2023 Autorización incorrecta a nivel de función</option><option value="API6:2023">API6:2023 Acceso ilimitado a flujos de negocio sensibles</option><option value="API7:2023">API7:2023 Falsificación de solicitudes del lado del servidor</option><option value="API8:2023">API8:2023 Configuración de seguridad incorrecta</option><option value="API9:2023">API9:2023 Gestión inadecuada del inventario de API</option><option value="API10:2023">API10:2023 Consumo inseguro de API</option><option value="pendiente">Pendiente de revisión</option></select>
+ <select id="f-severidad"><option value="">Todas las severidades</option><option value="Crítica">Crítica</option><option value="Alta">Alta</option><option value="Media">Media</option><option value="Baja">Baja</option></select>
+ <input id="f-texto" type="search" placeholder="Buscar texto…"><span id="contador" class="sub"></span>
+</div>
+
+<article class="hallazgo" data-servicio="order-service" data-categorias="A08:2025" data-sev="Crítica">
+ <div class="cab"><h3>VM-001 · Deserialización de datos no confiables. Evidencia: datos de la petición se deserializan.</h3><span class="sev Crítica">Crítica</span></div>
+ <div><span class="chip t10" title="Fallas en la integridad del software o de los datos (p=0.989)">A08:2025</span></div>
+ <dl>
+  <dt>Microservicio</dt><dd>order-service</dd>
+  <dt>Archivo</dt><dd><code>order-service/app/routers/receipts.py</code> · línea 26 (unidad <code>restore_draft</code>, líneas 23–27)</dd>
+  <dt>OWASP Top 10:2025</dt><dd>A08:2025 Fallas en la integridad del software o de los datos</dd>
+  <dt>OWASP API 2023</dt><dd>No aplica / no determinada</dd>
+  <dt>CWE</dt><dd>CWE-502 — Deserialization of Untrusted Data</dd>
+  <dt>Confianza del modelo</dt><dd>0.99</dd>
+  <dt>Severidad estimada</dt><dd>Crítica — severidad base de CWE-502: Crítica; datos de la petición llegan a una operación peligrosa en la misma función.</dd>
+  <dt>Estado</dt><dd>Potencial - respaldado por evidencia estática</dd>
+  <dt>Recomendación</dt><dd>Usar formatos de solo datos (JSON) con validación de esquema; evitar pickle/ObjectInputStream/yaml.load sobre datos externos.</dd>
+ </dl>
+ <pre><span class="l"><span class="num">24</span>async def restore_draft(request: Request, user=Depends(get_current_user)):</span><span class="l"><span class="num">25</span>    data = base64.b64decode(request.cookies.get(&quot;receipt_draft&quot;, &quot;&quot;))</span><span class="l r"><span class="num">26</span>    draft = pickle.loads(data)</span><span class="l"><span class="num">27</span>    return {&quot;restored&quot;: True, &quot;items&quot;: len(draft.get(&quot;items&quot;, []))}</span></pre>
+ <details><summary>Evidencia técnica</summary>
+  <p><b>Líneas que más aportan a la predicción (oclusión):</b> línea 25 (−0.16), línea 26 (−0.14), línea 24 (−0.02)</p>
+  <p><b>Patrones combinados:</b> x_entrada_deserializacion, x_entrada_sin_validar</p>
+  <ul><li>Línea 25: Lee datos enviados por el cliente en la petición — <code>data = base64.b64decode(request.cookies.get(&quot;receipt_draft&quot;, &quot;&quot;))</code></li><li>Línea 23: Define un endpoint HTTP — <code>@router.post(&quot;/draft/restore&quot;)</code></li><li>Línea 24: Exige autenticación en el endpoint — <code>async def restore_draft(request: Request, user=Depends(get_current_user)):</code></li><li>Línea 24: Usa la identidad del usuario autenticado — <code>async def restore_draft(request: Request, user=Depends(get_current_user)):</code></li><li>Línea 26: Deserializa objetos con un formato que permite ejecutar código — <code>draft = pickle.loads(data)</code></li></ul>
+ </details>
+</article>
+<article class="hallazgo" data-servicio="product-service" data-categorias="A05:2025" data-sev="Crítica">
+ <div class="cab"><h3>VM-002 · Consulta SQL construida por concatenación o interpolación de datos (inyección SQL). Evidencia: datos de la petición llegan a una consulta SQL construida dinámicamente.</h3><span class="sev Crítica">Crítica</span></div>
+ <div><span class="chip t10" title="Inyección (p=1.0)">A05:2025</span></div>
+ <dl>
+  <dt>Microservicio</dt><dd>product-service</dd>
+  <dt>Archivo</dt><dd><code>product-service/src/main/java/com/tienda/productos/ProductRepository.java</code> · línea 22 (unidad <code>searchByName</code>, líneas 21–24)</dd>
+  <dt>OWASP Top 10:2025</dt><dd>A05:2025 Inyección</dd>
+  <dt>OWASP API 2023</dt><dd>No aplica / no determinada</dd>
+  <dt>CWE</dt><dd>CWE-89 — Improper Neutralization of Special Elements used in an SQL Command</dd>
+  <dt>Confianza del modelo</dt><dd>0.99</dd>
+  <dt>Severidad estimada</dt><dd>Crítica — severidad base de CWE-89: Crítica; datos de la petición llegan a una operación peligrosa en la misma función.</dd>
+  <dt>Estado</dt><dd>Potencial - respaldado por evidencia estática</dd>
+  <dt>Recomendación</dt><dd>Usar consultas parametrizadas o el ORM con parámetros enlazados; nunca concatenar datos en el texto SQL.</dd>
+ </dl>
+ <pre><span class="l"><span class="num">20</span></span><span class="l"><span class="num">21</span>    public List&lt;Product&gt; searchByName(String name, String sort) {</span><span class="l r"><span class="num">22</span>        String sql = &quot;SELECT * FROM products WHERE name LIKE &#x27;%&quot; + name + &quot;%&#x27; ORDER BY &quot; + sort;</span><span class="l"><span class="num">23</span>        return jdbc.query(sql, mapper);</span><span class="l"><span class="num">24</span>    }</span></pre>
+ <details><summary>Evidencia técnica</summary>
+  <p><b>Líneas que más aportan a la predicción (oclusión):</b> línea 22 (−0.74), línea 23 (−0.18), línea 24 (−0.00)</p>
+  <p><b>Patrones combinados:</b> x_entrada_sql</p>
+  <ul><li>Línea 23: Lee datos enviados por el cliente en la petición — <code>return jdbc.query(sql, mapper);</code></li><li>Línea 22: Opera sobre un recurso que normalmente pertenece a un usuario — <code>String sql = &quot;SELECT * FROM products WHERE name LIKE &#x27;%&quot; + name + &quot;%&#x27; ORDER BY &quot; + sort;</code></li><li>Línea 22: Consulta SQL construida con concatenación o interpolación — <code>String sql = &quot;SELECT * FROM products WHERE name LIKE &#x27;%&quot; + name + &quot;%&#x27; ORDER BY &quot; + sort;</code></li></ul>
+ </details>
+</article>
+<article class="hallazgo" data-servicio="user-service" data-categorias="A07:2025 API2:2023 API5:2023" data-sev="Alta">
+ <div class="cab"><h3>VM-003 · Falta de verificación de autorización en el endpoint. Evidencia: el endpoint de autenticación no limita los intentos; una operación de modificación o administración no comprueba el rol.</h3><span class="sev Alta">Alta</span></div>
+ <div><span class="chip t10" title="Fallas de autenticación (p=0.809)">A07:2025</span><span class="chip" title="Autenticación incorrecta (p=0.918)">API2:2023</span><span class="chip" title="Autorización incorrecta a nivel de función (p=0.239)">API5:2023</span></div>
+ <dl>
+  <dt>Microservicio</dt><dd>user-service</dd>
+  <dt>Archivo</dt><dd><code>user-service/src/users/users.controller.ts</code> · línea 37 (unidad <code>changePassword</code>, líneas 36–41)</dd>
+  <dt>OWASP Top 10:2025</dt><dd>A07:2025 Fallas de autenticación</dd>
+  <dt>OWASP API 2023</dt><dd>API2:2023 Autenticación incorrecta, API5:2023 Autorización incorrecta a nivel de función</dd>
+  <dt>CWE</dt><dd>CWE-862 — Missing Authorization</dd>
+  <dt>Confianza del modelo</dt><dd>1.00</dd>
+  <dt>Severidad estimada</dt><dd>Alta — severidad base de CWE-862: Alta.</dd>
+  <dt>Estado</dt><dd>Potencial - requiere verificación manual o dinámica</dd>
+  <dt>Recomendación</dt><dd>Añadir control de acceso por rol (guards, @PreAuthorize, dependencias de seguridad) con denegación por defecto.</dd>
+ </dl>
+ <pre><span class="l"><span class="num">35</span></span><span class="l"><span class="num">36</span>  @UseGuards(JwtAuthGuard)</span><span class="l r"><span class="num">37</span>  @Patch(&#x27;me/password&#x27;)</span><span class="l"><span class="num">38</span>  async changePassword(@Req() req, @Body(&#x27;password&#x27;) password: string) {</span><span class="l"><span class="num">39</span>    await this.usersService.changePassword(req.user.sub, password);</span></pre>
+ <details><summary>Evidencia técnica</summary>
+  <p><b>Líneas que más aportan a la predicción (oclusión):</b> línea 37 (−0.26), línea 36 (−0.14), línea 38 (−0.07)</p>
+  <p><b>Patrones combinados:</b> x_entrada_sin_validar, x_login_sin_limite, x_ruta_privilegiada_sin_rol, x_secreto_sin_gestor</p>
+  <ul><li>Línea 38: Lee datos enviados por el cliente en la petición — <code>async changePassword(@Req() req, @Body(&#x27;password&#x27;) password: string) {</code></li><li>Línea 37: Define un endpoint HTTP — <code>@Patch(&#x27;me/password&#x27;)</code></li><li>Línea 37: Endpoint que modifica o elimina datos — <code>@Patch(&#x27;me/password&#x27;)</code></li><li>Línea 37: Endpoint de autenticación (login, OTP, recuperación de contraseña) — <code>@Patch(&#x27;me/password&#x27;)</code></li><li>Línea 36: Exige autenticación en el endpoint — <code>@UseGuards(JwtAuthGuard)</code></li><li>Línea 39: Usa la identidad del usuario autenticado — <code>await this.usersService.changePassword(req.user.sub, password);</code></li><li>Línea 38: Secreto o credencial escrito literalmente — <code>async changePassword(@Req() req, @Body(&#x27;password&#x27;) password: string) {</code></li><li>Línea 37: Maneja datos personales o secretos — <code>@Patch(&#x27;me/password&#x27;)</code></li></ul>
+ </details>
+</article>
+<article class="hallazgo" data-servicio="order-service" data-categorias="A01:2025 API1:2023" data-sev="Alta">
+ <div class="cab"><h3>VM-004 · Acceso a un objeto por un identificador controlado por el usuario sin comprobar su propiedad (IDOR/BOLA). Evidencia: el endpoint obtiene un objeto por el identificador de la ruta sin verificar que pertenezca al usuario; se accede a un recurso del usuario por su id sin verificar el propietario.</h3><span class="sev Alta">Alta</span></div>
+ <div><span class="chip t10" title="Pérdida de control de acceso (p=1.0)">A01:2025</span><span class="chip" title="Autorización incorrecta a nivel de objeto (p=0.999)">API1:2023</span></div>
+ <dl>
+  <dt>Microservicio</dt><dd>order-service</dd>
+  <dt>Archivo</dt><dd><code>order-service/app/routers/orders.py</code> · línea 23 (unidad <code>get_order</code>, líneas 21–26)</dd>
+  <dt>OWASP Top 10:2025</dt><dd>A01:2025 Pérdida de control de acceso</dd>
+  <dt>OWASP API 2023</dt><dd>API1:2023 Autorización incorrecta a nivel de objeto</dd>
+  <dt>CWE</dt><dd>CWE-639 — Authorization Bypass Through User-Controlled Key</dd>
+  <dt>Confianza del modelo</dt><dd>1.00</dd>
+  <dt>Severidad estimada</dt><dd>Alta — severidad base de CWE-639: Alta.</dd>
+  <dt>Estado</dt><dd>Potencial - requiere verificación manual o dinámica</dd>
+  <dt>Recomendación</dt><dd>Filtrar la consulta por el usuario autenticado (p. ej. findByIdAndOwner) o comprobar la propiedad antes de devolver o modificar el objeto.</dd>
+ </dl>
+ <pre><span class="l"><span class="num">21</span>@router.get(&quot;/{order_id}&quot;, response_model=OrderRead)</span><span class="l"><span class="num">22</span>def get_order(order_id: int, db: Session = Depends(get_db), user=Depends(get_current_user)):</span><span class="l r"><span class="num">23</span>    order = db.query(Order).filter(Order.id == order_id).first()</span><span class="l"><span class="num">24</span>    if order is None:</span><span class="l"><span class="num">25</span>        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=&quot;Order not found&quot;)</span></pre>
+ <details><summary>Evidencia técnica</summary>
+  <p><b>Líneas que más aportan a la predicción (oclusión):</b> línea 23 (−0.56), línea 22 (−0.56), línea 21 (−0.20)</p>
+  <p><b>Patrones combinados:</b> x_entrada_sin_validar, x_id_ruta_sin_propiedad, x_recurso_propio_sin_propiedad, x_usuario_sin_propiedad</p>
+  <ul><li>Línea 23: Lee datos enviados por el cliente en la petición — <code>order = db.query(Order).filter(Order.id == order_id).first()</code></li><li>Línea 21: Define un endpoint HTTP — <code>@router.get(&quot;/{order_id}&quot;, response_model=OrderRead)</code></li><li>Línea 21: El endpoint recibe un identificador de objeto en la ruta — <code>@router.get(&quot;/{order_id}&quot;, response_model=OrderRead)</code></li><li>Línea 22: El endpoint recibe un identificador de objeto en la ruta — <code>def get_order(order_id: int, db: Session = Depends(get_db), user=Depends(get_current_user)):</code></li><li>Línea 23: Opera sobre un recurso que normalmente pertenece a un usuario — <code>order = db.query(Order).filter(Order.id == order_id).first()</code></li><li>Línea 24: Opera sobre un recurso que normalmente pertenece a un usuario — <code>if order is None:</code></li><li>Línea 25: Opera sobre un recurso que normalmente pertenece a un usuario — <code>raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=&quot;Order not found&quot;)</code></li><li>Línea 23: Obtiene o modifica un objeto a partir de su identificador — <code>order = db.query(Order).filter(Order.id == order_id).first()</code></li></ul>
+ </details>
+</article>
+<article class="hallazgo" data-servicio="user-service" data-categorias="A04:2025 A07:2025 API2:2023" data-sev="Alta">
+ <div class="cab"><h3>VM-005 · Firma del token (JWT) no verificada o algoritmo &#x27;none&#x27; aceptado. Evidencia: el token se acepta sin verificar su firma o expiración; hay un secreto escrito literalmente.</h3><span class="sev Alta">Alta</span></div>
+ <div><span class="chip t10" title="Fallas criptográficas (p=0.682)">A04:2025</span><span class="chip t10" title="Fallas de autenticación (p=0.232)">A07:2025</span><span class="chip" title="Autenticación incorrecta (p=0.998)">API2:2023</span></div>
+ <dl>
+  <dt>Microservicio</dt><dd>user-service</dd>
+  <dt>Archivo</dt><dd><code>user-service/src/auth/jwt.strategy.ts</code> · línea 13 (unidad <code>constructor</code>, líneas 9–15)</dd>
+  <dt>OWASP Top 10:2025</dt><dd>A04:2025 Fallas criptográficas, A07:2025 Fallas de autenticación</dd>
+  <dt>OWASP API 2023</dt><dd>API2:2023 Autenticación incorrecta</dd>
+  <dt>CWE</dt><dd>CWE-347 — Improper Verification of Cryptographic Signature</dd>
+  <dt>Confianza del modelo</dt><dd>0.98</dd>
+  <dt>Severidad estimada</dt><dd>Alta — severidad base de CWE-347: Alta.</dd>
+  <dt>Estado</dt><dd>Potencial - respaldado por evidencia estática</dd>
+  <dt>Recomendación</dt><dd>Verificar siempre la firma con algoritmos explícitos y validar expiración, emisor y audiencia.</dd>
+ </dl>
+ <pre><span class="l"><span class="num">11</span>      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),</span><span class="l"><span class="num">12</span>      ignoreExpiration: true,</span><span class="l r"><span class="num">13</span>      secretOrKey: JWT_SECRET,</span><span class="l"><span class="num">14</span>    });</span><span class="l"><span class="num">15</span>  }</span></pre>
+ <details><summary>Evidencia técnica</summary>
+  <p><b>Líneas que más aportan a la predicción (oclusión):</b> línea 13 (−0.56), línea 12 (−0.55), línea 14 (−0.02)</p>
+  <p><b>Patrones combinados:</b> x_jwt_inseguro, x_secreto_sin_gestor</p>
+  <ul><li>Línea 13: Usa tokens JWT — <code>secretOrKey: JWT_SECRET,</code></li><li>Línea 12: Token aceptado sin verificar firma o expiración — <code>ignoreExpiration: true,</code></li><li>Línea 13: Secreto o credencial escrito literalmente — <code>secretOrKey: JWT_SECRET,</code></li></ul>
+ </details>
+</article>
+<article class="hallazgo" data-servicio="user-service" data-categorias="A01:2025 API3:2023 API5:2023" data-sev="Alta">
+ <div class="cab"><h3>VM-006 · Falta de verificación de autorización en el endpoint. Evidencia: se busca un objeto por id sin compararlo con el usuario autenticado.</h3><span class="sev Alta">Alta</span></div>
+ <div><span class="chip t10" title="Pérdida de control de acceso (p=0.973)">A01:2025</span><span class="chip" title="Autorización incorrecta a nivel de propiedades del objeto (p=0.979)">API3:2023</span><span class="chip" title="Autorización incorrecta a nivel de función (p=0.353)">API5:2023</span></div>
+ <dl>
+  <dt>Microservicio</dt><dd>user-service</dd>
+  <dt>Archivo</dt><dd><code>user-service/src/users/users.controller.ts</code> · línea 20 (unidad <code>me</code>, líneas 17–22)</dd>
+  <dt>OWASP Top 10:2025</dt><dd>A01:2025 Pérdida de control de acceso</dd>
+  <dt>OWASP API 2023</dt><dd>API3:2023 Autorización incorrecta a nivel de propiedades del objeto, API5:2023 Autorización incorrecta a nivel de función</dd>
+  <dt>CWE</dt><dd>CWE-862 — Missing Authorization</dd>
+  <dt>Confianza del modelo</dt><dd>0.95</dd>
+  <dt>Severidad estimada</dt><dd>Alta — severidad base de CWE-862: Alta.</dd>
+  <dt>Estado</dt><dd>Potencial - requiere verificación manual o dinámica</dd>
+  <dt>Recomendación</dt><dd>Añadir control de acceso por rol (guards, @PreAuthorize, dependencias de seguridad) con denegación por defecto.</dd>
+ </dl>
+ <pre><span class="l"><span class="num">18</span>  @Get(&#x27;me&#x27;)</span><span class="l"><span class="num">19</span>  async me(@Req() req): Promise&lt;UserResponseDto&gt; {</span><span class="l r"><span class="num">20</span>    const user = await this.usersService.findById(req.user.sub);</span><span class="l"><span class="num">21</span>    return UserResponseDto.from(user);</span><span class="l"><span class="num">22</span>  }</span></pre>
+ <details><summary>Evidencia técnica</summary>
+  <p><b>Líneas que más aportan a la predicción (oclusión):</b> línea 17 (−0.49), línea 18 (−0.17), línea 19 (−0.07)</p>
+  <p><b>Patrones combinados:</b> x_entrada_sin_validar, x_usuario_sin_propiedad</p>
+  <ul><li>Línea 19: Lee datos enviados por el cliente en la petición — <code>async me(@Req() req): Promise&lt;UserResponseDto&gt; {</code></li><li>Línea 18: Define un endpoint HTTP — <code>@Get(&#x27;me&#x27;)</code></li><li>Línea 20: Obtiene o modifica un objeto a partir de su identificador — <code>const user = await this.usersService.findById(req.user.sub);</code></li><li>Línea 17: Exige autenticación en el endpoint — <code>@UseGuards(JwtAuthGuard)</code></li><li>Línea 20: Usa la identidad del usuario autenticado — <code>const user = await this.usersService.findById(req.user.sub);</code></li><li>Línea 19: Selecciona explícitamente las propiedades expuestas o aceptadas — <code>async me(@Req() req): Promise&lt;UserResponseDto&gt; {</code></li><li>Línea 21: Selecciona explícitamente las propiedades expuestas o aceptadas — <code>return UserResponseDto.from(user);</code></li></ul>
+ </details>
+</article>
+<article class="hallazgo" data-servicio="order-service" data-categorias="A01:2025" data-sev="Alta">
+ <div class="cab"><h3>VM-007 · Posible falla de control de acceso: la operación no verifica suficientemente quién puede realizarla.</h3><span class="sev Alta">Alta</span></div>
+ <div><span class="chip t10" title="Pérdida de control de acceso (p=0.737)">A01:2025</span></div>
+ <dl>
+  <dt>Microservicio</dt><dd>order-service</dd>
+  <dt>Archivo</dt><dd><code>order-service/app/routers/receipts.py</code> · línea 19 (unidad <code>import_receipt</code>, líneas 17–20)</dd>
+  <dt>OWASP Top 10:2025</dt><dd>A01:2025 Pérdida de control de acceso</dd>
+  <dt>OWASP API 2023</dt><dd>No aplica / no determinada</dd>
+  <dt>CWE</dt><dd>No determinado</dd>
+  <dt>Confianza del modelo</dt><dd>0.90</dd>
+  <dt>Severidad estimada</dt><dd>Alta — severidad base de la categoría A01:2025: Alta.</dd>
+  <dt>Estado</dt><dd>Potencial - requiere verificación manual o dinámica</dd>
+  <dt>Recomendación</dt><dd>Aplicar control de acceso en el servidor con denegación por defecto y verificar que el usuario autenticado tenga permiso sobre el recurso solicitado.</dd>
+ </dl>
+ <pre><span class="l"><span class="num">17</span>@router.post(&quot;/import&quot;)</span><span class="l"><span class="num">18</span>def import_receipt(body: ReceiptImport, user=Depends(get_current_user)):</span><span class="l r"><span class="num">19</span>    response = requests.get(body.receipt_url, timeout=10)</span><span class="l"><span class="num">20</span>    return {&quot;size&quot;: len(response.content), &quot;content_type&quot;: response.headers.get(&quot;content-type&quot;)}</span><span class="l"><span class="num">21</span></span></pre>
+ <details><summary>Evidencia técnica</summary>
+  <p><b>Líneas que más aportan a la predicción (oclusión):</b> línea 18 (−0.22), línea 20 (−0.02)</p>
+  <p><b>Patrones combinados:</b> —</p>
+  <ul><li>Línea 17: Define un endpoint HTTP — <code>@router.post(&quot;/import&quot;)</code></li><li>Línea 18: Exige autenticación en el endpoint — <code>def import_receipt(body: ReceiptImport, user=Depends(get_current_user)):</code></li><li>Línea 18: Usa la identidad del usuario autenticado — <code>def import_receipt(body: ReceiptImport, user=Depends(get_current_user)):</code></li><li>Línea 19: Realiza peticiones HTTP a otro servicio — <code>response = requests.get(body.receipt_url, timeout=10)</code></li><li>Línea 19: Define un tiempo de espera — <code>response = requests.get(body.receipt_url, timeout=10)</code></li><li>Línea 19: Selecciona explícitamente las propiedades expuestas o aceptadas — <code>response = requests.get(body.receipt_url, timeout=10)</code></li></ul>
+ </details>
+</article>
+<article class="hallazgo" data-servicio="product-service" data-categorias="A07:2025 A02:2025 API2:2023 API8:2023" data-sev="Alta">
+ <div class="cab"><h3>VM-008 · Credenciales o secretos escritos en el código o en la configuración. Evidencia: hay un secreto escrito literalmente.</h3><span class="sev Alta">Alta</span></div>
+ <div><span class="chip t10" title="Fallas de autenticación (p=0.969)">A07:2025</span><span class="chip t10" title="Configuración de seguridad incorrecta (p=0.548)">A02:2025</span><span class="chip" title="Autenticación incorrecta (p=0.935)">API2:2023</span><span class="chip" title="Configuración de seguridad incorrecta (p=0.477)">API8:2023</span></div>
+ <dl>
+  <dt>Microservicio</dt><dd>product-service</dd>
+  <dt>Archivo</dt><dd><code>product-service/src/main/resources/application.yml</code> · línea 10 (unidad <code>spring</code>, líneas 4–13)</dd>
+  <dt>OWASP Top 10:2025</dt><dd>A07:2025 Fallas de autenticación, A02:2025 Configuración de seguridad incorrecta</dd>
+  <dt>OWASP API 2023</dt><dd>API2:2023 Autenticación incorrecta, API8:2023 Configuración de seguridad incorrecta</dd>
+  <dt>CWE</dt><dd>CWE-798 — Use of Hard-coded Credentials</dd>
+  <dt>Confianza del modelo</dt><dd>0.79</dd>
+  <dt>Severidad estimada</dt><dd>Alta — severidad base de CWE-798: Alta.</dd>
+  <dt>Estado</dt><dd>Potencial - respaldado por evidencia estática</dd>
+  <dt>Recomendación</dt><dd>Mover los secretos a variables de entorno o a un gestor de secretos, y rotar los que ya fueron expuestos.</dd>
+ </dl>
+ <pre><span class="l"><span class="num">8</span>    url: jdbc:postgresql://postgres:5432/products</span><span class="l"><span class="num">9</span>    username: products</span><span class="l r"><span class="num">10</span>    password: Pr0ducts!2024</span><span class="l"><span class="num">11</span>  h2:</span><span class="l"><span class="num">12</span>    console:</span></pre>
+ <details><summary>Evidencia técnica</summary>
+  <p><b>Líneas que más aportan a la predicción (oclusión):</b> línea 8 (−0.42), línea 10 (−0.11), línea 7 (−0.07)</p>
+  <p><b>Patrones combinados:</b> x_secreto_sin_gestor</p>
+  <ul><li>Línea 10: Secreto o credencial escrito literalmente — <code>password: Pr0ducts!2024</code></li><li>Línea 10: Maneja datos personales o secretos — <code>password: Pr0ducts!2024</code></li></ul>
+ </details>
+</article>
+<article class="hallazgo" data-servicio="user-service" data-categorias="A01:2025 API1:2023 API3:2023 API5:2023" data-sev="Alta">
+ <div class="cab"><h3>VM-009 · Acceso a un objeto por un identificador controlado por el usuario sin comprobar su propiedad (IDOR/BOLA). Evidencia: una operación de modificación o administración no comprueba el rol.</h3><span class="sev Alta">Alta</span></div>
+ <div><span class="chip t10" title="Pérdida de control de acceso (p=0.919)">A01:2025</span><span class="chip" title="Autorización incorrecta a nivel de objeto (p=0.87)">API1:2023</span><span class="chip" title="Autorización incorrecta a nivel de propiedades del objeto (p=0.516)">API3:2023</span><span class="chip" title="Autorización incorrecta a nivel de función (p=0.224)">API5:2023</span></div>
+ <dl>
+  <dt>Microservicio</dt><dd>user-service</dd>
+  <dt>Archivo</dt><dd><code>user-service/src/users/users.controller.ts</code> · línea 30 (unidad <code>update</code>, líneas 30–34)</dd>
+  <dt>OWASP Top 10:2025</dt><dd>A01:2025 Pérdida de control de acceso</dd>
+  <dt>OWASP API 2023</dt><dd>API1:2023 Autorización incorrecta a nivel de objeto, API3:2023 Autorización incorrecta a nivel de propiedades del objeto, API5:2023 Autorización incorrecta a nivel de función</dd>
+  <dt>CWE</dt><dd>CWE-639 — Authorization Bypass Through User-Controlled Key</dd>
+  <dt>Confianza del modelo</dt><dd>0.79</dd>
+  <dt>Severidad estimada</dt><dd>Alta — severidad base de CWE-639: Alta.</dd>
+  <dt>Estado</dt><dd>Potencial - requiere verificación manual o dinámica</dd>
+  <dt>Recomendación</dt><dd>Filtrar la consulta por el usuario autenticado (p. ej. findByIdAndOwner) o comprobar la propiedad antes de devolver o modificar el objeto.</dd>
+ </dl>
+ <pre><span class="l"><span class="num">28</span>  }</span><span class="l"><span class="num">29</span></span><span class="l r"><span class="num">30</span>  @UseGuards(JwtAuthGuard)</span><span class="l"><span class="num">31</span>  @Put(&#x27;:id&#x27;)</span><span class="l"><span class="num">32</span>  async update(@Param(&#x27;id&#x27;, ParseIntPipe) id: number, @Body() body: any) {</span></pre>
+ <details><summary>Evidencia técnica</summary>
+  <p><b>Líneas que más aportan a la predicción (oclusión):</b> línea 30 (−0.52), línea 31 (−0.15), línea 32 (−0.07)</p>
+  <p><b>Patrones combinados:</b> x_ruta_privilegiada_sin_rol</p>
+  <ul><li>Línea 32: Lee datos enviados por el cliente en la petición — <code>async update(@Param(&#x27;id&#x27;, ParseIntPipe) id: number, @Body() body: any) {</code></li><li>Línea 31: Define un endpoint HTTP — <code>@Put(&#x27;:id&#x27;)</code></li><li>Línea 31: El endpoint recibe un identificador de objeto en la ruta — <code>@Put(&#x27;:id&#x27;)</code></li><li>Línea 32: El endpoint recibe un identificador de objeto en la ruta — <code>async update(@Param(&#x27;id&#x27;, ParseIntPipe) id: number, @Body() body: any) {</code></li><li>Línea 31: Endpoint que modifica o elimina datos — <code>@Put(&#x27;:id&#x27;)</code></li><li>Línea 30: Exige autenticación en el endpoint — <code>@UseGuards(JwtAuthGuard)</code></li><li>Línea 32: Valida o convierte el tipo de la entrada — <code>async update(@Param(&#x27;id&#x27;, ParseIntPipe) id: number, @Body() body: any) {</code></li></ul>
+ </details>
+</article>
+<article class="hallazgo" data-servicio="user-service" data-categorias="A01:2025" data-sev="Alta">
+ <div class="cab"><h3>VM-010 · Posible falla de control de acceso: la operación no verifica suficientemente quién puede realizarla.</h3><span class="sev Alta">Alta</span></div>
+ <div><span class="chip t10" title="Pérdida de control de acceso (p=0.795)">A01:2025</span></div>
+ <dl>
+  <dt>Microservicio</dt><dd>user-service</dd>
+  <dt>Archivo</dt><dd><code>user-service/src/users/users.controller.ts</code> · línea 24 (unidad <code>ordersOfUser</code>, líneas 24–28)</dd>
+  <dt>OWASP Top 10:2025</dt><dd>A01:2025 Pérdida de control de acceso</dd>
+  <dt>OWASP API 2023</dt><dd>No aplica / no determinada</dd>
+  <dt>CWE</dt><dd>No determinado</dd>
+  <dt>Confianza del modelo</dt><dd>0.59</dd>
+  <dt>Severidad estimada</dt><dd>Alta — severidad base de la categoría A01:2025: Alta.</dd>
+  <dt>Estado</dt><dd>Potencial - requiere verificación manual o dinámica</dd>
+  <dt>Recomendación</dt><dd>Aplicar control de acceso en el servidor con denegación por defecto y verificar que el usuario autenticado tenga permiso sobre el recurso solicitado.</dd>
+ </dl>
+ <pre><span class="l"><span class="num">22</span>  }</span><span class="l"><span class="num">23</span></span><span class="l r"><span class="num">24</span>  @UseGuards(JwtAuthGuard)</span><span class="l"><span class="num">25</span>  @Get(&#x27;:id/orders&#x27;)</span><span class="l"><span class="num">26</span>  async ordersOfUser(@Param(&#x27;id&#x27;, ParseIntPipe) id: number) {</span></pre>
+ <details><summary>Evidencia técnica</summary>
+  <p><b>Líneas que más aportan a la predicción (oclusión):</b> línea 24 (−0.48), línea 26 (−0.16), línea 25 (−0.02)</p>
+  <p><b>Patrones combinados:</b> —</p>
+  <ul><li>Línea 26: Lee datos enviados por el cliente en la petición — <code>async ordersOfUser(@Param(&#x27;id&#x27;, ParseIntPipe) id: number) {</code></li><li>Línea 25: Define un endpoint HTTP — <code>@Get(&#x27;:id/orders&#x27;)</code></li><li>Línea 26: El endpoint recibe un identificador de objeto en la ruta — <code>async ordersOfUser(@Param(&#x27;id&#x27;, ParseIntPipe) id: number) {</code></li><li>Línea 25: Opera sobre un recurso que normalmente pertenece a un usuario — <code>@Get(&#x27;:id/orders&#x27;)</code></li><li>Línea 24: Exige autenticación en el endpoint — <code>@UseGuards(JwtAuthGuard)</code></li><li>Línea 26: Valida o convierte el tipo de la entrada — <code>async ordersOfUser(@Param(&#x27;id&#x27;, ParseIntPipe) id: number) {</code></li></ul>
+ </details>
+</article>
+<article class="hallazgo" data-servicio="order-service" data-categorias="A02:2025 API8:2023" data-sev="Media">
+ <div class="cab"><h3>VM-011 · Política CORS permisiva (origen &#x27;*&#x27;). Evidencia: el endpoint no muestra un mecanismo de autenticación.</h3><span class="sev Media">Media</span></div>
+ <div><span class="chip t10" title="Configuración de seguridad incorrecta (p=0.998)">A02:2025</span><span class="chip" title="Configuración de seguridad incorrecta (p=0.998)">API8:2023</span></div>
+ <dl>
+  <dt>Microservicio</dt><dd>order-service</dd>
+  <dt>Archivo</dt><dd><code>order-service/app/main.py</code> · línea 14 (unidad <code>bloque de módulo</code>, líneas 1–21)</dd>
+  <dt>OWASP Top 10:2025</dt><dd>A02:2025 Configuración de seguridad incorrecta</dd>
+  <dt>OWASP API 2023</dt><dd>API8:2023 Configuración de seguridad incorrecta</dd>
+  <dt>CWE</dt><dd>CWE-942 — Permissive Cross-domain Security Policy with Untrusted Domains</dd>
+  <dt>Confianza del modelo</dt><dd>0.99</dd>
+  <dt>Severidad estimada</dt><dd>Media — severidad base de CWE-942: Media.</dd>
+  <dt>Estado</dt><dd>Potencial - respaldado por evidencia estática</dd>
+  <dt>Recomendación</dt><dd>Restringir los orígenes permitidos a una lista explícita.</dd>
+ </dl>
+ <pre><span class="l"><span class="num">12</span>app.add_middleware(</span><span class="l"><span class="num">13</span>    CORSMiddleware,</span><span class="l r"><span class="num">14</span>    allow_origins=[&quot;*&quot;],</span><span class="l"><span class="num">15</span>    allow_credentials=True,</span><span class="l"><span class="num">16</span>    allow_methods=[&quot;*&quot;],</span></pre>
+ <details><summary>Evidencia técnica</summary>
+  <p><b>Líneas que más aportan a la predicción (oclusión):</b> línea 14 (−0.22), línea 10 (−0.04), línea 16 (−0.01)</p>
+  <p><b>Patrones combinados:</b> x_ruta_sin_autenticacion</p>
+  <ul><li>Línea 16: Define un endpoint HTTP — <code>allow_methods=[&quot;*&quot;],</code></li><li>Línea 7: Opera sobre un recurso que normalmente pertenece a un usuario — <code>from app.routers import orders, receipts</code></li><li>Línea 9: Opera sobre un recurso que normalmente pertenece a un usuario — <code>logger = logging.getLogger(&quot;order-service&quot;)</code></li><li>Línea 10: Opera sobre un recurso que normalmente pertenece a un usuario — <code>app = FastAPI(title=&quot;order-service&quot;, debug=True)</code></li><li>Línea 5: Selecciona explícitamente las propiedades expuestas o aceptadas — <code>from fastapi.responses import JSONResponse</code></li><li>Línea 10: Modo de depuración o trazas detalladas activas — <code>app = FastAPI(title=&quot;order-service&quot;, debug=True)</code></li><li>Línea 14: Política CORS que acepta cualquier origen — <code>allow_origins=[&quot;*&quot;],</code></li></ul>
+ </details>
+</article>
+<article class="hallazgo" data-servicio="product-service" data-categorias="A02:2025 API8:2023" data-sev="Media">
+ <div class="cab"><h3>VM-012 · Posible configuración de seguridad incorrecta o insegura por defecto.</h3><span class="sev Media">Media</span></div>
+ <div><span class="chip t10" title="Configuración de seguridad incorrecta (p=0.852)">A02:2025</span><span class="chip" title="Configuración de seguridad incorrecta (p=0.869)">API8:2023</span></div>
+ <dl>
+  <dt>Microservicio</dt><dd>product-service</dd>
+  <dt>Archivo</dt><dd><code>product-service/src/main/resources/application.yml</code> · línea 19 (unidad <code>management</code>, líneas 15–22)</dd>
+  <dt>OWASP Top 10:2025</dt><dd>A02:2025 Configuración de seguridad incorrecta</dd>
+  <dt>OWASP API 2023</dt><dd>API8:2023 Configuración de seguridad incorrecta</dd>
+  <dt>CWE</dt><dd>CWE-16 — </dd>
+  <dt>Confianza del modelo</dt><dd>0.98</dd>
+  <dt>Severidad estimada</dt><dd>Media — severidad base de la categoría A02:2025: Media.</dd>
+  <dt>Estado</dt><dd>Potencial - requiere verificación</dd>
+  <dt>Recomendación</dt><dd>Endurecer la configuración: desactivar funciones de depuración y endpoints innecesarios, restringir CORS y aplicar valores seguros por defecto en cada entorno.</dd>
+ </dl>
+ <pre><span class="l"><span class="num">17</span>    web:</span><span class="l"><span class="num">18</span>      exposure:</span><span class="l r"><span class="num">19</span>        include: &quot;*&quot;</span><span class="l"><span class="num">20</span>  endpoint:</span><span class="l"><span class="num">21</span>    health:</span></pre>
+ <details><summary>Evidencia técnica</summary>
+  <p><b>Líneas que más aportan a la predicción (oclusión):</b> línea 19 (−0.19), línea 22 (−0.01), línea 18 (−0.01)</p>
+  <p><b>Patrones combinados:</b> —</p>
+  <ul><li>Línea 19: Endpoints de administración (Actuator) expuestos — <code>include: &quot;*&quot;</code></li><li>Línea 22: Endpoints de administración (Actuator) expuestos — <code>show-details: always</code></li></ul>
+ </details>
+</article>
+<article class="hallazgo" data-servicio="api-gateway" data-categorias="A02:2025 API8:2023" data-sev="Media">
+ <div class="cab"><h3>VM-013 · Política CORS permisiva (origen &#x27;*&#x27;).</h3><span class="sev Media">Media</span></div>
+ <div><span class="chip t10" title="Configuración de seguridad incorrecta (p=0.906)">A02:2025</span><span class="chip" title="Configuración de seguridad incorrecta (p=0.997)">API8:2023</span></div>
+ <dl>
+  <dt>Microservicio</dt><dd>api-gateway</dd>
+  <dt>Archivo</dt><dd><code>api-gateway/src/server.js</code> · línea 10 (unidad <code>bloque de módulo</code>, líneas 1–16)</dd>
+  <dt>OWASP Top 10:2025</dt><dd>A02:2025 Configuración de seguridad incorrecta</dd>
+  <dt>OWASP API 2023</dt><dd>API8:2023 Configuración de seguridad incorrecta</dd>
+  <dt>CWE</dt><dd>CWE-942 — Permissive Cross-domain Security Policy with Untrusted Domains</dd>
+  <dt>Confianza del modelo</dt><dd>0.96</dd>
+  <dt>Severidad estimada</dt><dd>Media — severidad base de CWE-942: Media.</dd>
+  <dt>Estado</dt><dd>Potencial - requiere verificación</dd>
+  <dt>Recomendación</dt><dd>Restringir los orígenes permitidos a una lista explícita.</dd>
+ </dl>
+ <pre><span class="l"><span class="num">8</span>app.use(helmet());</span><span class="l"><span class="num">9</span>app.use(morgan(&#x27;combined&#x27;));</span><span class="l r"><span class="num">10</span>app.use(cors({ origin: true, credentials: true }));</span><span class="l"><span class="num">11</span></span><span class="l"><span class="num">12</span>const routes = {</span></pre>
+ <details><summary>Evidencia técnica</summary>
+  <p><b>Líneas que más aportan a la predicción (oclusión):</b> línea 10 (−0.53), línea 12 (−0.05), línea 1 (−0.03)</p>
+  <p><b>Patrones combinados:</b> —</p>
+  <ul><li>Línea 15: Opera sobre un recurso que normalmente pertenece a un usuario — <code>&#x27;/api/orders&#x27;: process.env.ORDERS_URL,</code></li><li>Línea 13: Obtiene secretos de variables de entorno o de un gestor — <code>&#x27;/api/users&#x27;: process.env.USERS_URL,</code></li><li>Línea 14: Obtiene secretos de variables de entorno o de un gestor — <code>&#x27;/api/products&#x27;: process.env.PRODUCTS_URL,</code></li><li>Línea 15: Obtiene secretos de variables de entorno o de un gestor — <code>&#x27;/api/orders&#x27;: process.env.ORDERS_URL,</code></li><li>Línea 10: Política CORS que acepta cualquier origen — <code>app.use(cors({ origin: true, credentials: true }));</code></li><li>Línea 3: Configura cabeceras de seguridad — <code>const helmet = require(&#x27;helmet&#x27;);</code></li><li>Línea 8: Configura cabeceras de seguridad — <code>app.use(helmet());</code></li></ul>
+ </details>
+</article>
+<article class="hallazgo" data-servicio="product-service" data-categorias="A03:2025 A02:2025 API8:2023" data-sev="Media">
+ <div class="cab"><h3>VM-014 · Dependencia de un componente no confiable o sin verificar.</h3><span class="sev Media">Media</span></div>
+ <div><span class="chip t10" title="Fallas en la cadena de suministro de software (p=0.896)">A03:2025</span><span class="chip t10" title="Configuración de seguridad incorrecta (p=0.704)">A02:2025</span><span class="chip" title="Configuración de seguridad incorrecta (p=0.746)">API8:2023</span></div>
+ <dl>
+  <dt>Microservicio</dt><dd>product-service</dd>
+  <dt>Archivo</dt><dd><code>product-service/Dockerfile</code> · línea 7 (unidad <code>etapa 2</code>, líneas 7–11)</dd>
+  <dt>OWASP Top 10:2025</dt><dd>A03:2025 Fallas en la cadena de suministro de software, A02:2025 Configuración de seguridad incorrecta</dd>
+  <dt>OWASP API 2023</dt><dd>API8:2023 Configuración de seguridad incorrecta</dd>
+  <dt>CWE</dt><dd>CWE-1357 — Reliance on Insufficiently Trustworthy Component</dd>
+  <dt>Confianza del modelo</dt><dd>0.49</dd>
+  <dt>Severidad estimada</dt><dd>Media — severidad base de CWE-1357: Media.</dd>
+  <dt>Estado</dt><dd>Potencial - requiere verificación</dd>
+  <dt>Recomendación</dt><dd>Usar imágenes y paquetes de fuentes oficiales con versión fijada y verificación de integridad.</dd>
+ </dl>
+ <pre><span class="l"><span class="num">5</span>RUN mvn -q package -DskipTests</span><span class="l"><span class="num">6</span></span><span class="l r"><span class="num">7</span>FROM openjdk:latest</span><span class="l"><span class="num">8</span>WORKDIR /app</span><span class="l"><span class="num">9</span>COPY --from=build /src/target/product-service-1.0.0.jar app.jar</span></pre>
+ <details><summary>Evidencia técnica</summary>
+  <p><b>Líneas que más aportan a la predicción (oclusión):</b> línea 7 (−0.36), línea 11 (−0.16), línea 10 (−0.07)</p>
+  <p><b>Patrones combinados:</b> —</p>
+  <ul><li>Línea 7: Imagen base sin versión fija (latest) — <code>FROM openjdk:latest</code></li></ul>
+ </details>
+</article>
+<article class="hallazgo" data-servicio="product-service" data-categorias="pendiente" data-sev="Media">
+ <div class="cab"><h3>VM-015 · Código o configuración similar a ejemplos vulnerables; la categoría no pudo determinarse.</h3><span class="sev Media">Media</span></div>
+ <div><span class="chip">Pendiente de revisión (sugerida: A05:2025)</span></div>
+ <dl>
+  <dt>Microservicio</dt><dd>product-service</dd>
+  <dt>Archivo</dt><dd><code>product-service/src/main/java/com/tienda/productos/ProductRepository.java</code> · línea 11 (unidad <code>clase ProductRepository</code>, líneas 10–11)</dd>
+  <dt>OWASP Top 10:2025</dt><dd>—</dd>
+  <dt>OWASP API 2023</dt><dd>No aplica / no determinada</dd>
+  <dt>CWE</dt><dd>No determinado</dd>
+  <dt>Confianza del modelo</dt><dd>0.46</dd>
+  <dt>Severidad estimada</dt><dd>Media — sin categoría determinada: severidad media por defecto.</dd>
+  <dt>Estado</dt><dd>Pendiente de revisión (categoría no determinada)</dd>
+  <dt>Recomendación</dt><dd>Revisar manualmente el fragmento: el modelo detectó similitud con código vulnerable pero no pudo determinar la categoría.</dd>
+ </dl>
+ <pre><span class="l"><span class="num">9</span></span><span class="l"><span class="num">10</span>    private final JdbcTemplate jdbc;</span><span class="l r"><span class="num">11</span>    private final ProductRowMapper mapper = new ProductRowMapper();</span><span class="l"><span class="num">12</span></span><span class="l"><span class="num">13</span>    public ProductRepository(JdbcTemplate jdbc) {</span></pre>
+ <details><summary>Evidencia técnica</summary>
+  <p><b>Líneas que más aportan a la predicción (oclusión):</b> línea 11 (−0.20), línea 10 (−0.10)</p>
+  <p><b>Patrones combinados:</b> —</p>
+  <ul><li>Sin indicadores de análisis estático: la decisión proviene de la representación TF-IDF.</li></ul>
+ </details>
+</article>
+<article class="hallazgo" data-servicio="order-service" data-categorias="A03:2025" data-sev="Media">
+ <div class="cab"><h3>VM-016 · Uso de componentes sin mantenimiento o con versión no fijada.</h3><span class="sev Media">Media</span></div>
+ <div><span class="chip t10" title="Fallas en la cadena de suministro de software (p=0.997)">A03:2025</span></div>
+ <dl>
+  <dt>Microservicio</dt><dd>order-service</dd>
+  <dt>Archivo</dt><dd><code>order-service/requirements.txt</code> · línea 2 (unidad <code>requirements.txt</code>, líneas 1–6)</dd>
+  <dt>OWASP Top 10:2025</dt><dd>A03:2025 Fallas en la cadena de suministro de software</dd>
+  <dt>OWASP API 2023</dt><dd>No aplica / no determinada</dd>
+  <dt>CWE</dt><dd>CWE-1104 — Use of Unmaintained Third Party Components</dd>
+  <dt>Confianza del modelo</dt><dd>0.43</dd>
+  <dt>Severidad estimada</dt><dd>Media — severidad base de CWE-1104: Media.</dd>
+  <dt>Estado</dt><dd>Potencial - requiere verificación</dd>
+  <dt>Recomendación</dt><dd>Fijar versiones, actualizar componentes y revisar sus vulnerabilidades conocidas.</dd>
+ </dl>
+ <pre><span class="l"><span class="num">1</span>fastapi</span><span class="l r"><span class="num">2</span>uvicorn</span><span class="l"><span class="num">3</span>requests</span><span class="l"><span class="num">4</span>sqlalchemy==2.0.36</span></pre>
+ <details><summary>Evidencia técnica</summary>
+  <p><b>Líneas que más aportan a la predicción (oclusión):</b> línea 2 (−0.20), línea 1 (−0.19), línea 3 (−0.15)</p>
+  <p><b>Patrones combinados:</b> —</p>
+  <ul><li>Línea 6: Usa tokens JWT — <code>python-jose==3.3.0</code></li><li>Línea 1: Dependencia o paquete sin versión fijada — <code>fastapi</code></li><li>Línea 2: Dependencia o paquete sin versión fijada — <code>uvicorn</code></li><li>Línea 3: Dependencia o paquete sin versión fijada — <code>requests</code></li></ul>
+ </details>
+</article>
+<article class="hallazgo" data-servicio="(raíz del proyecto)" data-categorias="A02:2025 A07:2025 API8:2023" data-sev="Media">
+ <div class="cab"><h3>VM-017 · El servicio o contenedor se ejecuta con privilegios innecesarios (root).</h3><span class="sev Media">Media</span></div>
+ <div><span class="chip t10" title="Configuración de seguridad incorrecta (p=0.802)">A02:2025</span><span class="chip t10" title="Fallas de autenticación (p=0.293)">A07:2025</span><span class="chip" title="Configuración de seguridad incorrecta (p=0.938)">API8:2023</span></div>
+ <dl>
+  <dt>Microservicio</dt><dd>(raíz del proyecto)</dd>
+  <dt>Archivo</dt><dd><code>docker-compose.yml</code> · línea 11 (unidad <code>servicio api-gateway</code>, líneas 4–15)</dd>
+  <dt>OWASP Top 10:2025</dt><dd>A02:2025 Configuración de seguridad incorrecta, A07:2025 Fallas de autenticación</dd>
+  <dt>OWASP API 2023</dt><dd>API8:2023 Configuración de seguridad incorrecta</dd>
+  <dt>CWE</dt><dd>CWE-250 — Execution with Unnecessary Privileges</dd>
+  <dt>Confianza del modelo</dt><dd>0.38</dd>
+  <dt>Severidad estimada</dt><dd>Media — severidad base de CWE-250: Media.</dd>
+  <dt>Estado</dt><dd>Potencial - requiere verificación</dd>
+  <dt>Recomendación</dt><dd>Crear y usar un usuario sin privilegios (USER en el Dockerfile), sin modo privilegiado ni capacidades extra.</dd>
+ </dl>
+ <pre><span class="l"><span class="num">9</span>      - USERS_URL=http://user-service:3000</span><span class="l"><span class="num">10</span>      - PRODUCTS_URL=http://product-service:8081</span><span class="l r"><span class="num">11</span>      - ORDERS_URL=http://order-service:8000</span><span class="l"><span class="num">12</span>    depends_on:</span><span class="l"><span class="num">13</span>      - user-service</span></pre>
+ <details><summary>Evidencia técnica</summary>
+  <p><b>Líneas que más aportan a la predicción (oclusión):</b> línea 10 (−0.09), línea 9 (−0.06), línea 11 (−0.05)</p>
+  <p><b>Patrones combinados:</b> —</p>
+  <ul><li>Línea 11: Opera sobre un recurso que normalmente pertenece a un usuario — <code>- ORDERS_URL=http://order-service:8000</code></li><li>Línea 15: Opera sobre un recurso que normalmente pertenece a un usuario — <code>- order-service</code></li></ul>
+ </details>
+</article>
+<h2>Microservicios identificados</h2>
+<div class="tabla-scroll"><table><thead><tr><th>Nombre</th><th>Ruta</th><th>Tecnologías</th><th>Lenguajes (archivos)</th><th>Archivos</th><th>No soportados</th></tr></thead>
+<tbody><tr><td>(raíz del proyecto)</td><td><code>.</code></td><td></td><td>Configuración (1)</td><td class='n'>1</td><td>—</td></tr><tr><td>api-gateway</td><td><code>api-gateway</code></td><td>Express, Docker</td><td>Configuración (2), JavaScript (1)</td><td class='n'>3</td><td>—</td></tr><tr><td>order-service</td><td><code>order-service</code></td><td>FastAPI, Docker</td><td>Python (3), Configuración (2)</td><td class='n'>5</td><td>—</td></tr><tr><td>product-service</td><td><code>product-service</code></td><td>Spring Boot, Docker</td><td>Configuración (3), Java (2)</td><td class='n'>5</td><td>—</td></tr><tr><td>user-service</td><td><code>user-service</code></td><td>NestJS</td><td>TypeScript (4), Configuración (1)</td><td class='n'>5</td><td>—</td></tr></tbody></table></div>
+<h2>Categorías evaluadas</h2>
+<div class="tabla-scroll"><table><thead><tr><th>Código</th><th>Categoría</th><th>Estado</th><th>Motivo</th><th>Hallazgos</th></tr></thead>
+<tbody><tr><td>A01:2025</td><td>Pérdida de control de acceso</td><td>evaluada</td><td></td><td class='n'>5</td></tr><tr><td>A02:2025</td><td>Configuración de seguridad incorrecta</td><td>evaluada</td><td></td><td class='n'>6</td></tr><tr><td>A03:2025</td><td>Fallas en la cadena de suministro de software</td><td>evaluada</td><td></td><td class='n'>2</td></tr><tr><td>A04:2025</td><td>Fallas criptográficas</td><td>evaluada</td><td></td><td class='n'>1</td></tr><tr><td>A05:2025</td><td>Inyección</td><td>evaluada</td><td></td><td class='n'>1</td></tr><tr><td>A06:2025</td><td>Diseño inseguro</td><td>evaluada</td><td></td><td class='n'>0</td></tr><tr><td>A07:2025</td><td>Fallas de autenticación</td><td>evaluada</td><td></td><td class='n'>4</td></tr><tr><td>A08:2025</td><td>Fallas en la integridad del software o de los datos</td><td>evaluada</td><td></td><td class='n'>1</td></tr><tr><td>A09:2025</td><td>Fallas en el registro, alerta y monitoreo de seguridad</td><td>evaluada</td><td></td><td class='n'>0</td></tr><tr><td>A10:2025</td><td>Manejo inadecuado de condiciones excepcionales</td><td>evaluada</td><td></td><td class='n'>0</td></tr><tr><td>API1:2023</td><td>Autorización incorrecta a nivel de objeto</td><td>evaluada</td><td></td><td class='n'>2</td></tr><tr><td>API2:2023</td><td>Autenticación incorrecta</td><td>evaluada</td><td></td><td class='n'>3</td></tr><tr><td>API3:2023</td><td>Autorización incorrecta a nivel de propiedades del objeto</td><td>evaluada</td><td></td><td class='n'>2</td></tr><tr><td>API4:2023</td><td>Consumo ilimitado de recursos</td><td>evaluada</td><td></td><td class='n'>0</td></tr><tr><td>API5:2023</td><td>Autorización incorrecta a nivel de función</td><td>evaluada</td><td></td><td class='n'>3</td></tr><tr><td>API6:2023</td><td>Acceso ilimitado a flujos de negocio sensibles</td><td>no evaluada</td><td>datos insuficientes para entrenar (0 ejemplos; mínimo 15)</td><td class='n'>0</td></tr><tr><td>API7:2023</td><td>Falsificación de solicitudes del lado del servidor</td><td>evaluada</td><td></td><td class='n'>0</td></tr><tr><td>API8:2023</td><td>Configuración de seguridad incorrecta</td><td>evaluada</td><td></td><td class='n'>6</td></tr><tr><td>API9:2023</td><td>Gestión inadecuada del inventario de API</td><td>no evaluada</td><td>datos insuficientes para entrenar (1 ejemplos; mínimo 15)</td><td class='n'>0</td></tr><tr><td>API10:2023</td><td>Consumo inseguro de API</td><td>evaluada</td><td></td><td class='n'>0</td></tr></tbody></table></div>
+<footer>Generado por vulnminer en 0.5 s. Ruta analizada: ejemplos/proyecto-microservicios</footer>
+</main><script>
+const sel = id => document.getElementById(id);
+function filtrar(){
+  const s=sel('f-servicio').value, c=sel('f-categoria').value, v=sel('f-severidad').value, q=sel('f-texto').value.toLowerCase();
+  let n=0;
+  document.querySelectorAll('.hallazgo').forEach(h=>{
+    const ok=(!s||h.dataset.servicio===s)&&(!c||h.dataset.categorias.split(' ').includes(c))&&(!v||h.dataset.sev===v)
+      &&(!q||h.textContent.toLowerCase().includes(q));
+    h.classList.toggle('oculto',!ok); if(ok) n++;
+  });
+  sel('contador').textContent=n+' hallazgos visibles';
+}
+['f-servicio','f-categoria','f-severidad','f-texto'].forEach(id=>sel(id).addEventListener('input',filtrar));
+document.querySelectorAll('[data-filtro]').forEach(td=>td.addEventListener('click',()=>{
+  const [s,c]=td.dataset.filtro.split('|'); sel('f-servicio').value=s; sel('f-categoria').value=c; filtrar();
+  sel('lista').scrollIntoView({behavior:'smooth'});}));
+filtrar();
+</script></body></html>

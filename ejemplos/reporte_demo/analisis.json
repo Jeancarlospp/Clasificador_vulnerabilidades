@@ -1,0 +1,2124 @@
+{
+  "herramienta": "vulnminer",
+  "version": "1.0.0",
+  "fecha": "2026-11-23T11:55:50",
+  "proyecto": "proyecto-microservicios",
+  "ruta": "ejemplos/proyecto-microservicios",
+  "estandares": [
+    "owasp2025",
+    "api2023"
+  ],
+  "modelo": {
+    "detector": "SVM lineal (calibrada)",
+    "categorias": "Regresión logística",
+    "umbral": 0.35,
+    "combinacion": {
+      "umbral_base_codigo": 0.45,
+      "umbral_combinado": 0.88
+    },
+    "version": "1.0.0",
+    "fecha": "2026-11-22T20:56:13",
+    "detector_prueba": {
+      "precision": 0.8439803439803439,
+      "recall": 0.8367844092570037,
+      "f1": 0.8403669724770643,
+      "roc_auc": 0.9292590528362182
+    }
+  },
+  "resumen": {
+    "microservicios": 4,
+    "archivos_analizados": 19,
+    "unidades_analizadas": 65,
+    "hallazgos": 17,
+    "duracion_segundos": 0.5,
+    "archivos_omitidos": {},
+    "archivos_no_soportados": {},
+    "por_severidad": {
+      "Crítica": 2,
+      "Alta": 8,
+      "Media": 7
+    },
+    "por_microservicio": {
+      "order-service": 5,
+      "product-service": 5,
+      "user-service": 5,
+      "api-gateway": 1,
+      "(raíz del proyecto)": 1
+    },
+    "por_categoria": {
+      "A08:2025": 1,
+      "A05:2025": 1,
+      "A07:2025": 4,
+      "API2:2023": 3,
+      "API5:2023": 3,
+      "A01:2025": 5,
+      "API1:2023": 2,
+      "A04:2025": 1,
+      "API3:2023": 2,
+      "A02:2025": 6,
+      "API8:2023": 6,
+      "A03:2025": 2,
+      "pendiente de revisión": 1
+    }
+  },
+  "microservicios": [
+    {
+      "nombre": "(raíz del proyecto)",
+      "ruta": ".",
+      "tecnologias": [],
+      "lenguajes": {
+        "Configuración": 1
+      },
+      "archivos_analizados": 1,
+      "archivos_no_soportados": {},
+      "archivos_omitidos": {}
+    },
+    {
+      "nombre": "api-gateway",
+      "ruta": "api-gateway",
+      "tecnologias": [
+        "Express",
+        "Docker"
+      ],
+      "lenguajes": {
+        "Configuración": 2,
+        "JavaScript": 1
+      },
+      "archivos_analizados": 3,
+      "archivos_no_soportados": {},
+      "archivos_omitidos": {}
+    },
+    {
+      "nombre": "order-service",
+      "ruta": "order-service",
+      "tecnologias": [
+        "FastAPI",
+        "Docker"
+      ],
+      "lenguajes": {
+        "Python": 3,
+        "Configuración": 2
+      },
+      "archivos_analizados": 5,
+      "archivos_no_soportados": {},
+      "archivos_omitidos": {}
+    },
+    {
+      "nombre": "product-service",
+      "ruta": "product-service",
+      "tecnologias": [
+        "Spring Boot",
+        "Docker"
+      ],
+      "lenguajes": {
+        "Configuración": 3,
+        "Java": 2
+      },
+      "archivos_analizados": 5,
+      "archivos_no_soportados": {},
+      "archivos_omitidos": {}
+    },
+    {
+      "nombre": "user-service",
+      "ruta": "user-service",
+      "tecnologias": [
+        "NestJS"
+      ],
+      "lenguajes": {
+        "TypeScript": 4,
+        "Configuración": 1
+      },
+      "archivos_analizados": 5,
+      "archivos_no_soportados": {},
+      "archivos_omitidos": {}
+    }
+  ],
+  "hallazgos": [
+    {
+      "id": "VM-001",
+      "microservicio": "order-service",
+      "archivo": "order-service/app/routers/receipts.py",
+      "linea": 26,
+      "linea_inicio": 23,
+      "linea_fin": 27,
+      "unidad": "restore_draft",
+      "lenguaje": "python",
+      "descripcion": "Deserialización de datos no confiables. Evidencia: datos de la petición se deserializan.",
+      "evidencia": {
+        "fragmento": [
+          {
+            "linea": 24,
+            "codigo": "async def restore_draft(request: Request, user=Depends(get_current_user)):",
+            "resaltada": false
+          },
+          {
+            "linea": 25,
+            "codigo": "    data = base64.b64decode(request.cookies.get(\"receipt_draft\", \"\"))",
+            "resaltada": false
+          },
+          {
+            "linea": 26,
+            "codigo": "    draft = pickle.loads(data)",
+            "resaltada": true
+          },
+          {
+            "linea": 27,
+            "codigo": "    return {\"restored\": True, \"items\": len(draft.get(\"items\", []))}",
+            "resaltada": false
+          }
+        ],
+        "lineas_influyentes": [
+          {
+            "linea": 25,
+            "aporte": 0.156
+          },
+          {
+            "linea": 26,
+            "aporte": 0.137
+          },
+          {
+            "linea": 24,
+            "aporte": 0.016
+          }
+        ],
+        "indicadores": [
+          {
+            "indicador": "entrada_http",
+            "descripcion": "Lee datos enviados por el cliente en la petición",
+            "linea": 25,
+            "codigo": "data = base64.b64decode(request.cookies.get(\"receipt_draft\", \"\"))"
+          },
+          {
+            "indicador": "ruta_definida",
+            "descripcion": "Define un endpoint HTTP",
+            "linea": 23,
+            "codigo": "@router.post(\"/draft/restore\")"
+          },
+          {
+            "indicador": "guard_autenticacion",
+            "descripcion": "Exige autenticación en el endpoint",
+            "linea": 24,
+            "codigo": "async def restore_draft(request: Request, user=Depends(get_current_user)):"
+          },
+          {
+            "indicador": "usuario_actual",
+            "descripcion": "Usa la identidad del usuario autenticado",
+            "linea": 24,
+            "codigo": "async def restore_draft(request: Request, user=Depends(get_current_user)):"
+          },
+          {
+            "indicador": "deserializacion",
+            "descripcion": "Deserializa objetos con un formato que permite ejecutar código",
+            "linea": 26,
+            "codigo": "draft = pickle.loads(data)"
+          }
+        ],
+        "patrones_combinados": [
+          "x_entrada_deserializacion",
+          "x_entrada_sin_validar"
+        ],
+        "probabilidad_modelo_base": 0.987,
+        "probabilidad_combinada": 0.991
+      },
+      "owasp_top10": [
+        {
+          "codigo": "A08:2025",
+          "nombre": "Fallas en la integridad del software o de los datos",
+          "probabilidad": 0.989
+        }
+      ],
+      "owasp_api": [],
+      "cwe": {
+        "id": "CWE-502",
+        "nombre": "Deserialization of Untrusted Data"
+      },
+      "confianza": 0.991,
+      "severidad": "Crítica",
+      "justificacion_severidad": "severidad base de CWE-502: Crítica; datos de la petición llegan a una operación peligrosa en la misma función.",
+      "recomendacion": "Usar formatos de solo datos (JSON) con validación de esquema; evitar pickle/ObjectInputStream/yaml.load sobre datos externos.",
+      "estado": "Potencial - respaldado por evidencia estática",
+      "categoria_sugerida": {}
+    },
+    {
+      "id": "VM-002",
+      "microservicio": "product-service",
+      "archivo": "product-service/src/main/java/com/tienda/productos/ProductRepository.java",
+      "linea": 22,
+      "linea_inicio": 21,
+      "linea_fin": 24,
+      "unidad": "searchByName",
+      "lenguaje": "java",
+      "descripcion": "Consulta SQL construida por concatenación o interpolación de datos (inyección SQL). Evidencia: datos de la petición llegan a una consulta SQL construida dinámicamente.",
+      "evidencia": {
+        "fragmento": [
+          {
+            "linea": 20,
+            "codigo": "",
+            "resaltada": false
+          },
+          {
+            "linea": 21,
+            "codigo": "    public List<Product> searchByName(String name, String sort) {",
+            "resaltada": false
+          },
+          {
+            "linea": 22,
+            "codigo": "        String sql = \"SELECT * FROM products WHERE name LIKE '%\" + name + \"%' ORDER BY \" + sort;",
+            "resaltada": true
+          },
+          {
+            "linea": 23,
+            "codigo": "        return jdbc.query(sql, mapper);",
+            "resaltada": false
+          },
+          {
+            "linea": 24,
+            "codigo": "    }",
+            "resaltada": false
+          }
+        ],
+        "lineas_influyentes": [
+          {
+            "linea": 22,
+            "aporte": 0.737
+          },
+          {
+            "linea": 23,
+            "aporte": 0.182
+          },
+          {
+            "linea": 24,
+            "aporte": 0.0
+          }
+        ],
+        "indicadores": [
+          {
+            "indicador": "entrada_http",
+            "descripcion": "Lee datos enviados por el cliente en la petición",
+            "linea": 23,
+            "codigo": "return jdbc.query(sql, mapper);"
+          },
+          {
+            "indicador": "recurso_de_usuario",
+            "descripcion": "Opera sobre un recurso que normalmente pertenece a un usuario",
+            "linea": 22,
+            "codigo": "String sql = \"SELECT * FROM products WHERE name LIKE '%\" + name + \"%' ORDER BY \" + sort;"
+          },
+          {
+            "indicador": "sql_dinamico",
+            "descripcion": "Consulta SQL construida con concatenación o interpolación",
+            "linea": 22,
+            "codigo": "String sql = \"SELECT * FROM products WHERE name LIKE '%\" + name + \"%' ORDER BY \" + sort;"
+          }
+        ],
+        "patrones_combinados": [
+          "x_entrada_sql"
+        ],
+        "probabilidad_modelo_base": 0.986,
+        "probabilidad_combinada": 0.978
+      },
+      "owasp_top10": [
+        {
+          "codigo": "A05:2025",
+          "nombre": "Inyección",
+          "probabilidad": 1.0
+        }
+      ],
+      "owasp_api": [],
+      "cwe": {
+        "id": "CWE-89",
+        "nombre": "Improper Neutralization of Special Elements used in an SQL Command"
+      },
+      "confianza": 0.986,
+      "severidad": "Crítica",
+      "justificacion_severidad": "severidad base de CWE-89: Crítica; datos de la petición llegan a una operación peligrosa en la misma función.",
+      "recomendacion": "Usar consultas parametrizadas o el ORM con parámetros enlazados; nunca concatenar datos en el texto SQL.",
+      "estado": "Potencial - respaldado por evidencia estática",
+      "categoria_sugerida": {}
+    },
+    {
+      "id": "VM-003",
+      "microservicio": "user-service",
+      "archivo": "user-service/src/users/users.controller.ts",
+      "linea": 37,
+      "linea_inicio": 36,
+      "linea_fin": 41,
+      "unidad": "changePassword",
+      "lenguaje": "typescript",
+      "descripcion": "Falta de verificación de autorización en el endpoint. Evidencia: el endpoint de autenticación no limita los intentos; una operación de modificación o administración no comprueba el rol.",
+      "evidencia": {
+        "fragmento": [
+          {
+            "linea": 35,
+            "codigo": "",
+            "resaltada": false
+          },
+          {
+            "linea": 36,
+            "codigo": "  @UseGuards(JwtAuthGuard)",
+            "resaltada": false
+          },
+          {
+            "linea": 37,
+            "codigo": "  @Patch('me/password')",
+            "resaltada": true
+          },
+          {
+            "linea": 38,
+            "codigo": "  async changePassword(@Req() req, @Body('password') password: string) {",
+            "resaltada": false
+          },
+          {
+            "linea": 39,
+            "codigo": "    await this.usersService.changePassword(req.user.sub, password);",
+            "resaltada": false
+          }
+        ],
+        "lineas_influyentes": [
+          {
+            "linea": 37,
+            "aporte": 0.264
+          },
+          {
+            "linea": 36,
+            "aporte": 0.137
+          },
+          {
+            "linea": 38,
+            "aporte": 0.07
+          }
+        ],
+        "indicadores": [
+          {
+            "indicador": "entrada_http",
+            "descripcion": "Lee datos enviados por el cliente en la petición",
+            "linea": 38,
+            "codigo": "async changePassword(@Req() req, @Body('password') password: string) {"
+          },
+          {
+            "indicador": "ruta_definida",
+            "descripcion": "Define un endpoint HTTP",
+            "linea": 37,
+            "codigo": "@Patch('me/password')"
+          },
+          {
+            "indicador": "metodo_modificacion",
+            "descripcion": "Endpoint que modifica o elimina datos",
+            "linea": 37,
+            "codigo": "@Patch('me/password')"
+          },
+          {
+            "indicador": "ruta_autenticacion",
+            "descripcion": "Endpoint de autenticación (login, OTP, recuperación de contraseña)",
+            "linea": 37,
+            "codigo": "@Patch('me/password')"
+          },
+          {
+            "indicador": "guard_autenticacion",
+            "descripcion": "Exige autenticación en el endpoint",
+            "linea": 36,
+            "codigo": "@UseGuards(JwtAuthGuard)"
+          },
+          {
+            "indicador": "usuario_actual",
+            "descripcion": "Usa la identidad del usuario autenticado",
+            "linea": 39,
+            "codigo": "await this.usersService.changePassword(req.user.sub, password);"
+          },
+          {
+            "indicador": "secreto_literal",
+            "descripcion": "Secreto o credencial escrito literalmente",
+            "linea": 38,
+            "codigo": "async changePassword(@Req() req, @Body('password') password: string) {"
+          },
+          {
+            "indicador": "datos_sensibles",
+            "descripcion": "Maneja datos personales o secretos",
+            "linea": 37,
+            "codigo": "@Patch('me/password')"
+          }
+        ],
+        "patrones_combinados": [
+          "x_entrada_sin_validar",
+          "x_login_sin_limite",
+          "x_ruta_privilegiada_sin_rol",
+          "x_secreto_sin_gestor"
+        ],
+        "probabilidad_modelo_base": 0.975,
+        "probabilidad_combinada": 0.999
+      },
+      "owasp_top10": [
+        {
+          "codigo": "A07:2025",
+          "nombre": "Fallas de autenticación",
+          "probabilidad": 0.809
+        }
+      ],
+      "owasp_api": [
+        {
+          "codigo": "API2:2023",
+          "nombre": "Autenticación incorrecta",
+          "probabilidad": 0.918
+        },
+        {
+          "codigo": "API5:2023",
+          "nombre": "Autorización incorrecta a nivel de función",
+          "probabilidad": 0.239
+        }
+      ],
+      "cwe": {
+        "id": "CWE-862",
+        "nombre": "Missing Authorization"
+      },
+      "confianza": 0.999,
+      "severidad": "Alta",
+      "justificacion_severidad": "severidad base de CWE-862: Alta.",
+      "recomendacion": "Añadir control de acceso por rol (guards, @PreAuthorize, dependencias de seguridad) con denegación por defecto.",
+      "estado": "Potencial - requiere verificación manual o dinámica",
+      "categoria_sugerida": {}
+    },
+    {
+      "id": "VM-004",
+      "microservicio": "order-service",
+      "archivo": "order-service/app/routers/orders.py",
+      "linea": 23,
+      "linea_inicio": 21,
+      "linea_fin": 26,
+      "unidad": "get_order",
+      "lenguaje": "python",
+      "descripcion": "Acceso a un objeto por un identificador controlado por el usuario sin comprobar su propiedad (IDOR/BOLA). Evidencia: el endpoint obtiene un objeto por el identificador de la ruta sin verificar que pertenezca al usuario; se accede a un recurso del usuario por su id sin verificar el propietario.",
+      "evidencia": {
+        "fragmento": [
+          {
+            "linea": 21,
+            "codigo": "@router.get(\"/{order_id}\", response_model=OrderRead)",
+            "resaltada": false
+          },
+          {
+            "linea": 22,
+            "codigo": "def get_order(order_id: int, db: Session = Depends(get_db), user=Depends(get_current_user)):",
+            "resaltada": false
+          },
+          {
+            "linea": 23,
+            "codigo": "    order = db.query(Order).filter(Order.id == order_id).first()",
+            "resaltada": true
+          },
+          {
+            "linea": 24,
+            "codigo": "    if order is None:",
+            "resaltada": false
+          },
+          {
+            "linea": 25,
+            "codigo": "        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=\"Order not found\")",
+            "resaltada": false
+          }
+        ],
+        "lineas_influyentes": [
+          {
+            "linea": 23,
+            "aporte": 0.563
+          },
+          {
+            "linea": 22,
+            "aporte": 0.559
+          },
+          {
+            "linea": 21,
+            "aporte": 0.197
+          }
+        ],
+        "indicadores": [
+          {
+            "indicador": "entrada_http",
+            "descripcion": "Lee datos enviados por el cliente en la petición",
+            "linea": 23,
+            "codigo": "order = db.query(Order).filter(Order.id == order_id).first()"
+          },
+          {
+            "indicador": "ruta_definida",
+            "descripcion": "Define un endpoint HTTP",
+            "linea": 21,
+            "codigo": "@router.get(\"/{order_id}\", response_model=OrderRead)"
+          },
+          {
+            "indicador": "parametro_ruta_id",
+            "descripcion": "El endpoint recibe un identificador de objeto en la ruta",
+            "linea": 21,
+            "codigo": "@router.get(\"/{order_id}\", response_model=OrderRead)"
+          },
+          {
+            "indicador": "parametro_ruta_id",
+            "descripcion": "El endpoint recibe un identificador de objeto en la ruta",
+            "linea": 22,
+            "codigo": "def get_order(order_id: int, db: Session = Depends(get_db), user=Depends(get_current_user)):"
+          },
+          {
+            "indicador": "recurso_de_usuario",
+            "descripcion": "Opera sobre un recurso que normalmente pertenece a un usuario",
+            "linea": 23,
+            "codigo": "order = db.query(Order).filter(Order.id == order_id).first()"
+          },
+          {
+            "indicador": "recurso_de_usuario",
+            "descripcion": "Opera sobre un recurso que normalmente pertenece a un usuario",
+            "linea": 24,
+            "codigo": "if order is None:"
+          },
+          {
+            "indicador": "recurso_de_usuario",
+            "descripcion": "Opera sobre un recurso que normalmente pertenece a un usuario",
+            "linea": 25,
+            "codigo": "raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=\"Order not found\")"
+          },
+          {
+            "indicador": "busqueda_por_id",
+            "descripcion": "Obtiene o modifica un objeto a partir de su identificador",
+            "linea": 23,
+            "codigo": "order = db.query(Order).filter(Order.id == order_id).first()"
+          }
+        ],
+        "patrones_combinados": [
+          "x_entrada_sin_validar",
+          "x_id_ruta_sin_propiedad",
+          "x_recurso_propio_sin_propiedad",
+          "x_usuario_sin_propiedad"
+        ],
+        "probabilidad_modelo_base": 0.849,
+        "probabilidad_combinada": 0.997
+      },
+      "owasp_top10": [
+        {
+          "codigo": "A01:2025",
+          "nombre": "Pérdida de control de acceso",
+          "probabilidad": 1.0
+        }
+      ],
+      "owasp_api": [
+        {
+          "codigo": "API1:2023",
+          "nombre": "Autorización incorrecta a nivel de objeto",
+          "probabilidad": 0.999
+        }
+      ],
+      "cwe": {
+        "id": "CWE-639",
+        "nombre": "Authorization Bypass Through User-Controlled Key"
+      },
+      "confianza": 0.997,
+      "severidad": "Alta",
+      "justificacion_severidad": "severidad base de CWE-639: Alta.",
+      "recomendacion": "Filtrar la consulta por el usuario autenticado (p. ej. findByIdAndOwner) o comprobar la propiedad antes de devolver o modificar el objeto.",
+      "estado": "Potencial - requiere verificación manual o dinámica",
+      "categoria_sugerida": {}
+    },
+    {
+      "id": "VM-005",
+      "microservicio": "user-service",
+      "archivo": "user-service/src/auth/jwt.strategy.ts",
+      "linea": 13,
+      "linea_inicio": 9,
+      "linea_fin": 15,
+      "unidad": "constructor",
+      "lenguaje": "typescript",
+      "descripcion": "Firma del token (JWT) no verificada o algoritmo 'none' aceptado. Evidencia: el token se acepta sin verificar su firma o expiración; hay un secreto escrito literalmente.",
+      "evidencia": {
+        "fragmento": [
+          {
+            "linea": 11,
+            "codigo": "      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),",
+            "resaltada": false
+          },
+          {
+            "linea": 12,
+            "codigo": "      ignoreExpiration: true,",
+            "resaltada": false
+          },
+          {
+            "linea": 13,
+            "codigo": "      secretOrKey: JWT_SECRET,",
+            "resaltada": true
+          },
+          {
+            "linea": 14,
+            "codigo": "    });",
+            "resaltada": false
+          },
+          {
+            "linea": 15,
+            "codigo": "  }",
+            "resaltada": false
+          }
+        ],
+        "lineas_influyentes": [
+          {
+            "linea": 13,
+            "aporte": 0.556
+          },
+          {
+            "linea": 12,
+            "aporte": 0.547
+          },
+          {
+            "linea": 14,
+            "aporte": 0.021
+          }
+        ],
+        "indicadores": [
+          {
+            "indicador": "jwt",
+            "descripcion": "Usa tokens JWT",
+            "linea": 13,
+            "codigo": "secretOrKey: JWT_SECRET,"
+          },
+          {
+            "indicador": "jwt_inseguro",
+            "descripcion": "Token aceptado sin verificar firma o expiración",
+            "linea": 12,
+            "codigo": "ignoreExpiration: true,"
+          },
+          {
+            "indicador": "secreto_literal",
+            "descripcion": "Secreto o credencial escrito literalmente",
+            "linea": 13,
+            "codigo": "secretOrKey: JWT_SECRET,"
+          }
+        ],
+        "patrones_combinados": [
+          "x_jwt_inseguro",
+          "x_secreto_sin_gestor"
+        ],
+        "probabilidad_modelo_base": 0.6,
+        "probabilidad_combinada": 0.979
+      },
+      "owasp_top10": [
+        {
+          "codigo": "A04:2025",
+          "nombre": "Fallas criptográficas",
+          "probabilidad": 0.682
+        },
+        {
+          "codigo": "A07:2025",
+          "nombre": "Fallas de autenticación",
+          "probabilidad": 0.232
+        }
+      ],
+      "owasp_api": [
+        {
+          "codigo": "API2:2023",
+          "nombre": "Autenticación incorrecta",
+          "probabilidad": 0.998
+        }
+      ],
+      "cwe": {
+        "id": "CWE-347",
+        "nombre": "Improper Verification of Cryptographic Signature"
+      },
+      "confianza": 0.979,
+      "severidad": "Alta",
+      "justificacion_severidad": "severidad base de CWE-347: Alta.",
+      "recomendacion": "Verificar siempre la firma con algoritmos explícitos y validar expiración, emisor y audiencia.",
+      "estado": "Potencial - respaldado por evidencia estática",
+      "categoria_sugerida": {}
+    },
+    {
+      "id": "VM-006",
+      "microservicio": "user-service",
+      "archivo": "user-service/src/users/users.controller.ts",
+      "linea": 20,
+      "linea_inicio": 17,
+      "linea_fin": 22,
+      "unidad": "me",
+      "lenguaje": "typescript",
+      "descripcion": "Falta de verificación de autorización en el endpoint. Evidencia: se busca un objeto por id sin compararlo con el usuario autenticado.",
+      "evidencia": {
+        "fragmento": [
+          {
+            "linea": 18,
+            "codigo": "  @Get('me')",
+            "resaltada": false
+          },
+          {
+            "linea": 19,
+            "codigo": "  async me(@Req() req): Promise<UserResponseDto> {",
+            "resaltada": false
+          },
+          {
+            "linea": 20,
+            "codigo": "    const user = await this.usersService.findById(req.user.sub);",
+            "resaltada": true
+          },
+          {
+            "linea": 21,
+            "codigo": "    return UserResponseDto.from(user);",
+            "resaltada": false
+          },
+          {
+            "linea": 22,
+            "codigo": "  }",
+            "resaltada": false
+          }
+        ],
+        "lineas_influyentes": [
+          {
+            "linea": 17,
+            "aporte": 0.486
+          },
+          {
+            "linea": 18,
+            "aporte": 0.167
+          },
+          {
+            "linea": 19,
+            "aporte": 0.074
+          }
+        ],
+        "indicadores": [
+          {
+            "indicador": "entrada_http",
+            "descripcion": "Lee datos enviados por el cliente en la petición",
+            "linea": 19,
+            "codigo": "async me(@Req() req): Promise<UserResponseDto> {"
+          },
+          {
+            "indicador": "ruta_definida",
+            "descripcion": "Define un endpoint HTTP",
+            "linea": 18,
+            "codigo": "@Get('me')"
+          },
+          {
+            "indicador": "busqueda_por_id",
+            "descripcion": "Obtiene o modifica un objeto a partir de su identificador",
+            "linea": 20,
+            "codigo": "const user = await this.usersService.findById(req.user.sub);"
+          },
+          {
+            "indicador": "guard_autenticacion",
+            "descripcion": "Exige autenticación en el endpoint",
+            "linea": 17,
+            "codigo": "@UseGuards(JwtAuthGuard)"
+          },
+          {
+            "indicador": "usuario_actual",
+            "descripcion": "Usa la identidad del usuario autenticado",
+            "linea": 20,
+            "codigo": "const user = await this.usersService.findById(req.user.sub);"
+          },
+          {
+            "indicador": "filtro_propiedades",
+            "descripcion": "Selecciona explícitamente las propiedades expuestas o aceptadas",
+            "linea": 19,
+            "codigo": "async me(@Req() req): Promise<UserResponseDto> {"
+          },
+          {
+            "indicador": "filtro_propiedades",
+            "descripcion": "Selecciona explícitamente las propiedades expuestas o aceptadas",
+            "linea": 21,
+            "codigo": "return UserResponseDto.from(user);"
+          }
+        ],
+        "patrones_combinados": [
+          "x_entrada_sin_validar",
+          "x_usuario_sin_propiedad"
+        ],
+        "probabilidad_modelo_base": 0.845,
+        "probabilidad_combinada": 0.947
+      },
+      "owasp_top10": [
+        {
+          "codigo": "A01:2025",
+          "nombre": "Pérdida de control de acceso",
+          "probabilidad": 0.973
+        }
+      ],
+      "owasp_api": [
+        {
+          "codigo": "API3:2023",
+          "nombre": "Autorización incorrecta a nivel de propiedades del objeto",
+          "probabilidad": 0.979
+        },
+        {
+          "codigo": "API5:2023",
+          "nombre": "Autorización incorrecta a nivel de función",
+          "probabilidad": 0.353
+        }
+      ],
+      "cwe": {
+        "id": "CWE-862",
+        "nombre": "Missing Authorization"
+      },
+      "confianza": 0.947,
+      "severidad": "Alta",
+      "justificacion_severidad": "severidad base de CWE-862: Alta.",
+      "recomendacion": "Añadir control de acceso por rol (guards, @PreAuthorize, dependencias de seguridad) con denegación por defecto.",
+      "estado": "Potencial - requiere verificación manual o dinámica",
+      "categoria_sugerida": {}
+    },
+    {
+      "id": "VM-007",
+      "microservicio": "order-service",
+      "archivo": "order-service/app/routers/receipts.py",
+      "linea": 19,
+      "linea_inicio": 17,
+      "linea_fin": 20,
+      "unidad": "import_receipt",
+      "lenguaje": "python",
+      "descripcion": "Posible falla de control de acceso: la operación no verifica suficientemente quién puede realizarla.",
+      "evidencia": {
+        "fragmento": [
+          {
+            "linea": 17,
+            "codigo": "@router.post(\"/import\")",
+            "resaltada": false
+          },
+          {
+            "linea": 18,
+            "codigo": "def import_receipt(body: ReceiptImport, user=Depends(get_current_user)):",
+            "resaltada": false
+          },
+          {
+            "linea": 19,
+            "codigo": "    response = requests.get(body.receipt_url, timeout=10)",
+            "resaltada": true
+          },
+          {
+            "linea": 20,
+            "codigo": "    return {\"size\": len(response.content), \"content_type\": response.headers.get(\"content-type\")}",
+            "resaltada": false
+          },
+          {
+            "linea": 21,
+            "codigo": "",
+            "resaltada": false
+          }
+        ],
+        "lineas_influyentes": [
+          {
+            "linea": 18,
+            "aporte": 0.221
+          },
+          {
+            "linea": 20,
+            "aporte": 0.019
+          }
+        ],
+        "indicadores": [
+          {
+            "indicador": "ruta_definida",
+            "descripcion": "Define un endpoint HTTP",
+            "linea": 17,
+            "codigo": "@router.post(\"/import\")"
+          },
+          {
+            "indicador": "guard_autenticacion",
+            "descripcion": "Exige autenticación en el endpoint",
+            "linea": 18,
+            "codigo": "def import_receipt(body: ReceiptImport, user=Depends(get_current_user)):"
+          },
+          {
+            "indicador": "usuario_actual",
+            "descripcion": "Usa la identidad del usuario autenticado",
+            "linea": 18,
+            "codigo": "def import_receipt(body: ReceiptImport, user=Depends(get_current_user)):"
+          },
+          {
+            "indicador": "peticion_saliente",
+            "descripcion": "Realiza peticiones HTTP a otro servicio",
+            "linea": 19,
+            "codigo": "response = requests.get(body.receipt_url, timeout=10)"
+          },
+          {
+            "indicador": "timeout",
+            "descripcion": "Define un tiempo de espera",
+            "linea": 19,
+            "codigo": "response = requests.get(body.receipt_url, timeout=10)"
+          },
+          {
+            "indicador": "filtro_propiedades",
+            "descripcion": "Selecciona explícitamente las propiedades expuestas o aceptadas",
+            "linea": 19,
+            "codigo": "response = requests.get(body.receipt_url, timeout=10)"
+          }
+        ],
+        "patrones_combinados": [],
+        "probabilidad_modelo_base": 0.876,
+        "probabilidad_combinada": 0.896
+      },
+      "owasp_top10": [
+        {
+          "codigo": "A01:2025",
+          "nombre": "Pérdida de control de acceso",
+          "probabilidad": 0.737
+        }
+      ],
+      "owasp_api": [],
+      "cwe": {},
+      "confianza": 0.896,
+      "severidad": "Alta",
+      "justificacion_severidad": "severidad base de la categoría A01:2025: Alta.",
+      "recomendacion": "Aplicar control de acceso en el servidor con denegación por defecto y verificar que el usuario autenticado tenga permiso sobre el recurso solicitado.",
+      "estado": "Potencial - requiere verificación manual o dinámica",
+      "categoria_sugerida": {}
+    },
+    {
+      "id": "VM-008",
+      "microservicio": "product-service",
+      "archivo": "product-service/src/main/resources/application.yml",
+      "linea": 10,
+      "linea_inicio": 4,
+      "linea_fin": 13,
+      "unidad": "spring",
+      "lenguaje": "config",
+      "descripcion": "Credenciales o secretos escritos en el código o en la configuración. Evidencia: hay un secreto escrito literalmente.",
+      "evidencia": {
+        "fragmento": [
+          {
+            "linea": 8,
+            "codigo": "    url: jdbc:postgresql://postgres:5432/products",
+            "resaltada": false
+          },
+          {
+            "linea": 9,
+            "codigo": "    username: products",
+            "resaltada": false
+          },
+          {
+            "linea": 10,
+            "codigo": "    password: Pr0ducts!2024",
+            "resaltada": true
+          },
+          {
+            "linea": 11,
+            "codigo": "  h2:",
+            "resaltada": false
+          },
+          {
+            "linea": 12,
+            "codigo": "    console:",
+            "resaltada": false
+          }
+        ],
+        "lineas_influyentes": [
+          {
+            "linea": 8,
+            "aporte": 0.423
+          },
+          {
+            "linea": 10,
+            "aporte": 0.112
+          },
+          {
+            "linea": 7,
+            "aporte": 0.074
+          }
+        ],
+        "indicadores": [
+          {
+            "indicador": "secreto_literal",
+            "descripcion": "Secreto o credencial escrito literalmente",
+            "linea": 10,
+            "codigo": "password: Pr0ducts!2024"
+          },
+          {
+            "indicador": "datos_sensibles",
+            "descripcion": "Maneja datos personales o secretos",
+            "linea": 10,
+            "codigo": "password: Pr0ducts!2024"
+          }
+        ],
+        "patrones_combinados": [
+          "x_secreto_sin_gestor"
+        ],
+        "probabilidad_modelo_base": 0.791,
+        "probabilidad_combinada": null
+      },
+      "owasp_top10": [
+        {
+          "codigo": "A07:2025",
+          "nombre": "Fallas de autenticación",
+          "probabilidad": 0.969
+        },
+        {
+          "codigo": "A02:2025",
+          "nombre": "Configuración de seguridad incorrecta",
+          "probabilidad": 0.548
+        }
+      ],
+      "owasp_api": [
+        {
+          "codigo": "API2:2023",
+          "nombre": "Autenticación incorrecta",
+          "probabilidad": 0.935
+        },
+        {
+          "codigo": "API8:2023",
+          "nombre": "Configuración de seguridad incorrecta",
+          "probabilidad": 0.477
+        }
+      ],
+      "cwe": {
+        "id": "CWE-798",
+        "nombre": "Use of Hard-coded Credentials"
+      },
+      "confianza": 0.791,
+      "severidad": "Alta",
+      "justificacion_severidad": "severidad base de CWE-798: Alta.",
+      "recomendacion": "Mover los secretos a variables de entorno o a un gestor de secretos, y rotar los que ya fueron expuestos.",
+      "estado": "Potencial - respaldado por evidencia estática",
+      "categoria_sugerida": {}
+    },
+    {
+      "id": "VM-009",
+      "microservicio": "user-service",
+      "archivo": "user-service/src/users/users.controller.ts",
+      "linea": 30,
+      "linea_inicio": 30,
+      "linea_fin": 34,
+      "unidad": "update",
+      "lenguaje": "typescript",
+      "descripcion": "Acceso a un objeto por un identificador controlado por el usuario sin comprobar su propiedad (IDOR/BOLA). Evidencia: una operación de modificación o administración no comprueba el rol.",
+      "evidencia": {
+        "fragmento": [
+          {
+            "linea": 28,
+            "codigo": "  }",
+            "resaltada": false
+          },
+          {
+            "linea": 29,
+            "codigo": "",
+            "resaltada": false
+          },
+          {
+            "linea": 30,
+            "codigo": "  @UseGuards(JwtAuthGuard)",
+            "resaltada": true
+          },
+          {
+            "linea": 31,
+            "codigo": "  @Put(':id')",
+            "resaltada": false
+          },
+          {
+            "linea": 32,
+            "codigo": "  async update(@Param('id', ParseIntPipe) id: number, @Body() body: any) {",
+            "resaltada": false
+          }
+        ],
+        "lineas_influyentes": [
+          {
+            "linea": 30,
+            "aporte": 0.518
+          },
+          {
+            "linea": 31,
+            "aporte": 0.152
+          },
+          {
+            "linea": 32,
+            "aporte": 0.066
+          }
+        ],
+        "indicadores": [
+          {
+            "indicador": "entrada_http",
+            "descripcion": "Lee datos enviados por el cliente en la petición",
+            "linea": 32,
+            "codigo": "async update(@Param('id', ParseIntPipe) id: number, @Body() body: any) {"
+          },
+          {
+            "indicador": "ruta_definida",
+            "descripcion": "Define un endpoint HTTP",
+            "linea": 31,
+            "codigo": "@Put(':id')"
+          },
+          {
+            "indicador": "parametro_ruta_id",
+            "descripcion": "El endpoint recibe un identificador de objeto en la ruta",
+            "linea": 31,
+            "codigo": "@Put(':id')"
+          },
+          {
+            "indicador": "parametro_ruta_id",
+            "descripcion": "El endpoint recibe un identificador de objeto en la ruta",
+            "linea": 32,
+            "codigo": "async update(@Param('id', ParseIntPipe) id: number, @Body() body: any) {"
+          },
+          {
+            "indicador": "metodo_modificacion",
+            "descripcion": "Endpoint que modifica o elimina datos",
+            "linea": 31,
+            "codigo": "@Put(':id')"
+          },
+          {
+            "indicador": "guard_autenticacion",
+            "descripcion": "Exige autenticación en el endpoint",
+            "linea": 30,
+            "codigo": "@UseGuards(JwtAuthGuard)"
+          },
+          {
+            "indicador": "validacion_entrada",
+            "descripcion": "Valida o convierte el tipo de la entrada",
+            "linea": 32,
+            "codigo": "async update(@Param('id', ParseIntPipe) id: number, @Body() body: any) {"
+          }
+        ],
+        "patrones_combinados": [
+          "x_ruta_privilegiada_sin_rol"
+        ],
+        "probabilidad_modelo_base": 0.787,
+        "probabilidad_combinada": 0.685
+      },
+      "owasp_top10": [
+        {
+          "codigo": "A01:2025",
+          "nombre": "Pérdida de control de acceso",
+          "probabilidad": 0.919
+        }
+      ],
+      "owasp_api": [
+        {
+          "codigo": "API1:2023",
+          "nombre": "Autorización incorrecta a nivel de objeto",
+          "probabilidad": 0.87
+        },
+        {
+          "codigo": "API3:2023",
+          "nombre": "Autorización incorrecta a nivel de propiedades del objeto",
+          "probabilidad": 0.516
+        },
+        {
+          "codigo": "API5:2023",
+          "nombre": "Autorización incorrecta a nivel de función",
+          "probabilidad": 0.224
+        }
+      ],
+      "cwe": {
+        "id": "CWE-639",
+        "nombre": "Authorization Bypass Through User-Controlled Key"
+      },
+      "confianza": 0.787,
+      "severidad": "Alta",
+      "justificacion_severidad": "severidad base de CWE-639: Alta.",
+      "recomendacion": "Filtrar la consulta por el usuario autenticado (p. ej. findByIdAndOwner) o comprobar la propiedad antes de devolver o modificar el objeto.",
+      "estado": "Potencial - requiere verificación manual o dinámica",
+      "categoria_sugerida": {}
+    },
+    {
+      "id": "VM-010",
+      "microservicio": "user-service",
+      "archivo": "user-service/src/users/users.controller.ts",
+      "linea": 24,
+      "linea_inicio": 24,
+      "linea_fin": 28,
+      "unidad": "ordersOfUser",
+      "lenguaje": "typescript",
+      "descripcion": "Posible falla de control de acceso: la operación no verifica suficientemente quién puede realizarla.",
+      "evidencia": {
+        "fragmento": [
+          {
+            "linea": 22,
+            "codigo": "  }",
+            "resaltada": false
+          },
+          {
+            "linea": 23,
+            "codigo": "",
+            "resaltada": false
+          },
+          {
+            "linea": 24,
+            "codigo": "  @UseGuards(JwtAuthGuard)",
+            "resaltada": true
+          },
+          {
+            "linea": 25,
+            "codigo": "  @Get(':id/orders')",
+            "resaltada": false
+          },
+          {
+            "linea": 26,
+            "codigo": "  async ordersOfUser(@Param('id', ParseIntPipe) id: number) {",
+            "resaltada": false
+          }
+        ],
+        "lineas_influyentes": [
+          {
+            "linea": 24,
+            "aporte": 0.484
+          },
+          {
+            "linea": 26,
+            "aporte": 0.16
+          },
+          {
+            "linea": 25,
+            "aporte": 0.019
+          }
+        ],
+        "indicadores": [
+          {
+            "indicador": "entrada_http",
+            "descripcion": "Lee datos enviados por el cliente en la petición",
+            "linea": 26,
+            "codigo": "async ordersOfUser(@Param('id', ParseIntPipe) id: number) {"
+          },
+          {
+            "indicador": "ruta_definida",
+            "descripcion": "Define un endpoint HTTP",
+            "linea": 25,
+            "codigo": "@Get(':id/orders')"
+          },
+          {
+            "indicador": "parametro_ruta_id",
+            "descripcion": "El endpoint recibe un identificador de objeto en la ruta",
+            "linea": 26,
+            "codigo": "async ordersOfUser(@Param('id', ParseIntPipe) id: number) {"
+          },
+          {
+            "indicador": "recurso_de_usuario",
+            "descripcion": "Opera sobre un recurso que normalmente pertenece a un usuario",
+            "linea": 25,
+            "codigo": "@Get(':id/orders')"
+          },
+          {
+            "indicador": "guard_autenticacion",
+            "descripcion": "Exige autenticación en el endpoint",
+            "linea": 24,
+            "codigo": "@UseGuards(JwtAuthGuard)"
+          },
+          {
+            "indicador": "validacion_entrada",
+            "descripcion": "Valida o convierte el tipo de la entrada",
+            "linea": 26,
+            "codigo": "async ordersOfUser(@Param('id', ParseIntPipe) id: number) {"
+          }
+        ],
+        "patrones_combinados": [],
+        "probabilidad_modelo_base": 0.589,
+        "probabilidad_combinada": 0.307
+      },
+      "owasp_top10": [
+        {
+          "codigo": "A01:2025",
+          "nombre": "Pérdida de control de acceso",
+          "probabilidad": 0.795
+        }
+      ],
+      "owasp_api": [],
+      "cwe": {},
+      "confianza": 0.589,
+      "severidad": "Alta",
+      "justificacion_severidad": "severidad base de la categoría A01:2025: Alta.",
+      "recomendacion": "Aplicar control de acceso en el servidor con denegación por defecto y verificar que el usuario autenticado tenga permiso sobre el recurso solicitado.",
+      "estado": "Potencial - requiere verificación manual o dinámica",
+      "categoria_sugerida": {}
+    },
+    {
+      "id": "VM-011",
+      "microservicio": "order-service",
+      "archivo": "order-service/app/main.py",
+      "linea": 14,
+      "linea_inicio": 1,
+      "linea_fin": 21,
+      "unidad": "bloque de módulo",
+      "lenguaje": "python",
+      "descripcion": "Política CORS permisiva (origen '*'). Evidencia: el endpoint no muestra un mecanismo de autenticación.",
+      "evidencia": {
+        "fragmento": [
+          {
+            "linea": 12,
+            "codigo": "app.add_middleware(",
+            "resaltada": false
+          },
+          {
+            "linea": 13,
+            "codigo": "    CORSMiddleware,",
+            "resaltada": false
+          },
+          {
+            "linea": 14,
+            "codigo": "    allow_origins=[\"*\"],",
+            "resaltada": true
+          },
+          {
+            "linea": 15,
+            "codigo": "    allow_credentials=True,",
+            "resaltada": false
+          },
+          {
+            "linea": 16,
+            "codigo": "    allow_methods=[\"*\"],",
+            "resaltada": false
+          }
+        ],
+        "lineas_influyentes": [
+          {
+            "linea": 14,
+            "aporte": 0.223
+          },
+          {
+            "linea": 10,
+            "aporte": 0.036
+          },
+          {
+            "linea": 16,
+            "aporte": 0.01
+          }
+        ],
+        "indicadores": [
+          {
+            "indicador": "ruta_definida",
+            "descripcion": "Define un endpoint HTTP",
+            "linea": 16,
+            "codigo": "allow_methods=[\"*\"],"
+          },
+          {
+            "indicador": "recurso_de_usuario",
+            "descripcion": "Opera sobre un recurso que normalmente pertenece a un usuario",
+            "linea": 7,
+            "codigo": "from app.routers import orders, receipts"
+          },
+          {
+            "indicador": "recurso_de_usuario",
+            "descripcion": "Opera sobre un recurso que normalmente pertenece a un usuario",
+            "linea": 9,
+            "codigo": "logger = logging.getLogger(\"order-service\")"
+          },
+          {
+            "indicador": "recurso_de_usuario",
+            "descripcion": "Opera sobre un recurso que normalmente pertenece a un usuario",
+            "linea": 10,
+            "codigo": "app = FastAPI(title=\"order-service\", debug=True)"
+          },
+          {
+            "indicador": "filtro_propiedades",
+            "descripcion": "Selecciona explícitamente las propiedades expuestas o aceptadas",
+            "linea": 5,
+            "codigo": "from fastapi.responses import JSONResponse"
+          },
+          {
+            "indicador": "debug_activo",
+            "descripcion": "Modo de depuración o trazas detalladas activas",
+            "linea": 10,
+            "codigo": "app = FastAPI(title=\"order-service\", debug=True)"
+          },
+          {
+            "indicador": "cors_permisivo",
+            "descripcion": "Política CORS que acepta cualquier origen",
+            "linea": 14,
+            "codigo": "allow_origins=[\"*\"],"
+          }
+        ],
+        "patrones_combinados": [
+          "x_ruta_sin_autenticacion"
+        ],
+        "probabilidad_modelo_base": 0.982,
+        "probabilidad_combinada": 0.989
+      },
+      "owasp_top10": [
+        {
+          "codigo": "A02:2025",
+          "nombre": "Configuración de seguridad incorrecta",
+          "probabilidad": 0.998
+        }
+      ],
+      "owasp_api": [
+        {
+          "codigo": "API8:2023",
+          "nombre": "Configuración de seguridad incorrecta",
+          "probabilidad": 0.998
+        }
+      ],
+      "cwe": {
+        "id": "CWE-942",
+        "nombre": "Permissive Cross-domain Security Policy with Untrusted Domains"
+      },
+      "confianza": 0.989,
+      "severidad": "Media",
+      "justificacion_severidad": "severidad base de CWE-942: Media.",
+      "recomendacion": "Restringir los orígenes permitidos a una lista explícita.",
+      "estado": "Potencial - respaldado por evidencia estática",
+      "categoria_sugerida": {}
+    },
+    {
+      "id": "VM-012",
+      "microservicio": "product-service",
+      "archivo": "product-service/src/main/resources/application.yml",
+      "linea": 19,
+      "linea_inicio": 15,
+      "linea_fin": 22,
+      "unidad": "management",
+      "lenguaje": "config",
+      "descripcion": "Posible configuración de seguridad incorrecta o insegura por defecto.",
+      "evidencia": {
+        "fragmento": [
+          {
+            "linea": 17,
+            "codigo": "    web:",
+            "resaltada": false
+          },
+          {
+            "linea": 18,
+            "codigo": "      exposure:",
+            "resaltada": false
+          },
+          {
+            "linea": 19,
+            "codigo": "        include: \"*\"",
+            "resaltada": true
+          },
+          {
+            "linea": 20,
+            "codigo": "  endpoint:",
+            "resaltada": false
+          },
+          {
+            "linea": 21,
+            "codigo": "    health:",
+            "resaltada": false
+          }
+        ],
+        "lineas_influyentes": [
+          {
+            "linea": 19,
+            "aporte": 0.193
+          },
+          {
+            "linea": 22,
+            "aporte": 0.014
+          },
+          {
+            "linea": 18,
+            "aporte": 0.008
+          }
+        ],
+        "indicadores": [
+          {
+            "indicador": "actuator_expuesto",
+            "descripcion": "Endpoints de administración (Actuator) expuestos",
+            "linea": 19,
+            "codigo": "include: \"*\""
+          },
+          {
+            "indicador": "actuator_expuesto",
+            "descripcion": "Endpoints de administración (Actuator) expuestos",
+            "linea": 22,
+            "codigo": "show-details: always"
+          }
+        ],
+        "patrones_combinados": [],
+        "probabilidad_modelo_base": 0.985,
+        "probabilidad_combinada": null
+      },
+      "owasp_top10": [
+        {
+          "codigo": "A02:2025",
+          "nombre": "Configuración de seguridad incorrecta",
+          "probabilidad": 0.852
+        }
+      ],
+      "owasp_api": [
+        {
+          "codigo": "API8:2023",
+          "nombre": "Configuración de seguridad incorrecta",
+          "probabilidad": 0.869
+        }
+      ],
+      "cwe": {
+        "id": "CWE-16",
+        "nombre": ""
+      },
+      "confianza": 0.985,
+      "severidad": "Media",
+      "justificacion_severidad": "severidad base de la categoría A02:2025: Media.",
+      "recomendacion": "Endurecer la configuración: desactivar funciones de depuración y endpoints innecesarios, restringir CORS y aplicar valores seguros por defecto en cada entorno.",
+      "estado": "Potencial - requiere verificación",
+      "categoria_sugerida": {}
+    },
+    {
+      "id": "VM-013",
+      "microservicio": "api-gateway",
+      "archivo": "api-gateway/src/server.js",
+      "linea": 10,
+      "linea_inicio": 1,
+      "linea_fin": 16,
+      "unidad": "bloque de módulo",
+      "lenguaje": "javascript",
+      "descripcion": "Política CORS permisiva (origen '*').",
+      "evidencia": {
+        "fragmento": [
+          {
+            "linea": 8,
+            "codigo": "app.use(helmet());",
+            "resaltada": false
+          },
+          {
+            "linea": 9,
+            "codigo": "app.use(morgan('combined'));",
+            "resaltada": false
+          },
+          {
+            "linea": 10,
+            "codigo": "app.use(cors({ origin: true, credentials: true }));",
+            "resaltada": true
+          },
+          {
+            "linea": 11,
+            "codigo": "",
+            "resaltada": false
+          },
+          {
+            "linea": 12,
+            "codigo": "const routes = {",
+            "resaltada": false
+          }
+        ],
+        "lineas_influyentes": [
+          {
+            "linea": 10,
+            "aporte": 0.531
+          },
+          {
+            "linea": 12,
+            "aporte": 0.048
+          },
+          {
+            "linea": 1,
+            "aporte": 0.026
+          }
+        ],
+        "indicadores": [
+          {
+            "indicador": "recurso_de_usuario",
+            "descripcion": "Opera sobre un recurso que normalmente pertenece a un usuario",
+            "linea": 15,
+            "codigo": "'/api/orders': process.env.ORDERS_URL,"
+          },
+          {
+            "indicador": "secreto_externo",
+            "descripcion": "Obtiene secretos de variables de entorno o de un gestor",
+            "linea": 13,
+            "codigo": "'/api/users': process.env.USERS_URL,"
+          },
+          {
+            "indicador": "secreto_externo",
+            "descripcion": "Obtiene secretos de variables de entorno o de un gestor",
+            "linea": 14,
+            "codigo": "'/api/products': process.env.PRODUCTS_URL,"
+          },
+          {
+            "indicador": "secreto_externo",
+            "descripcion": "Obtiene secretos de variables de entorno o de un gestor",
+            "linea": 15,
+            "codigo": "'/api/orders': process.env.ORDERS_URL,"
+          },
+          {
+            "indicador": "cors_permisivo",
+            "descripcion": "Política CORS que acepta cualquier origen",
+            "linea": 10,
+            "codigo": "app.use(cors({ origin: true, credentials: true }));"
+          },
+          {
+            "indicador": "cabeceras_seguridad",
+            "descripcion": "Configura cabeceras de seguridad",
+            "linea": 3,
+            "codigo": "const helmet = require('helmet');"
+          },
+          {
+            "indicador": "cabeceras_seguridad",
+            "descripcion": "Configura cabeceras de seguridad",
+            "linea": 8,
+            "codigo": "app.use(helmet());"
+          }
+        ],
+        "patrones_combinados": [],
+        "probabilidad_modelo_base": 0.891,
+        "probabilidad_combinada": 0.96
+      },
+      "owasp_top10": [
+        {
+          "codigo": "A02:2025",
+          "nombre": "Configuración de seguridad incorrecta",
+          "probabilidad": 0.906
+        }
+      ],
+      "owasp_api": [
+        {
+          "codigo": "API8:2023",
+          "nombre": "Configuración de seguridad incorrecta",
+          "probabilidad": 0.997
+        }
+      ],
+      "cwe": {
+        "id": "CWE-942",
+        "nombre": "Permissive Cross-domain Security Policy with Untrusted Domains"
+      },
+      "confianza": 0.96,
+      "severidad": "Media",
+      "justificacion_severidad": "severidad base de CWE-942: Media.",
+      "recomendacion": "Restringir los orígenes permitidos a una lista explícita.",
+      "estado": "Potencial - requiere verificación",
+      "categoria_sugerida": {}
+    },
+    {
+      "id": "VM-014",
+      "microservicio": "product-service",
+      "archivo": "product-service/Dockerfile",
+      "linea": 7,
+      "linea_inicio": 7,
+      "linea_fin": 11,
+      "unidad": "etapa 2",
+      "lenguaje": "config",
+      "descripcion": "Dependencia de un componente no confiable o sin verificar.",
+      "evidencia": {
+        "fragmento": [
+          {
+            "linea": 5,
+            "codigo": "RUN mvn -q package -DskipTests",
+            "resaltada": false
+          },
+          {
+            "linea": 6,
+            "codigo": "",
+            "resaltada": false
+          },
+          {
+            "linea": 7,
+            "codigo": "FROM openjdk:latest",
+            "resaltada": true
+          },
+          {
+            "linea": 8,
+            "codigo": "WORKDIR /app",
+            "resaltada": false
+          },
+          {
+            "linea": 9,
+            "codigo": "COPY --from=build /src/target/product-service-1.0.0.jar app.jar",
+            "resaltada": false
+          }
+        ],
+        "lineas_influyentes": [
+          {
+            "linea": 7,
+            "aporte": 0.357
+          },
+          {
+            "linea": 11,
+            "aporte": 0.161
+          },
+          {
+            "linea": 10,
+            "aporte": 0.071
+          }
+        ],
+        "indicadores": [
+          {
+            "indicador": "imagen_sin_version",
+            "descripcion": "Imagen base sin versión fija (latest)",
+            "linea": 7,
+            "codigo": "FROM openjdk:latest"
+          }
+        ],
+        "patrones_combinados": [],
+        "probabilidad_modelo_base": 0.493,
+        "probabilidad_combinada": null
+      },
+      "owasp_top10": [
+        {
+          "codigo": "A03:2025",
+          "nombre": "Fallas en la cadena de suministro de software",
+          "probabilidad": 0.896
+        },
+        {
+          "codigo": "A02:2025",
+          "nombre": "Configuración de seguridad incorrecta",
+          "probabilidad": 0.704
+        }
+      ],
+      "owasp_api": [
+        {
+          "codigo": "API8:2023",
+          "nombre": "Configuración de seguridad incorrecta",
+          "probabilidad": 0.746
+        }
+      ],
+      "cwe": {
+        "id": "CWE-1357",
+        "nombre": "Reliance on Insufficiently Trustworthy Component"
+      },
+      "confianza": 0.493,
+      "severidad": "Media",
+      "justificacion_severidad": "severidad base de CWE-1357: Media.",
+      "recomendacion": "Usar imágenes y paquetes de fuentes oficiales con versión fijada y verificación de integridad.",
+      "estado": "Potencial - requiere verificación",
+      "categoria_sugerida": {}
+    },
+    {
+      "id": "VM-015",
+      "microservicio": "product-service",
+      "archivo": "product-service/src/main/java/com/tienda/productos/ProductRepository.java",
+      "linea": 11,
+      "linea_inicio": 10,
+      "linea_fin": 11,
+      "unidad": "clase ProductRepository",
+      "lenguaje": "java",
+      "descripcion": "Código o configuración similar a ejemplos vulnerables; la categoría no pudo determinarse.",
+      "evidencia": {
+        "fragmento": [
+          {
+            "linea": 9,
+            "codigo": "",
+            "resaltada": false
+          },
+          {
+            "linea": 10,
+            "codigo": "    private final JdbcTemplate jdbc;",
+            "resaltada": false
+          },
+          {
+            "linea": 11,
+            "codigo": "    private final ProductRowMapper mapper = new ProductRowMapper();",
+            "resaltada": true
+          },
+          {
+            "linea": 12,
+            "codigo": "",
+            "resaltada": false
+          },
+          {
+            "linea": 13,
+            "codigo": "    public ProductRepository(JdbcTemplate jdbc) {",
+            "resaltada": false
+          }
+        ],
+        "lineas_influyentes": [
+          {
+            "linea": 11,
+            "aporte": 0.2
+          },
+          {
+            "linea": 10,
+            "aporte": 0.103
+          }
+        ],
+        "indicadores": [],
+        "patrones_combinados": [],
+        "probabilidad_modelo_base": 0.463,
+        "probabilidad_combinada": 0.236
+      },
+      "owasp_top10": [],
+      "owasp_api": [],
+      "cwe": {},
+      "confianza": 0.463,
+      "severidad": "Media",
+      "justificacion_severidad": "sin categoría determinada: severidad media por defecto.",
+      "recomendacion": "Revisar manualmente el fragmento: el modelo detectó similitud con código vulnerable pero no pudo determinar la categoría.",
+      "estado": "Pendiente de revisión (categoría no determinada)",
+      "categoria_sugerida": {
+        "codigo": "A05:2025",
+        "probabilidad": 0.462
+      }
+    },
+    {
+      "id": "VM-016",
+      "microservicio": "order-service",
+      "archivo": "order-service/requirements.txt",
+      "linea": 2,
+      "linea_inicio": 1,
+      "linea_fin": 6,
+      "unidad": "requirements.txt",
+      "lenguaje": "config",
+      "descripcion": "Uso de componentes sin mantenimiento o con versión no fijada.",
+      "evidencia": {
+        "fragmento": [
+          {
+            "linea": 1,
+            "codigo": "fastapi",
+            "resaltada": false
+          },
+          {
+            "linea": 2,
+            "codigo": "uvicorn",
+            "resaltada": true
+          },
+          {
+            "linea": 3,
+            "codigo": "requests",
+            "resaltada": false
+          },
+          {
+            "linea": 4,
+            "codigo": "sqlalchemy==2.0.36",
+            "resaltada": false
+          }
+        ],
+        "lineas_influyentes": [
+          {
+            "linea": 2,
+            "aporte": 0.203
+          },
+          {
+            "linea": 1,
+            "aporte": 0.188
+          },
+          {
+            "linea": 3,
+            "aporte": 0.154
+          }
+        ],
+        "indicadores": [
+          {
+            "indicador": "jwt",
+            "descripcion": "Usa tokens JWT",
+            "linea": 6,
+            "codigo": "python-jose==3.3.0"
+          },
+          {
+            "indicador": "paquete_sin_version",
+            "descripcion": "Dependencia o paquete sin versión fijada",
+            "linea": 1,
+            "codigo": "fastapi"
+          },
+          {
+            "indicador": "paquete_sin_version",
+            "descripcion": "Dependencia o paquete sin versión fijada",
+            "linea": 2,
+            "codigo": "uvicorn"
+          },
+          {
+            "indicador": "paquete_sin_version",
+            "descripcion": "Dependencia o paquete sin versión fijada",
+            "linea": 3,
+            "codigo": "requests"
+          }
+        ],
+        "patrones_combinados": [],
+        "probabilidad_modelo_base": 0.427,
+        "probabilidad_combinada": null
+      },
+      "owasp_top10": [
+        {
+          "codigo": "A03:2025",
+          "nombre": "Fallas en la cadena de suministro de software",
+          "probabilidad": 0.997
+        }
+      ],
+      "owasp_api": [],
+      "cwe": {
+        "id": "CWE-1104",
+        "nombre": "Use of Unmaintained Third Party Components"
+      },
+      "confianza": 0.427,
+      "severidad": "Media",
+      "justificacion_severidad": "severidad base de CWE-1104: Media.",
+      "recomendacion": "Fijar versiones, actualizar componentes y revisar sus vulnerabilidades conocidas.",
+      "estado": "Potencial - requiere verificación",
+      "categoria_sugerida": {}
+    },
+    {
+      "id": "VM-017",
+      "microservicio": "(raíz del proyecto)",
+      "archivo": "docker-compose.yml",
+      "linea": 11,
+      "linea_inicio": 4,
+      "linea_fin": 15,
+      "unidad": "servicio api-gateway",
+      "lenguaje": "config",
+      "descripcion": "El servicio o contenedor se ejecuta con privilegios innecesarios (root).",
+      "evidencia": {
+        "fragmento": [
+          {
+            "linea": 9,
+            "codigo": "      - USERS_URL=http://user-service:3000",
+            "resaltada": false
+          },
+          {
+            "linea": 10,
+            "codigo": "      - PRODUCTS_URL=http://product-service:8081",
+            "resaltada": false
+          },
+          {
+            "linea": 11,
+            "codigo": "      - ORDERS_URL=http://order-service:8000",
+            "resaltada": true
+          },
+          {
+            "linea": 12,
+            "codigo": "    depends_on:",
+            "resaltada": false
+          },
+          {
+            "linea": 13,
+            "codigo": "      - user-service",
+            "resaltada": false
+          }
+        ],
+        "lineas_influyentes": [
+          {
+            "linea": 10,
+            "aporte": 0.092
+          },
+          {
+            "linea": 9,
+            "aporte": 0.063
+          },
+          {
+            "linea": 11,
+            "aporte": 0.047
+          }
+        ],
+        "indicadores": [
+          {
+            "indicador": "recurso_de_usuario",
+            "descripcion": "Opera sobre un recurso que normalmente pertenece a un usuario",
+            "linea": 11,
+            "codigo": "- ORDERS_URL=http://order-service:8000"
+          },
+          {
+            "indicador": "recurso_de_usuario",
+            "descripcion": "Opera sobre un recurso que normalmente pertenece a un usuario",
+            "linea": 15,
+            "codigo": "- order-service"
+          }
+        ],
+        "patrones_combinados": [],
+        "probabilidad_modelo_base": 0.378,
+        "probabilidad_combinada": null
+      },
+      "owasp_top10": [
+        {
+          "codigo": "A02:2025",
+          "nombre": "Configuración de seguridad incorrecta",
+          "probabilidad": 0.802
+        },
+        {
+          "codigo": "A07:2025",
+          "nombre": "Fallas de autenticación",
+          "probabilidad": 0.293
+        }
+      ],
+      "owasp_api": [
+        {
+          "codigo": "API8:2023",
+          "nombre": "Configuración de seguridad incorrecta",
+          "probabilidad": 0.938
+        }
+      ],
+      "cwe": {
+        "id": "CWE-250",
+        "nombre": "Execution with Unnecessary Privileges"
+      },
+      "confianza": 0.378,
+      "severidad": "Media",
+      "justificacion_severidad": "severidad base de CWE-250: Media.",
+      "recomendacion": "Crear y usar un usuario sin privilegios (USER en el Dockerfile), sin modo privilegiado ni capacidades extra.",
+      "estado": "Potencial - requiere verificación",
+      "categoria_sugerida": {}
+    }
+  ],
+  "categorias": {
+    "A01:2025": {
+      "nombre": "Pérdida de control de acceso",
+      "estado": "evaluada",
+      "motivo": ""
+    },
+    "A02:2025": {
+      "nombre": "Configuración de seguridad incorrecta",
+      "estado": "evaluada",
+      "motivo": ""
+    },
+    "A03:2025": {
+      "nombre": "Fallas en la cadena de suministro de software",
+      "estado": "evaluada",
+      "motivo": ""
+    },
+    "A04:2025": {
+      "nombre": "Fallas criptográficas",
+      "estado": "evaluada",
+      "motivo": ""
+    },
+    "A05:2025": {
+      "nombre": "Inyección",
+      "estado": "evaluada",
+      "motivo": ""
+    },
+    "A06:2025": {
+      "nombre": "Diseño inseguro",
+      "estado": "evaluada",
+      "motivo": ""
+    },
+    "A07:2025": {
+      "nombre": "Fallas de autenticación",
+      "estado": "evaluada",
+      "motivo": ""
+    },
+    "A08:2025": {
+      "nombre": "Fallas en la integridad del software o de los datos",
+      "estado": "evaluada",
+      "motivo": ""
+    },
+    "A09:2025": {
+      "nombre": "Fallas en el registro, alerta y monitoreo de seguridad",
+      "estado": "evaluada",
+      "motivo": ""
+    },
+    "A10:2025": {
+      "nombre": "Manejo inadecuado de condiciones excepcionales",
+      "estado": "evaluada",
+      "motivo": ""
+    },
+    "API1:2023": {
+      "nombre": "Autorización incorrecta a nivel de objeto",
+      "estado": "evaluada",
+      "motivo": ""
+    },
+    "API2:2023": {
+      "nombre": "Autenticación incorrecta",
+      "estado": "evaluada",
+      "motivo": ""
+    },
+    "API3:2023": {
+      "nombre": "Autorización incorrecta a nivel de propiedades del objeto",
+      "estado": "evaluada",
+      "motivo": ""
+    },
+    "API4:2023": {
+      "nombre": "Consumo ilimitado de recursos",
+      "estado": "evaluada",
+      "motivo": ""
+    },
+    "API5:2023": {
+      "nombre": "Autorización incorrecta a nivel de función",
+      "estado": "evaluada",
+      "motivo": ""
+    },
+    "API6:2023": {
+      "nombre": "Acceso ilimitado a flujos de negocio sensibles",
+      "estado": "no evaluada",
+      "motivo": "datos insuficientes para entrenar (0 ejemplos; mínimo 15)"
+    },
+    "API7:2023": {
+      "nombre": "Falsificación de solicitudes del lado del servidor",
+      "estado": "evaluada",
+      "motivo": ""
+    },
+    "API8:2023": {
+      "nombre": "Configuración de seguridad incorrecta",
+      "estado": "evaluada",
+      "motivo": ""
+    },
+    "API9:2023": {
+      "nombre": "Gestión inadecuada del inventario de API",
+      "estado": "no evaluada",
+      "motivo": "datos insuficientes para entrenar (1 ejemplos; mínimo 15)"
+    },
+    "API10:2023": {
+      "nombre": "Consumo inseguro de API",
+      "estado": "evaluada",
+      "motivo": ""
+    }
+  }
+}
