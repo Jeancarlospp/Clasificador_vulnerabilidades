@@ -38,6 +38,9 @@ def comando_scan(args):
     if not estandares or not formatos:
         print("error: indique al menos un estándar y un formato", file=sys.stderr)
         return 2
+    if args.threshold is not None and not 0 < args.threshold < 1:
+        print("error: el umbral debe estar entre 0 y 1", file=sys.stderr)
+        return 2
     if not args.quiet:
         print(f"Analizando {raiz} ...", file=sys.stderr)
     modelo = cargar_modelo(args.modelo)

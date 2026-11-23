@@ -44,3 +44,10 @@ def test_lenguajes_no_soportados_se_informan(tmp_path):
     (tmp_path / "svc" / "main.go").write_text("package main\n")
     servicios, _ = descubrir(tmp_path)
     assert servicios[0].no_soportados == {".go": 1}
+
+
+def test_es_binario():
+    from vulnminer.descubrimiento import es_binario
+    assert es_binario(b"\x89PNG\r\n\x1a\n\x00\x00")
+    assert not es_binario("const nombre = 'añadir ñandú';".encode())
+    assert not es_binario(b"")

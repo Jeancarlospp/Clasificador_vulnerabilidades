@@ -9,6 +9,7 @@
 """
 
 import time
+from collections import Counter
 from dataclasses import asdict, dataclass, field
 from datetime import datetime
 from pathlib import Path
@@ -17,7 +18,7 @@ from . import __version__
 from . import caracteristicas as C
 from .catalogo import (API2023, DESCRIPCION_CATEGORIA, DESCRIPCION_PATRON, OWASP2025, RECOMENDACION_CATEGORIA,
                        conocimiento, nombre_categoria, nombre_cwe)
-from .descubrimiento import descubrir, es_generado, resumen_servicio
+from .descubrimiento import descubrir, es_generado, leer_texto, resumen_servicio
 from .modelo import NOMBRES_ALGORITMO
 from .segmentacion import segmentar
 from .severidad import NIVELES, estado, estimar
@@ -137,9 +138,9 @@ def analizar_proyecto(raiz, modelo=None, estandares=("owasp2025", "api2023"), um
     unidades, origen, textos = [], [], {}
     for s in servicios:
         for rel in s.archivos:
-            try:
-                texto = (raiz / rel).read_text(encoding="utf-8", errors="ignore")
-            except OSError:
+            texto, motivo = leer_texto(raiz / rel)
+            if texto is None:
+                s.omitidos[motivo] = s.omitidos.get(motivo, 0) + 1
                 continue
             if es_generado(rel, texto):
                 continue
@@ -208,7 +209,9 @@ def analizar_proyecto(raiz, modelo=None, estandares=("owasp2025", "api2023"), um
                                                                                if k in ("version", "fecha", "detector_prueba")}},
         "resumen": {"microservicios": len([s for s in servicios if s.ruta != "."]) or len(servicios),
                     "archivos_analizados": total, "unidades_analizadas": len(unidades), "hallazgos": len(hallazgos),
-                    "duracion_segundos": round(time.time() - t0, 1)},
+                    "duracion_segundos": round(time.time() - t0, 1),
+                    "archivos_omitidos": dict(sum((Counter(s.omitidos) for s in servicios), Counter())),
+                    "archivos_no_soportados": dict(sum((Counter(s.no_soportados) for s in servicios), Counter()))},
         "microservicios": [resumen_servicio(s) for s in servicios],
         "hallazgos": [asdict(h) for h in hallazgos],
         "categorias": {c: {"nombre": nombre_categoria(c),

@@ -23,6 +23,14 @@ def consola(resultado, rutas=(), max_hallazgos=None, detalle=True):
            f"Archivos analizados: {r['archivos_analizados']}",
            f"Unidades analizadas: {r['unidades_analizadas']}",
            f"Hallazgos potenciales: {r['hallazgos']}", ""]
+    if r.get("archivos_omitidos"):
+        out.insert(-2, "Archivos omitidos: " + ", ".join(f"{v} ({k})" for k, v in r["archivos_omitidos"].items()))
+    if r.get("archivos_no_soportados"):
+        out.insert(-2, "Lenguajes no soportados (no analizados): " +
+                   ", ".join(f"{k} {v} archivo(s)" for k, v in r["archivos_no_soportados"].items()))
+    if not r["archivos_analizados"]:
+        out += ["AVISO: no se encontraron archivos soportados (Python, Java, JavaScript/TypeScript, Dockerfile,",
+                "docker-compose, YAML, properties, .env o manifiestos de dependencias). Revise la ruta indicada.", ""]
     sev = Counter(h["severidad"] for h in resultado["hallazgos"])
     if resultado["hallazgos"]:
         out.append("Por severidad: " + ", ".join(f"{n} {sev.get(n, 0)}" for n in reversed(NIVELES)))

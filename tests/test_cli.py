@@ -103,3 +103,34 @@ def test_linea_reportada_es_la_operacion_peligrosa(ruta_modelo, tmp_path):
               '    data = base64.b64decode(request.cookies.get("draft", ""))\n    draft = pickle.loads(data)\n    return {"ok": True}\n')
     d = analizar_unidades(cargar_modelo(ruta_modelo), segmentar("r.py", codigo))
     assert d and d[0]["linea"] == 4
+
+
+# ------------------------------------------------------------------ casos límite
+def test_directorio_sin_archivos_soportados(ruta_modelo, tmp_path, capsys):
+    (tmp_path / "vacio").mkdir()
+    (tmp_path / "vacio" / "notas.txt").write_text("nada que analizar")
+    assert main(["scan", str(tmp_path / "vacio"), "--output", str(tmp_path / "r"), "-q", "--format", "json"]) == 0
+    assert "no se encontraron archivos soportados" in capsys.readouterr().out
+    assert json.loads((tmp_path / "r" / "analisis.json").read_text())["resumen"]["hallazgos"] == 0
+
+
+def test_archivos_binarios_grandes_e_ilegibles_se_omiten(ruta_modelo, tmp_path, capsys):
+    svc = tmp_path / "p" / "svc"
+    svc.mkdir(parents=True)
+    (svc / "package.json").write_text('{"name": "svc", "dependencies": {"express": "4"}}')
+    (svc / "imagen.js").write_bytes(bytes(range(256)) * 80)
+    (svc / "enorme.js").write_text("function f(){ return 1 }\n" * 60000)
+    (svc / "ok.js").write_text("function f(req, res) { db.query('SELECT * FROM t WHERE id=' + req.params.id) }\n")
+    salida = tmp_path / "r"
+    assert main(["scan", str(tmp_path / "p"), "--output", str(salida), "-q", "--format", "json"]) == 0
+    datos = json.loads((salida / "analisis.json").read_text())
+    assert datos["resumen"]["archivos_omitidos"] == {"contenido binario": 1, "mayor a 1 MB": 1}
+    assert {h["archivo"] for h in datos["hallazgos"]} == {"svc/ok.js"}
+    assert "Archivos omitidos" in capsys.readouterr().out
+
+
+def test_umbral_fuera_de_rango_y_modelo_inexistente(tmp_path, capsys):
+    assert main(["scan", str(tmp_path), "--threshold", "3"]) == 2
+    assert main(["scan", str(tmp_path), "--modelo", str(tmp_path / "no.joblib"), "-q"]) == 2
+    err = capsys.readouterr().err
+    assert "umbral" in err and "No se encontró el modelo" in err
