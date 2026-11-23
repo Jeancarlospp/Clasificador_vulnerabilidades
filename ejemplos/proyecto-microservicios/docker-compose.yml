@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - USERS_URL=http://user-service:3000
+      - PRODUCTS_URL=http://product-service:8081
+      - ORDERS_URL=http://order-service:8000
+    depends_on:
+      - user-service
+      - product-service
+      - order-service
+
+  user-service:
+    build: ./user-service
+    environment:
+      - DATABASE_URL=postgres://users:${USERS_DB_PASSWORD}@postgres:5432/users
+      - JWT_SECRET=${JWT_SECRET}
+
+  product-service:
+    build: ./product-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+
+  order-service:
+    build: ./order-service
+    environment:
+      - DB_PASSWORD=orders2024!
+      - PAYMENTS_API_KEY=sk_live_51HxQ2demoKey9988
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+  postgres:
+    image: postgres:16.4
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
