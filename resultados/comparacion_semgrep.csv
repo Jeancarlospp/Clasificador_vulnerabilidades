@@ -1,9 +1,9 @@
 proyecto,tipo,semgrep_hallazgos,semgrep_segundos,vulnminer_hallazgos,vulnminer_segundos,documentadas,semgrep_detectadas,vulnminer_detectadas,unidades,semgrep_unidades_marcadas,vulnminer_unidades_marcadas
-VAmPI,vulnerable,17,12.0,22,5.3,9.0,1.0,2.0,,,
-crAPI,vulnerable,257,13.7,121,29.4,14.0,2.0,6.0,,,
-dvws-node,vulnerable,104,13.3,84,12.3,21.0,11.0,16.0,,,
-restaurant-api,vulnerable,26,13.3,13,1.0,6.0,2.0,0.0,,,
-VRPlayground,vulnerable,58,14.2,61,7.0,16.0,11.0,16.0,,,
-petclinic-microservices,referencia,28,15.0,8,1.2,,,,229.0,4.0,8.0
-microservices-demo,referencia,80,15.1,24,2.0,,,,150.0,39.0,24.0
-proyecto-demo,demostracion,18,14.8,17,0.4,19.0,8.0,13.0,,,
+VAmPI,vulnerable,17,12.5,23,5.7,9.0,1.0,5.0,,,
+crAPI,vulnerable,257,15.7,153,42.9,14.0,2.0,8.0,,,
+dvws-node,vulnerable,104,15.6,106,20.5,21.0,11.0,19.0,,,
+restaurant-api,vulnerable,26,15.1,18,2.0,6.0,2.0,1.0,,,
+VRPlayground,vulnerable,58,15.4,59,7.1,16.0,11.0,16.0,,,
+petclinic-microservices,referencia,28,15.2,7,1.4,,,,229.0,4.0,7.0
+microservices-demo,referencia,80,15.2,18,2.0,,,,150.0,39.0,18.0
+proyecto-demo,demostracion,18,15.0,17,0.5,19.0,8.0,13.0,,,

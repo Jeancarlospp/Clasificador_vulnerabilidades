@@ -2,16 +2,16 @@
   "umbral": 0.35,
   "resumen_proyectos_vulnerables": {
     "vulnerabilidades_documentadas": 66,
-    "detectadas": 40,
-    "sensibilidad": 0.606,
-    "categoria_correcta": 28,
-    "categoria_correcta_sobre_detectadas": 0.7
+    "detectadas": 49,
+    "sensibilidad": 0.742,
+    "categoria_correcta": 36,
+    "categoria_correcta_sobre_detectadas": 0.735
   },
   "por_categoria": {
     "A01:2025": {
       "documentadas": 21,
-      "detectadas": 9,
-      "categoria_correcta": 7
+      "detectadas": 10,
+      "categoria_correcta": 8
     },
     "A02:2025": {
       "documentadas": 4,
@@ -20,32 +20,32 @@
     },
     "A04:2025": {
       "documentadas": 4,
-      "detectadas": 3,
-      "categoria_correcta": 3
+      "detectadas": 4,
+      "categoria_correcta": 4
     },
     "A05:2025": {
       "documentadas": 19,
-      "detectadas": 16,
-      "categoria_correcta": 10
+      "detectadas": 18,
+      "categoria_correcta": 12
     },
     "A06:2025": {
       "documentadas": 3,
-      "detectadas": 2,
-      "categoria_correcta": 0
+      "detectadas": 3,
+      "categoria_correcta": 1
     },
     "A07:2025": {
       "documentadas": 6,
-      "detectadas": 2,
-      "categoria_correcta": 1
+      "detectadas": 4,
+      "categoria_correcta": 3
     },
     "A08:2025": {
       "documentadas": 9,
-      "detectadas": 5,
-      "categoria_correcta": 4
+      "detectadas": 7,
+      "categoria_correcta": 5
     },
     "API10:2023": {
       "documentadas": 1,
-      "detectadas": 0,
+      "detectadas": 1,
       "categoria_correcta": 0
     },
     "API1:2023": {
@@ -55,18 +55,18 @@
     },
     "API2:2023": {
       "documentadas": 10,
-      "detectadas": 5,
-      "categoria_correcta": 3
+      "detectadas": 8,
+      "categoria_correcta": 6
     },
     "API3:2023": {
       "documentadas": 8,
-      "detectadas": 2,
+      "detectadas": 4,
       "categoria_correcta": 0
     },
     "API4:2023": {
       "documentadas": 5,
-      "detectadas": 3,
-      "categoria_correcta": 1
+      "detectadas": 5,
+      "categoria_correcta": 2
     },
     "API5:2023": {
       "documentadas": 4,
@@ -90,15 +90,15 @@
       "microservicios": 1,
       "archivos": 15,
       "unidades": 66,
-      "hallazgos": 22,
-      "hallazgos_por_100_unidades": 33.33,
+      "hallazgos": 23,
+      "hallazgos_por_100_unidades": 34.85,
       "vulnerabilidades_documentadas": 9,
-      "detectadas": 2,
-      "sensibilidad": 0.222,
-      "categoria_correcta": 0,
-      "hallazgos_sobre_vulnerabilidades_documentadas": 2,
-      "hallazgos_adicionales": 20,
-      "duracion_segundos": 5.4,
+      "detectadas": 5,
+      "sensibilidad": 0.556,
+      "categoria_correcta": 3,
+      "hallazgos_sobre_vulnerabilidades_documentadas": 4,
+      "hallazgos_adicionales": 19,
+      "duracion_segundos": 5.7,
       "detalle": [
         {
           "id": "VAMPI-01",
@@ -127,9 +127,9 @@
           "linea": 187,
           "detectada": true,
           "hallazgos": [
-            "VM-003"
+            "VM-001"
           ],
-          "confianza": 0.698,
+          "confianza": 0.961,
           "categorias_esperadas": [
             "A01:2025",
             "API1:2023"
@@ -214,17 +214,22 @@
           "nombre": "Enumeración de usuarios y contraseñas en el login",
           "archivo": "api_views/users.py",
           "linea": 102,
-          "detectada": false,
-          "hallazgos": [],
-          "confianza": 0.0,
+          "detectada": true,
+          "hallazgos": [
+            "VM-002"
+          ],
+          "confianza": 0.946,
           "categorias_esperadas": [
             "A07:2025",
             "API2:2023"
           ],
-          "categorias_predichas": [],
-          "categoria_correcta": false,
-          "top10_correcta": false,
-          "api_correcta": false,
+          "categorias_predichas": [
+            "A07:2025",
+            "API2:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": true,
           "lineas_unidad": [
             85,
             114
@@ -235,17 +240,22 @@
           "nombre": "ReDoS en la actualización del correo",
           "archivo": "api_views/users.py",
           "linea": 144,
-          "detectada": false,
-          "hallazgos": [],
-          "confianza": 0.0,
+          "detectada": true,
+          "hallazgos": [
+            "VM-006"
+          ],
+          "confianza": 0.894,
           "categorias_esperadas": [
             "A06:2025",
             "API4:2023"
           ],
-          "categorias_predichas": [],
-          "categoria_correcta": false,
-          "top10_correcta": false,
-          "api_correcta": false,
+          "categorias_predichas": [
+            "A06:2025",
+            "API4:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": true,
           "lineas_unidad": [
             132,
             176
@@ -256,18 +266,23 @@
           "nombre": "Login sin limitación de intentos",
           "archivo": "api_views/users.py",
           "linea": 92,
-          "detectada": false,
-          "hallazgos": [],
-          "confianza": 0.0,
+          "detectada": true,
+          "hallazgos": [
+            "VM-002"
+          ],
+          "confianza": 0.946,
           "categorias_esperadas": [
             "A07:2025",
             "API2:2023",
             "API4:2023"
           ],
-          "categorias_predichas": [],
-          "categoria_correcta": false,
-          "top10_correcta": false,
-          "api_correcta": false,
+          "categorias_predichas": [
+            "A07:2025",
+            "API2:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": true,
           "lineas_unidad": [
             85,
             114
@@ -280,7 +295,7 @@
           "linea": 13,
           "detectada": true,
           "hallazgos": [
-            "VM-012"
+            "VM-013"
           ],
           "confianza": 0.715,
           "categorias_esperadas": [
@@ -303,15 +318,15 @@
       "microservicios": 7,
       "archivos": 268,
       "unidades": 1385,
-      "hallazgos": 121,
-      "hallazgos_por_100_unidades": 8.74,
+      "hallazgos": 153,
+      "hallazgos_por_100_unidades": 11.05,
       "vulnerabilidades_documentadas": 14,
-      "detectadas": 6,
-      "sensibilidad": 0.429,
-      "categoria_correcta": 5,
-      "hallazgos_sobre_vulnerabilidades_documentadas": 9,
-      "hallazgos_adicionales": 112,
-      "duracion_segundos": 30.3,
+      "detectadas": 8,
+      "sensibilidad": 0.571,
+      "categoria_correcta": 6,
+      "hallazgos_sobre_vulnerabilidades_documentadas": 12,
+      "hallazgos_adicionales": 141,
+      "duracion_segundos": 42.9,
       "detalle": [
         {
           "id": "CRAPI-01",
@@ -320,9 +335,9 @@
           "linea": 122,
           "detectada": true,
           "hallazgos": [
-            "VM-003"
+            "VM-007"
           ],
-          "confianza": 0.974,
+          "confianza": 1.0,
           "categorias_esperadas": [
             "A01:2025",
             "API1:2023"
@@ -344,14 +359,19 @@
           "nombre": "Asignación masiva del estado del pedido (reembolso)",
           "archivo": "services/workshop/crapi/shop/views.py",
           "linea": 250,
-          "detectada": false,
-          "hallazgos": [],
-          "confianza": 0.0,
+          "detectada": true,
+          "hallazgos": [
+            "VM-011"
+          ],
+          "confianza": 0.997,
           "categorias_esperadas": [
             "A08:2025",
             "API3:2023"
           ],
-          "categorias_predichas": [],
+          "categorias_predichas": [
+            "A01:2025",
+            "API1:2023"
+          ],
           "categoria_correcta": false,
           "top10_correcta": false,
           "api_correcta": false,
@@ -367,10 +387,10 @@
           "linea": 389,
           "detectada": true,
           "hallazgos": [
-            "VM-002",
+            "VM-008",
             "VM-015"
           ],
-          "confianza": 0.979,
+          "confianza": 1.0,
           "categorias_esperadas": [
             "A05:2025"
           ],
@@ -394,16 +414,18 @@
           "linea": 84,
           "detectada": true,
           "hallazgos": [
-            "VM-006"
+            "VM-006",
+            "VM-023"
           ],
-          "confianza": 0.861,
+          "confianza": 1.0,
           "categorias_esperadas": [
             "A01:2025",
             "API4:2023",
             "API7:2023"
           ],
           "categorias_predichas": [
-            "A01:2025"
+            "A01:2025",
+            "API1:2023"
           ],
           "categoria_correcta": true,
           "top10_correcta": true,
@@ -525,10 +547,10 @@
           "linea": 96,
           "detectada": true,
           "hallazgos": [
-            "VM-014",
-            "VM-017"
+            "VM-013",
+            "VM-025"
           ],
-          "confianza": 0.478,
+          "confianza": 0.994,
           "categorias_esperadas": [
             "A08:2025",
             "API3:2023"
@@ -550,17 +572,22 @@
           "nombre": "Validación del JWT acepta algoritmos inseguros",
           "archivo": "services/identity/src/main/java/com/crapi/config/JwtProvider.java",
           "linea": 172,
-          "detectada": false,
-          "hallazgos": [],
-          "confianza": 0.0,
+          "detectada": true,
+          "hallazgos": [
+            "VM-039"
+          ],
+          "confianza": 0.989,
           "categorias_esperadas": [
             "A04:2025",
             "API2:2023"
           ],
-          "categorias_predichas": [],
-          "categoria_correcta": false,
-          "top10_correcta": false,
-          "api_correcta": false,
+          "categorias_predichas": [
+            "A04:2025",
+            "API2:2023"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
+          "api_correcta": true,
           "lineas_unidad": [
             170,
             209
@@ -573,10 +600,10 @@
           "linea": 132,
           "detectada": true,
           "hallazgos": [
-            "VM-005",
-            "VM-018"
+            "VM-010",
+            "VM-029"
           ],
-          "confianza": 0.971,
+          "confianza": 1.0,
           "categorias_esperadas": [
             "A04:2025",
             "API2:2023"
@@ -601,10 +628,10 @@
           "linea": 126,
           "detectada": true,
           "hallazgos": [
-            "VM-018",
-            "VM-023"
+            "VM-029",
+            "VM-060"
           ],
-          "confianza": 0.971,
+          "confianza": 1.0,
           "categorias_esperadas": [
             "A04:2025",
             "API2:2023"
@@ -649,15 +676,15 @@
       "microservicios": 1,
       "archivos": 62,
       "unidades": 271,
-      "hallazgos": 84,
-      "hallazgos_por_100_unidades": 31.0,
+      "hallazgos": 106,
+      "hallazgos_por_100_unidades": 39.11,
       "vulnerabilidades_documentadas": 21,
-      "detectadas": 16,
-      "sensibilidad": 0.762,
-      "categoria_correcta": 13,
-      "hallazgos_sobre_vulnerabilidades_documentadas": 17,
-      "hallazgos_adicionales": 67,
-      "duracion_segundos": 12.3,
+      "detectadas": 19,
+      "sensibilidad": 0.905,
+      "categoria_correcta": 16,
+      "hallazgos_sobre_vulnerabilidades_documentadas": 19,
+      "hallazgos_adicionales": 87,
+      "duracion_segundos": 20.5,
       "detalle": [
         {
           "id": "DVWS-01",
@@ -666,9 +693,9 @@
           "linea": 41,
           "detectada": true,
           "hallazgos": [
-            "VM-001"
+            "VM-003"
           ],
-          "confianza": 0.988,
+          "confianza": 1.0,
           "categorias_esperadas": [
             "A05:2025"
           ],
@@ -690,9 +717,9 @@
           "linea": 58,
           "detectada": true,
           "hallazgos": [
-            "VM-003"
+            "VM-004"
           ],
-          "confianza": 0.985,
+          "confianza": 1.0,
           "categorias_esperadas": [
             "A05:2025"
           ],
@@ -716,9 +743,9 @@
           "linea": 96,
           "detectada": true,
           "hallazgos": [
-            "VM-006"
+            "VM-005"
           ],
-          "confianza": 0.911,
+          "confianza": 1.0,
           "categorias_esperadas": [
             "A08:2025"
           ],
@@ -741,9 +768,9 @@
           "linea": 69,
           "detectada": true,
           "hallazgos": [
-            "VM-002"
+            "VM-001"
           ],
-          "confianza": 0.987,
+          "confianza": 1.0,
           "categorias_esperadas": [
             "A05:2025"
           ],
@@ -765,9 +792,9 @@
           "linea": 81,
           "detectada": true,
           "hallazgos": [
-            "VM-030"
+            "VM-040"
           ],
-          "confianza": 0.631,
+          "confianza": 0.952,
           "categorias_esperadas": [
             "A05:2025"
           ],
@@ -789,9 +816,9 @@
           "linea": 166,
           "detectada": true,
           "hallazgos": [
-            "VM-007"
+            "VM-002"
           ],
-          "confianza": 0.868,
+          "confianza": 1.0,
           "categorias_esperadas": [
             "A05:2025"
           ],
@@ -813,9 +840,9 @@
           "linea": 121,
           "detectada": true,
           "hallazgos": [
-            "VM-056"
+            "VM-064"
           ],
-          "confianza": 0.722,
+          "confianza": 0.998,
           "categorias_esperadas": [
             "A01:2025",
             "API1:2023"
@@ -839,9 +866,9 @@
           "linea": 219,
           "detectada": true,
           "hallazgos": [
-            "VM-065"
+            "VM-061"
           ],
-          "confianza": 0.36,
+          "confianza": 1.0,
           "categorias_esperadas": [
             "A02:2025",
             "API4:2023"
@@ -862,9 +889,9 @@
           "linea": 43,
           "detectada": true,
           "hallazgos": [
-            "VM-013"
+            "VM-016"
           ],
-          "confianza": 0.98,
+          "confianza": 1.0,
           "categorias_esperadas": [
             "A04:2025",
             "API2:2023"
@@ -888,9 +915,9 @@
           "linea": 14,
           "detectada": true,
           "hallazgos": [
-            "VM-049"
+            "VM-077"
           ],
-          "confianza": 0.92,
+          "confianza": 0.968,
           "categorias_esperadas": [
             "A02:2025",
             "API8:2023"
@@ -935,9 +962,9 @@
           "linea": 50,
           "detectada": true,
           "hallazgos": [
-            "VM-024"
+            "VM-014"
           ],
-          "confianza": 0.749,
+          "confianza": 1.0,
           "categorias_esperadas": [
             "A06:2025"
           ],
@@ -959,9 +986,9 @@
           "linea": 100,
           "detectada": true,
           "hallazgos": [
-            "VM-014"
+            "VM-018"
           ],
-          "confianza": 0.951,
+          "confianza": 0.999,
           "categorias_esperadas": [
             "A01:2025"
           ],
@@ -981,16 +1008,21 @@
           "nombre": "Carga de YAML que ejecuta funciones",
           "archivo": "src/controllers/integrations.js",
           "linea": 76,
-          "detectada": false,
-          "hallazgos": [],
-          "confianza": 0.0,
+          "detectada": true,
+          "hallazgos": [
+            "VM-036"
+          ],
+          "confianza": 0.984,
           "categorias_esperadas": [
             "A08:2025",
             "API10:2023"
           ],
-          "categorias_predichas": [],
-          "categoria_correcta": false,
-          "top10_correcta": false,
+          "categorias_predichas": [
+            "A08:2025",
+            "A10:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
           "api_correcta": false,
           "lineas_unidad": [
             70,
@@ -1004,9 +1036,9 @@
           "linea": 139,
           "detectada": true,
           "hallazgos": [
-            "VM-011"
+            "VM-010"
           ],
-          "confianza": 0.485,
+          "confianza": 0.988,
           "categorias_esperadas": [
             "A01:2025"
           ],
@@ -1028,9 +1060,9 @@
           "linea": 136,
           "detectada": true,
           "hallazgos": [
-            "VM-051"
+            "VM-085"
           ],
-          "confianza": 0.898,
+          "confianza": 0.91,
           "categorias_esperadas": [
             "A01:2025"
           ],
@@ -1052,9 +1084,9 @@
           "linea": 80,
           "detectada": true,
           "hallazgos": [
-            "VM-055"
+            "VM-062"
           ],
-          "confianza": 0.795,
+          "confianza": 1.0,
           "categorias_esperadas": [
             "A08:2025",
             "API3:2023"
@@ -1078,18 +1110,15 @@
           "linea": 150,
           "detectada": true,
           "hallazgos": [
-            "VM-045",
-            "VM-046"
+            "VM-027"
           ],
-          "confianza": 0.384,
+          "confianza": 0.996,
           "categorias_esperadas": [
             "A07:2025",
             "API2:2023"
           ],
           "categorias_predichas": [
-            "A01:2025",
             "A04:2025",
-            "A06:2025",
             "A07:2025",
             "API2:2023"
           ],
@@ -1106,15 +1135,20 @@
           "nombre": "Inyección LDAP",
           "archivo": "src/controllers/users.js",
           "linea": 655,
-          "detectada": false,
-          "hallazgos": [],
-          "confianza": 0.0,
+          "detectada": true,
+          "hallazgos": [
+            "VM-079"
+          ],
+          "confianza": 0.955,
           "categorias_esperadas": [
             "A05:2025"
           ],
-          "categorias_predichas": [],
-          "categoria_correcta": false,
-          "top10_correcta": false,
+          "categorias_predichas": [
+            "A05:2025",
+            "A10:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
           "api_correcta": null,
           "lineas_unidad": [
             654,
@@ -1126,16 +1160,21 @@
           "nombre": "Exposición de datos del perfil según rol",
           "archivo": "src/controllers/users.js",
           "linea": 450,
-          "detectada": false,
-          "hallazgos": [],
-          "confianza": 0.0,
+          "detectada": true,
+          "hallazgos": [
+            "VM-067"
+          ],
+          "confianza": 0.995,
           "categorias_esperadas": [
             "A01:2025",
             "API3:2023"
           ],
-          "categorias_predichas": [],
-          "categoria_correcta": false,
-          "top10_correcta": false,
+          "categorias_predichas": [
+            "A01:2025",
+            "A10:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
           "api_correcta": false,
           "lineas_unidad": [
             444,
@@ -1170,15 +1209,15 @@
       "microservicios": 1,
       "archivos": 61,
       "unidades": 170,
-      "hallazgos": 13,
-      "hallazgos_por_100_unidades": 7.65,
+      "hallazgos": 18,
+      "hallazgos_por_100_unidades": 10.59,
       "vulnerabilidades_documentadas": 6,
-      "detectadas": 0,
-      "sensibilidad": 0.0,
-      "categoria_correcta": 0,
-      "hallazgos_sobre_vulnerabilidades_documentadas": 0,
-      "hallazgos_adicionales": 13,
-      "duracion_segundos": 1.0,
+      "detectadas": 1,
+      "sensibilidad": 0.167,
+      "categoria_correcta": 1,
+      "hallazgos_sobre_vulnerabilidades_documentadas": 1,
+      "hallazgos_adicionales": 17,
+      "duracion_segundos": 2.0,
       "detalle": [
         {
           "id": "REST-00",
@@ -1291,15 +1330,19 @@
           "nombre": "Ejecución remota de comandos en estadísticas de disco",
           "archivo": "app/apis/admin/utils.py",
           "linea": 9,
-          "detectada": false,
-          "hallazgos": [],
-          "confianza": 0.0,
+          "detectada": true,
+          "hallazgos": [
+            "VM-003"
+          ],
+          "confianza": 0.883,
           "categorias_esperadas": [
             "A05:2025"
           ],
-          "categorias_predichas": [],
-          "categoria_correcta": false,
-          "top10_correcta": false,
+          "categorias_predichas": [
+            "A05:2025"
+          ],
+          "categoria_correcta": true,
+          "top10_correcta": true,
           "api_correcta": null,
           "lineas_unidad": [
             4,
@@ -1313,15 +1356,15 @@
       "microservicios": 6,
       "archivos": 38,
       "unidades": 123,
-      "hallazgos": 61,
-      "hallazgos_por_100_unidades": 49.59,
+      "hallazgos": 59,
+      "hallazgos_por_100_unidades": 47.97,
       "vulnerabilidades_documentadas": 16,
       "detectadas": 16,
       "sensibilidad": 1.0,
       "categoria_correcta": 10,
       "hallazgos_sobre_vulnerabilidades_documentadas": 16,
-      "hallazgos_adicionales": 45,
-      "duracion_segundos": 6.9,
+      "hallazgos_adicionales": 43,
+      "duracion_segundos": 7.1,
       "detalle": [
         {
           "id": "VRP-01",
@@ -1330,9 +1373,9 @@
           "linea": 21,
           "detectada": true,
           "hallazgos": [
-            "VM-002"
+            "VM-005"
           ],
-          "confianza": 0.99,
+          "confianza": 1.0,
           "categorias_esperadas": [
             "A08:2025"
           ],
@@ -1355,9 +1398,9 @@
           "linea": 33,
           "detectada": true,
           "hallazgos": [
-            "VM-009"
+            "VM-008"
           ],
-          "confianza": 0.922,
+          "confianza": 0.999,
           "categorias_esperadas": [
             "A05:2025"
           ],
@@ -1380,9 +1423,9 @@
           "linea": 20,
           "detectada": true,
           "hallazgos": [
-            "VM-053"
+            "VM-026"
           ],
-          "confianza": 0.627,
+          "confianza": 0.997,
           "categorias_esperadas": [
             "A05:2025"
           ],
@@ -1405,9 +1448,9 @@
           "linea": 26,
           "detectada": true,
           "hallazgos": [
-            "VM-012"
+            "VM-011"
           ],
-          "confianza": 0.811,
+          "confianza": 0.996,
           "categorias_esperadas": [
             "A05:2025"
           ],
@@ -1430,9 +1473,9 @@
           "linea": 54,
           "detectada": true,
           "hallazgos": [
-            "VM-019"
+            "VM-013"
           ],
-          "confianza": 0.607,
+          "confianza": 0.992,
           "categorias_esperadas": [
             "A05:2025"
           ],
@@ -1455,9 +1498,9 @@
           "linea": 82,
           "detectada": true,
           "hallazgos": [
-            "VM-022"
+            "VM-015"
           ],
-          "confianza": 0.466,
+          "confianza": 0.987,
           "categorias_esperadas": [
             "A05:2025"
           ],
@@ -1480,9 +1523,9 @@
           "linea": 113,
           "detectada": true,
           "hallazgos": [
-            "VM-018"
+            "VM-014"
           ],
-          "confianza": 0.635,
+          "confianza": 0.992,
           "categorias_esperadas": [
             "A05:2025"
           ],
@@ -1505,9 +1548,9 @@
           "linea": 31,
           "detectada": true,
           "hallazgos": [
-            "VM-021"
+            "VM-012"
           ],
-          "confianza": 0.486,
+          "confianza": 0.995,
           "categorias_esperadas": [
             "A05:2025"
           ],
@@ -1531,9 +1574,9 @@
           "linea": 60,
           "detectada": true,
           "hallazgos": [
-            "VM-015"
+            "VM-009"
           ],
-          "confianza": 0.721,
+          "confianza": 0.998,
           "categorias_esperadas": [
             "A05:2025"
           ],
@@ -1557,9 +1600,9 @@
           "linea": 34,
           "detectada": true,
           "hallazgos": [
-            "VM-006"
+            "VM-007"
           ],
-          "confianza": 0.861,
+          "confianza": 0.992,
           "categorias_esperadas": [
             "A05:2025"
           ],
@@ -1581,9 +1624,9 @@
           "linea": 58,
           "detectada": true,
           "hallazgos": [
-            "VM-011"
+            "VM-010"
           ],
-          "confianza": 0.814,
+          "confianza": 0.996,
           "categorias_esperadas": [
             "A06:2025",
             "API4:2023"
@@ -1606,9 +1649,9 @@
           "linea": 75,
           "detectada": true,
           "hallazgos": [
-            "VM-005"
+            "VM-006"
           ],
-          "confianza": 0.892,
+          "confianza": 0.999,
           "categorias_esperadas": [
             "A01:2025"
           ],
@@ -1630,9 +1673,9 @@
           "linea": 87,
           "detectada": true,
           "hallazgos": [
-            "VM-004"
+            "VM-003"
           ],
-          "confianza": 0.907,
+          "confianza": 1.0,
           "categorias_esperadas": [
             "A01:2025",
             "API7:2023"
@@ -1656,9 +1699,9 @@
           "linea": 102,
           "detectada": true,
           "hallazgos": [
-            "VM-003"
+            "VM-004"
           ],
-          "confianza": 0.947,
+          "confianza": 1.0,
           "categorias_esperadas": [
             "A05:2025"
           ],
@@ -1680,9 +1723,9 @@
           "linea": 39,
           "detectada": true,
           "hallazgos": [
-            "VM-007"
+            "VM-001"
           ],
-          "confianza": 0.858,
+          "confianza": 1.0,
           "categorias_esperadas": [
             "A02:2025"
           ],
@@ -1704,9 +1747,9 @@
           "linea": 72,
           "detectada": true,
           "hallazgos": [
-            "VM-001"
+            "VM-002"
           ],
-          "confianza": 0.994,
+          "confianza": 1.0,
           "categorias_esperadas": [
             "A08:2025"
           ],
@@ -1729,15 +1772,15 @@
       "microservicios": 9,
       "archivos": 77,
       "unidades": 229,
-      "hallazgos": 8,
-      "hallazgos_por_100_unidades": 3.49,
+      "hallazgos": 7,
+      "hallazgos_por_100_unidades": 3.06,
       "vulnerabilidades_documentadas": 0,
       "detectadas": 0,
       "sensibilidad": null,
       "categoria_correcta": 0,
       "hallazgos_sobre_vulnerabilidades_documentadas": 0,
-      "hallazgos_adicionales": 8,
-      "duracion_segundos": 1.2,
+      "hallazgos_adicionales": 7,
+      "duracion_segundos": 1.4,
       "detalle": []
     },
     "microservices-demo": {
@@ -1745,14 +1788,14 @@
       "microservicios": 12,
       "archivos": 41,
       "unidades": 150,
-      "hallazgos": 24,
-      "hallazgos_por_100_unidades": 16.0,
+      "hallazgos": 18,
+      "hallazgos_por_100_unidades": 12.0,
       "vulnerabilidades_documentadas": 0,
       "detectadas": 0,
       "sensibilidad": null,
       "categoria_correcta": 0,
       "hallazgos_sobre_vulnerabilidades_documentadas": 0,
-      "hallazgos_adicionales": 24,
+      "hallazgos_adicionales": 18,
       "duracion_segundos": 2.0,
       "detalle": []
     },
@@ -1769,7 +1812,7 @@
       "categoria_correcta": 13,
       "hallazgos_sobre_vulnerabilidades_documentadas": 13,
       "hallazgos_adicionales": 4,
-      "duracion_segundos": 0.4,
+      "duracion_segundos": 0.5,
       "detalle": [
         {
           "id": "DEMO-01",
@@ -1803,7 +1846,7 @@
           "linea": 33,
           "detectada": true,
           "hallazgos": [
-            "VM-008"
+            "VM-009"
           ],
           "confianza": 0.787,
           "categorias_esperadas": [
@@ -1874,9 +1917,9 @@
           "linea": 12,
           "detectada": true,
           "hallazgos": [
-            "VM-009"
+            "VM-005"
           ],
-          "confianza": 0.6,
+          "confianza": 0.979,
           "categorias_esperadas": [
             "A07:2025",
             "API2:2023"
@@ -1903,7 +1946,7 @@
           "hallazgos": [
             "VM-013"
           ],
-          "confianza": 0.891,
+          "confianza": 0.96,
           "categorias_esperadas": [
             "A02:2025",
             "API8:2023"
@@ -1972,7 +2015,7 @@
           "linea": 10,
           "detectada": true,
           "hallazgos": [
-            "VM-007"
+            "VM-008"
           ],
           "confianza": 0.791,
           "categorias_esperadas": [
@@ -2000,7 +2043,7 @@
           "linea": 19,
           "detectada": true,
           "hallazgos": [
-            "VM-011"
+            "VM-012"
           ],
           "confianza": 0.985,
           "categorias_esperadas": [
@@ -2072,9 +2115,9 @@
           "linea": 10,
           "detectada": true,
           "hallazgos": [
-            "VM-012"
+            "VM-011"
           ],
-          "confianza": 0.982,
+          "confianza": 0.989,
           "categorias_esperadas": [
             "A02:2025",
             "API8:2023"
@@ -2119,9 +2162,9 @@
           "linea": 23,
           "detectada": true,
           "hallazgos": [
-            "VM-005"
+            "VM-004"
           ],
-          "confianza": 0.849,
+          "confianza": 0.997,
           "categorias_esperadas": [
             "A01:2025",
             "API1:2023"
@@ -2145,9 +2188,9 @@
           "linea": 19,
           "detectada": true,
           "hallazgos": [
-            "VM-004"
+            "VM-007"
           ],
-          "confianza": 0.876,
+          "confianza": 0.896,
           "categorias_esperadas": [
             "A01:2025",
             "API7:2023"
@@ -2172,7 +2215,7 @@
           "hallazgos": [
             "VM-001"
           ],
-          "confianza": 0.987,
+          "confianza": 0.991,
           "categorias_esperadas": [
             "A08:2025"
           ],
@@ -2243,15 +2286,15 @@
   "fragmentos_web": {
     "n": 30,
     "vulnerables": 19,
-    "precision": 0.7727272727272727,
-    "recall": 0.8947368421052632,
-    "f1": 0.8292682926829268,
-    "accuracy": 0.7666666666666667,
-    "roc_auc": 0.8660287081339713,
-    "TP": 17,
-    "FP": 5,
-    "TN": 6,
-    "FN": 2,
+    "precision": 0.6923076923076923,
+    "recall": 0.9473684210526315,
+    "f1": 0.8,
+    "accuracy": 0.7,
+    "roc_auc": 0.8564593301435407,
+    "TP": 18,
+    "FP": 8,
+    "TN": 3,
+    "FN": 1,
     "detalle": [
       {
         "id": "W02",
@@ -2273,7 +2316,7 @@
         "lenguaje": "javascript",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.906,
+        "probabilidad": 0.915,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2287,7 +2330,7 @@
         "lenguaje": "python",
         "vulnerable": 1,
         "owasp_esperado": "A08:2025",
-        "probabilidad": 0.986,
+        "probabilidad": 0.999,
         "prediccion": 1,
         "categorias": [
           "A08:2025"
@@ -2315,7 +2358,7 @@
         "lenguaje": "java",
         "vulnerable": 0,
         "owasp_esperado": "",
-        "probabilidad": 0.016,
+        "probabilidad": 0.224,
         "prediccion": 0,
         "categorias": [
           "A05:2025"
@@ -2329,7 +2372,7 @@
         "lenguaje": "python",
         "vulnerable": 0,
         "owasp_esperado": "",
-        "probabilidad": 0.134,
+        "probabilidad": 0.367,
         "prediccion": 0,
         "categorias": [
           "A05:2025"
@@ -2343,7 +2386,7 @@
         "lenguaje": "python",
         "vulnerable": 0,
         "owasp_esperado": "",
-        "probabilidad": 0.135,
+        "probabilidad": 0.368,
         "prediccion": 0,
         "categorias": [
           "A05:2025"
@@ -2357,7 +2400,7 @@
         "lenguaje": "java",
         "vulnerable": 0,
         "owasp_esperado": "",
-        "probabilidad": 0.095,
+        "probabilidad": 0.149,
         "prediccion": 0,
         "categorias": [
           "A01:2025"
@@ -2386,7 +2429,7 @@
         "lenguaje": "java",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.515,
+        "probabilidad": 0.693,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2415,7 +2458,7 @@
         "vulnerable": 0,
         "owasp_esperado": "",
         "probabilidad": 0.36,
-        "prediccion": 1,
+        "prediccion": 0,
         "categorias": [
           "A05:2025"
         ],
@@ -2428,7 +2471,7 @@
         "lenguaje": "python",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.451,
+        "probabilidad": 0.653,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2456,7 +2499,7 @@
         "lenguaje": "java",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.963,
+        "probabilidad": 0.982,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2470,7 +2513,7 @@
         "lenguaje": "java",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.976,
+        "probabilidad": 0.987,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2484,7 +2527,7 @@
         "lenguaje": "java",
         "vulnerable": 1,
         "owasp_esperado": "A01:2025",
-        "probabilidad": 0.567,
+        "probabilidad": 0.724,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2498,7 +2541,7 @@
         "lenguaje": "javascript",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.439,
+        "probabilidad": 0.92,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2512,7 +2555,7 @@
         "lenguaje": "javascript",
         "vulnerable": 1,
         "owasp_esperado": "A01:2025",
-        "probabilidad": 0.847,
+        "probabilidad": 0.979,
         "prediccion": 1,
         "categorias": [
           "A01:2025"
@@ -2526,7 +2569,7 @@
         "lenguaje": "javascript",
         "vulnerable": 1,
         "owasp_esperado": "A09:2025",
-        "probabilidad": 0.156,
+        "probabilidad": 0.396,
         "prediccion": 0,
         "categorias": [],
         "categoria_correcta": null,
@@ -2538,7 +2581,7 @@
         "lenguaje": "javascript",
         "vulnerable": 0,
         "owasp_esperado": "",
-        "probabilidad": 0.467,
+        "probabilidad": 0.664,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2552,7 +2595,7 @@
         "lenguaje": "python",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.956,
+        "probabilidad": 0.999,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2566,7 +2609,7 @@
         "lenguaje": "python",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.964,
+        "probabilidad": 1.0,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2580,7 +2623,7 @@
         "lenguaje": "python",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.993,
+        "probabilidad": 0.999,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2608,7 +2651,7 @@
         "lenguaje": "python",
         "vulnerable": 0,
         "owasp_esperado": "",
-        "probabilidad": 0.012,
+        "probabilidad": 0.036,
         "prediccion": 0,
         "categorias": [
           "A05:2025"
@@ -2622,7 +2665,7 @@
         "lenguaje": "python",
         "vulnerable": 1,
         "owasp_esperado": "A05:2025",
-        "probabilidad": 0.839,
+        "probabilidad": 0.874,
         "prediccion": 1,
         "categorias": [
           "A05:2025"
@@ -2636,7 +2679,7 @@
         "lenguaje": "python",
         "vulnerable": 0,
         "owasp_esperado": "",
-        "probabilidad": 0.289,
+        "probabilidad": 0.534,
         "prediccion": 0,
         "categorias": [
           "A05:2025"
@@ -2650,7 +2693,7 @@
         "lenguaje": "python",
         "vulnerable": 0,
         "owasp_esperado": "",
-        "probabilidad": 0.68,
+        "probabilidad": 0.959,
         "prediccion": 1,
         "categorias": [
           "A06:2025"

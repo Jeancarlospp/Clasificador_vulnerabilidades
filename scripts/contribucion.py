@@ -5,10 +5,12 @@ Responde a la pregunta: ¿el modelo aporta algo frente a las reglas o frente a u
 1. Ablación del detector. Con el mismo algoritmo del modelo final (SVM lineal calibrada, C=1) y el mismo
    protocolo (umbral de máximo F1 en validación, reentrenamiento con entrenamiento + validación) se comparan:
      a) Reglas solas: sin aprendizaje; una unidad es vulnerable si activa al menos k indicadores de operación
-        peligrosa o patrones combinados (k elegido en validación).
+        peligrosa o patrones combinados (k elegido en validación y, aparte, k calibrado en desarrollo como el
+        umbral del modelo).
      b) Solo indicadores de análisis estático (149 variables) con el clasificador.
      c) Solo representación textual (TF-IDF de tokens y de caracteres) con el clasificador.
-     d) Modelo completo (TF-IDF + indicadores), la configuración que usa la herramienta.
+     d) Modelo completo (TF-IDF + indicadores), el modelo base de la herramienta.
+     e) Modelo completo + etapa de combinación (scripts/combinar.py): la decisión final de la herramienta.
    También se incluye (b') indicadores con Random Forest, para descartar que la diferencia se deba a usar
    un clasificador lineal sobre variables que podrían requerir uno no lineal.
    Cada variante se mide en la partición de prueba y, a nivel de unidad, en los proyectos externos:
@@ -45,7 +47,7 @@ sys.path.insert(0, str(BASE))
 sys.path.insert(0, str(BASE / "scripts"))
 
 from vulnminer import caracteristicas as C  # noqa: E402
-from vulnminer.descubrimiento import descubrir, es_generado  # noqa: E402
+from vulnminer.descubrimiento import descubrir, es_generado, marcar_frontend  # noqa: E402
 from vulnminer.modelo import _caracteristicas, a_unidades, crear_clasificador, representacion  # noqa: E402
 from vulnminer.segmentacion import segmentar  # noqa: E402
 
@@ -54,7 +56,6 @@ from evaluar import unidad_de_linea  # noqa: E402
 
 warnings.filterwarnings("ignore")
 RESULTADOS = BASE / "resultados"
-FAMILIAS_CONTEXTO = {"entrada", "rutas", "validacion", "auth"}
 LENGUAJES_SEMGREP = ("python", "java", "javascript", "typescript", "dockerfile", "yaml", "generic", "json")
 FALSAS_ALARMAS_REFERENCIA = 0.05
 
@@ -78,7 +79,7 @@ def unidades_externas(verdad):
                 for rel in s.archivos:
                     texto = (raiz / rel).read_text(encoding="utf-8", errors="ignore")
                     if not es_generado(rel, texto):
-                        neg.extend((nombre, u) for u in segmentar(rel, texto))
+                        neg.extend((nombre, u) for u in marcar_frontend(segmentar(rel, texto), s, rel))
             continue
         destino = pos if spec["tipo"] == "vulnerable" else demo
         for v in spec["vulnerabilidades"]:
@@ -90,9 +91,7 @@ def unidades_externas(verdad):
 
 def puntaje_reglas(unidades):
     """Cantidad de indicadores de operación peligrosa y patrones combinados activos (sin aprendizaje)."""
-    nombres = C.nombres_caracteristicas()
-    mascara = np.array([(n in C.FAMILIA and C.FAMILIA[n] not in FAMILIAS_CONTEXTO) or n.startswith("x_") for n in nombres])
-    return np.array([float((C.vector(u, binario=True, estilo=False)[mascara] > 0).sum()) for u in unidades])
+    return np.array([C.puntaje_evidencia(u) for u in unidades])
 
 
 def sensibilidad_a_falsas_alarmas(p_pos, p_neg, maximo=FALSAS_ALARMAS_REFERENCIA):
@@ -134,14 +133,27 @@ def ablacion(tr, va, te, externos):
     candidatos = [k for k in range(1, 6)]
     f1s = [E.metricas_binarias(va.vulnerable, s_va, k)["f1"] for k in candidatos]
     k = candidatos[int(np.argmax(f1s))]
-    filas.append({"variante": "Reglas solas (indicadores, sin aprendizaje)", "clave": "reglas", "umbral": k,
+    filas.append({"variante": "Reglas solas, k elegido en validación", "clave": "reglas", "umbral": k,
                   "variables": int(sum(1 for n in C.nombres_caracteristicas()
-                                       if (n in C.FAMILIA and C.FAMILIA[n] not in FAMILIAS_CONTEXTO) or n.startswith("x_"))),
+                                       if (n in C.FAMILIA and C.FAMILIA[n] not in C.FAMILIAS_CONTEXTO) or n.startswith("x_"))),
                   **{f"prueba_{m}": v for m, v in E.metricas_binarias(te.vulnerable, s_te, k).items()},
                   **{f"ext_{m}": v for m, v in medir_externo(puntaje_reglas(u_pos), puntaje_reglas(u_neg),
                                                               puntaje_reglas(u_demo), k).items()},
                   "segundos": round(time.time() - t0, 1)})
     log(f"reglas solas: k={k} F1 prueba={filas[-1]['prueba_f1']:.3f} externo {filas[-1]['ext_detectadas']}/"
+        f"{filas[-1]['ext_documentadas']} falsas alarmas={filas[-1]['ext_falsas_alarmas']:.3f}")
+
+    # ---- (a') reglas solas con k calibrado como el modelo: menor k con <= 5 % de falsas alarmas en los
+    #          proyectos limpios del conjunto de desarrollo (aplicaciones reales)
+    import desarrollo
+    dev_pos, dev_neg = desarrollo.cargar()
+    s_dev_neg = puntaje_reglas(dev_neg)
+    k_dev = next(k for k in range(1, 20) if (s_dev_neg >= k).mean() <= desarrollo.FALSAS_ALARMAS_MAX)
+    filas.append({**filas[0], "variante": "Reglas solas, k calibrado en desarrollo", "clave": "reglas_desarrollo", "umbral": k_dev,
+                  **{f"prueba_{m}": v for m, v in E.metricas_binarias(te.vulnerable, s_te, k_dev).items()},
+                  **{f"ext_{m}": v for m, v in medir_externo(puntaje_reglas(u_pos), puntaje_reglas(u_neg),
+                                                              puntaje_reglas(u_demo), k_dev).items()}})
+    log(f"reglas (desarrollo): k={k_dev} F1 prueba={filas[-1]['prueba_f1']:.3f} externo {filas[-1]['ext_detectadas']}/"
         f"{filas[-1]['ext_documentadas']} falsas alarmas={filas[-1]['ext_falsas_alarmas']:.3f}")
 
     # ---- representaciones aprendidas
@@ -179,6 +191,33 @@ def ablacion(tr, va, te, externos):
         log(f"{clave:15s} umbral={umbral:.2f} prueba F1={f['prueba_f1']:.3f} AUC={f['prueba_roc_auc']:.3f} | externo "
             f"{f['ext_detectadas']}/{f['ext_documentadas']} falsas alarmas={f['ext_falsas_alarmas']:.3f} "
             f"AUC={f['ext_auc']:.3f} sens@5%={f['ext_sensibilidad_con_5pct_falsas_alarmas']:.2f} ({f['segundos']:.0f}s)")
+    # ---- (e) herramienta final: modelo completo + etapa de combinación (scripts/combinar.py)
+    from vulnminer.analizador import cargar_modelo
+    t0 = time.time()
+    modelo = cargar_modelo()
+
+    def decidir(unidades):
+        d, conf, _ = modelo.decision(unidades, modelo.probabilidad(unidades))
+        return d.astype(float), conf
+
+    d_te, c_te = decidir(u_te)
+    (d_pos, c_pos), (d_neg, c_neg), (d_demo, _) = decidir(u_pos), decidir(u_neg), decidir(u_demo)
+    prueba = E.metricas_binarias(te.vulnerable, d_te, 0.5)
+    prueba.update({"roc_auc": roc_auc_score(te.vulnerable, c_te), "ap": average_precision_score(te.vulnerable, c_te)})
+    externo = medir_externo(d_pos, d_neg, d_demo, 0.5)
+    y_ext = np.r_[np.ones(len(c_pos)), np.zeros(len(c_neg))]
+    sens5, _ = sensibilidad_a_falsas_alarmas(c_pos, c_neg)
+    externo.update({"auc": float(roc_auc_score(y_ext, np.r_[c_pos, c_neg])),
+                    "ap": float(average_precision_score(y_ext, np.r_[c_pos, c_neg])),
+                    "sensibilidad_con_5pct_falsas_alarmas": sens5})
+    filas.append({"variante": "Modelo completo + combinación (herramienta)", "clave": "herramienta",
+                  "umbral": f"{modelo.umbral_base_codigo}/{modelo.umbral_combinado}", "variables": filas[-1]["variables"] + 1,
+                  **{f"prueba_{k}": v for k, v in prueba.items()}, **{f"ext_{k}": v for k, v in externo.items()},
+                  "segundos": round(time.time() - t0, 1)})
+    f = filas[-1]
+    log(f"herramienta     prueba F1={f['prueba_f1']:.3f} AUC={f['prueba_roc_auc']:.3f} | externo {f['ext_detectadas']}/"
+        f"{f['ext_documentadas']} falsas alarmas={f['ext_falsas_alarmas']:.3f} AUC={f['ext_auc']:.3f} "
+        f"sens@5%={f['ext_sensibilidad_con_5pct_falsas_alarmas']:.2f}")
     return pd.DataFrame(filas)
 
 

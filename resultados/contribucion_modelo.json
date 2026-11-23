@@ -1,5 +1,5 @@
 {
-  "fecha": "2026-11-23T11:32:14",
+  "fecha": "2026-11-23T11:55:07",
   "semgrep": {
     "version": "1.186.0",
     "reglas": "semgrep-rules (python, java, javascript, typescript, dockerfile, yaml, generic, json)",
@@ -8,12 +8,12 @@
         "proyecto": "VAmPI",
         "tipo": "vulnerable",
         "semgrep_hallazgos": 17,
-        "semgrep_segundos": 12.0,
-        "vulnminer_hallazgos": 22,
-        "vulnminer_segundos": 5.3,
+        "semgrep_segundos": 12.5,
+        "vulnminer_hallazgos": 23,
+        "vulnminer_segundos": 5.7,
         "documentadas": 9.0,
         "semgrep_detectadas": 1.0,
-        "vulnminer_detectadas": 2.0,
+        "vulnminer_detectadas": 5.0,
         "unidades": NaN,
         "semgrep_unidades_marcadas": NaN,
         "vulnminer_unidades_marcadas": NaN
@@ -22,12 +22,12 @@
         "proyecto": "crAPI",
         "tipo": "vulnerable",
         "semgrep_hallazgos": 257,
-        "semgrep_segundos": 13.7,
-        "vulnminer_hallazgos": 121,
-        "vulnminer_segundos": 29.4,
+        "semgrep_segundos": 15.7,
+        "vulnminer_hallazgos": 153,
+        "vulnminer_segundos": 42.9,
         "documentadas": 14.0,
         "semgrep_detectadas": 2.0,
-        "vulnminer_detectadas": 6.0,
+        "vulnminer_detectadas": 8.0,
         "unidades": NaN,
         "semgrep_unidades_marcadas": NaN,
         "vulnminer_unidades_marcadas": NaN
@@ -36,12 +36,12 @@
         "proyecto": "dvws-node",
         "tipo": "vulnerable",
         "semgrep_hallazgos": 104,
-        "semgrep_segundos": 13.3,
-        "vulnminer_hallazgos": 84,
-        "vulnminer_segundos": 12.3,
+        "semgrep_segundos": 15.6,
+        "vulnminer_hallazgos": 106,
+        "vulnminer_segundos": 20.5,
         "documentadas": 21.0,
         "semgrep_detectadas": 11.0,
-        "vulnminer_detectadas": 16.0,
+        "vulnminer_detectadas": 19.0,
         "unidades": NaN,
         "semgrep_unidades_marcadas": NaN,
         "vulnminer_unidades_marcadas": NaN
@@ -50,12 +50,12 @@
         "proyecto": "restaurant-api",
         "tipo": "vulnerable",
         "semgrep_hallazgos": 26,
-        "semgrep_segundos": 13.3,
-        "vulnminer_hallazgos": 13,
-        "vulnminer_segundos": 1.0,
+        "semgrep_segundos": 15.1,
+        "vulnminer_hallazgos": 18,
+        "vulnminer_segundos": 2.0,
         "documentadas": 6.0,
         "semgrep_detectadas": 2.0,
-        "vulnminer_detectadas": 0.0,
+        "vulnminer_detectadas": 1.0,
         "unidades": NaN,
         "semgrep_unidades_marcadas": NaN,
         "vulnminer_unidades_marcadas": NaN
@@ -64,9 +64,9 @@
         "proyecto": "VRPlayground",
         "tipo": "vulnerable",
         "semgrep_hallazgos": 58,
-        "semgrep_segundos": 14.2,
-        "vulnminer_hallazgos": 61,
-        "vulnminer_segundos": 7.0,
+        "semgrep_segundos": 15.4,
+        "vulnminer_hallazgos": 59,
+        "vulnminer_segundos": 7.1,
         "documentadas": 16.0,
         "semgrep_detectadas": 11.0,
         "vulnminer_detectadas": 16.0,
@@ -78,37 +78,37 @@
         "proyecto": "petclinic-microservices",
         "tipo": "referencia",
         "semgrep_hallazgos": 28,
-        "semgrep_segundos": 15.0,
-        "vulnminer_hallazgos": 8,
-        "vulnminer_segundos": 1.2,
+        "semgrep_segundos": 15.2,
+        "vulnminer_hallazgos": 7,
+        "vulnminer_segundos": 1.4,
         "documentadas": NaN,
         "semgrep_detectadas": NaN,
         "vulnminer_detectadas": NaN,
         "unidades": 229.0,
         "semgrep_unidades_marcadas": 4.0,
-        "vulnminer_unidades_marcadas": 8.0
+        "vulnminer_unidades_marcadas": 7.0
       },
       {
         "proyecto": "microservices-demo",
         "tipo": "referencia",
         "semgrep_hallazgos": 80,
-        "semgrep_segundos": 15.1,
-        "vulnminer_hallazgos": 24,
+        "semgrep_segundos": 15.2,
+        "vulnminer_hallazgos": 18,
         "vulnminer_segundos": 2.0,
         "documentadas": NaN,
         "semgrep_detectadas": NaN,
         "vulnminer_detectadas": NaN,
         "unidades": 150.0,
         "semgrep_unidades_marcadas": 39.0,
-        "vulnminer_unidades_marcadas": 24.0
+        "vulnminer_unidades_marcadas": 18.0
       },
       {
         "proyecto": "proyecto-demo",
         "tipo": "demostracion",
         "semgrep_hallazgos": 18,
-        "semgrep_segundos": 14.8,
+        "semgrep_segundos": 15.0,
         "vulnminer_hallazgos": 17,
-        "vulnminer_segundos": 0.4,
+        "vulnminer_segundos": 0.5,
         "documentadas": 19.0,
         "semgrep_detectadas": 8.0,
         "vulnminer_detectadas": 13.0,
@@ -187,7 +187,7 @@
         ],
         "semgrep": false,
         "reglas_semgrep": [],
-        "vulnminer": false
+        "vulnminer": true
       },
       {
         "proyecto": "VAmPI",
@@ -199,7 +199,7 @@
         ],
         "semgrep": false,
         "reglas_semgrep": [],
-        "vulnminer": false
+        "vulnminer": true
       },
       {
         "proyecto": "VAmPI",
@@ -212,7 +212,7 @@
         ],
         "semgrep": false,
         "reglas_semgrep": [],
-        "vulnminer": false
+        "vulnminer": true
       },
       {
         "proyecto": "VAmPI",
@@ -252,7 +252,7 @@
         ],
         "semgrep": false,
         "reglas_semgrep": [],
-        "vulnminer": false
+        "vulnminer": true
       },
       {
         "proyecto": "crAPI",
@@ -363,7 +363,7 @@
         ],
         "semgrep": false,
         "reglas_semgrep": [],
-        "vulnminer": false
+        "vulnminer": true
       },
       {
         "proyecto": "crAPI",
@@ -576,7 +576,7 @@
         ],
         "semgrep": false,
         "reglas_semgrep": [],
-        "vulnminer": false
+        "vulnminer": true
       },
       {
         "proyecto": "dvws-node",
@@ -641,7 +641,7 @@
         ],
         "semgrep": false,
         "reglas_semgrep": [],
-        "vulnminer": false
+        "vulnminer": true
       },
       {
         "proyecto": "dvws-node",
@@ -655,7 +655,7 @@
         "reglas_semgrep": [
           "direct-response-write"
         ],
-        "vulnminer": false
+        "vulnminer": true
       },
       {
         "proyecto": "dvws-node",
@@ -745,7 +745,7 @@
           "dangerous-subprocess-use-audit",
           "subprocess-shell-true"
         ],
-        "vulnminer": false
+        "vulnminer": true
       },
       {
         "proyecto": "VRPlayground",
@@ -1199,21 +1199,21 @@
     "resumen": {
       "documentadas": 66,
       "semgrep_detectadas": 27,
-      "vulnminer_detectadas": 40,
-      "solo_vulnminer": 16,
-      "solo_semgrep": 3,
-      "ambas": 24,
-      "union": 43,
+      "vulnminer_detectadas": 49,
+      "solo_vulnminer": 23,
+      "solo_semgrep": 1,
+      "ambas": 26,
+      "union": 50,
       "unidades_limpias": 379,
       "semgrep_unidades_limpias_marcadas": 43,
-      "vulnminer_unidades_limpias_marcadas": 32
+      "vulnminer_unidades_limpias_marcadas": 25
     }
   },
   "ablacion": [
     {
-      "variante": "Reglas solas (indicadores, sin aprendizaje)",
+      "variante": "Reglas solas, k elegido en validación",
       "clave": "reglas",
-      "umbral": 1.0,
+      "umbral": 1,
       "variables": 99,
       "prueba_precision": 0.5190476190476191,
       "prueba_recall": 0.7965895249695494,
@@ -1237,7 +1237,36 @@
       "ext_sensibilidad_con_5pct_falsas_alarmas": 0.7727272727272727,
       "ext_demo_detectadas": 18,
       "ext_demo_sembradas": 19,
-      "segundos": 12.9
+      "segundos": 11.3
+    },
+    {
+      "variante": "Reglas solas, k calibrado en desarrollo",
+      "clave": "reglas_desarrollo",
+      "umbral": 4,
+      "variables": 99,
+      "prueba_precision": 0.5907473309608541,
+      "prueba_recall": 0.20219244823386115,
+      "prueba_f1": 0.30127041742286753,
+      "prueba_accuracy": 0.65,
+      "prueba_roc_auc": 0.7052578303930808,
+      "prueba_ap": 0.5290156376865348,
+      "prueba_tasa_falsos_positivos": 0.08339376359680928,
+      "prueba_TP": 166,
+      "prueba_FP": 115,
+      "prueba_TN": 1264,
+      "prueba_FN": 655,
+      "ext_detectadas": 51,
+      "ext_documentadas": 66,
+      "ext_sensibilidad": 0.7727272727272727,
+      "ext_falsas_alarmas": 0.047493403693931395,
+      "ext_unidades_limpias_marcadas": 18,
+      "ext_unidades_limpias": 379,
+      "ext_auc": 0.9268409690573279,
+      "ext_ap": 0.8180354857100309,
+      "ext_sensibilidad_con_5pct_falsas_alarmas": 0.7727272727272727,
+      "ext_demo_detectadas": 4,
+      "ext_demo_sembradas": 19,
+      "segundos": 11.3
     },
     {
       "variante": "Solo indicadores de análisis estático",
@@ -1266,7 +1295,7 @@
       "ext_sensibilidad_con_5pct_falsas_alarmas": 0.3787878787878788,
       "ext_demo_detectadas": 13,
       "ext_demo_sembradas": 19,
-      "segundos": 91.0
+      "segundos": 83.2
     },
     {
       "variante": "Solo indicadores con Random Forest",
@@ -1295,7 +1324,7 @@
       "ext_sensibilidad_con_5pct_falsas_alarmas": 0.15151515151515152,
       "ext_demo_detectadas": 14,
       "ext_demo_sembradas": 19,
-      "segundos": 94.0
+      "segundos": 90.0
     },
     {
       "variante": "Solo texto (TF-IDF de tokens y caracteres)",
@@ -1306,8 +1335,8 @@
       "prueba_recall": 0.8197320341047503,
       "prueba_f1": 0.8132930513595166,
       "prueba_accuracy": 0.8595454545454545,
-      "prueba_roc_auc": 0.9218404835363232,
-      "prueba_ap": 0.8509968609750541,
+      "prueba_roc_auc": 0.9218396002681603,
+      "prueba_ap": 0.8509940763204644,
       "prueba_tasa_falsos_positivos": 0.116751269035533,
       "prueba_TP": 673,
       "prueba_FP": 161,
@@ -1324,7 +1353,7 @@
       "ext_sensibilidad_con_5pct_falsas_alarmas": 0.5454545454545454,
       "ext_demo_detectadas": 11,
       "ext_demo_sembradas": 19,
-      "segundos": 95.3
+      "segundos": 86.8
     },
     {
       "variante": "Modelo completo (TF-IDF + indicadores)",
@@ -1353,7 +1382,36 @@
       "ext_sensibilidad_con_5pct_falsas_alarmas": 0.5151515151515151,
       "ext_demo_detectadas": 13,
       "ext_demo_sembradas": 19,
-      "segundos": 101.2
+      "segundos": 91.9
+    },
+    {
+      "variante": "Modelo completo + combinación (herramienta)",
+      "clave": "herramienta",
+      "umbral": "0.45/0.88",
+      "variables": 120150,
+      "prueba_precision": 0.818297331639136,
+      "prueba_recall": 0.784409257003654,
+      "prueba_f1": 0.8009950248756219,
+      "prueba_accuracy": 0.8545454545454545,
+      "prueba_roc_auc": 0.9107590011650307,
+      "prueba_ap": 0.8267590331462561,
+      "prueba_tasa_falsos_positivos": 0.10369833212472807,
+      "prueba_TP": 644,
+      "prueba_FP": 143,
+      "prueba_TN": 1236,
+      "prueba_FN": 177,
+      "ext_detectadas": 49,
+      "ext_documentadas": 66,
+      "ext_sensibilidad": 0.7424242424242424,
+      "ext_falsas_alarmas": 0.06596306068601583,
+      "ext_unidades_limpias_marcadas": 25,
+      "ext_unidades_limpias": 379,
+      "ext_auc": 0.9389541856560325,
+      "ext_ap": 0.8414095648694474,
+      "ext_sensibilidad_con_5pct_falsas_alarmas": 0.7424242424242424,
+      "ext_demo_detectadas": 13,
+      "ext_demo_sembradas": 19,
+      "segundos": 13.1
     }
   ]
 }
