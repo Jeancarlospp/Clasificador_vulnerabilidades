@@ -1,0 +1,85 @@
+VAMPI-01 & Inyección SQL en la búsqueda de usuario & A05:2025 & No & --- & ---\\
+VAMPI-02 & Cambio de contraseña de otro usuario & A01:2025, API1:2023 & Sí & 0{,}96 & A07:2025, API2:2023\\
+VAMPI-03 & BOLA en la consulta de libros & A01:2025, API1:2023 & No & --- & ---\\
+VAMPI-04 & Asignación masiva del atributo admin en el registro & A08:2025, API3:2023 & No & --- & ---\\
+VAMPI-05 & Exposición excesiva de datos en el endpoint de depuración & A01:2025, API3:2023 & No & --- & ---\\
+VAMPI-06 & Enumeración de usuarios y contraseñas en el login & A07:2025, API2:2023 & Sí & 0{,}95 & A07:2025, API2:2023\\
+VAMPI-07 & ReDoS en la actualización del correo & A06:2025, API4:2023 & Sí & 0{,}89 & A06:2025, API4:2023\\
+VAMPI-08 & Login sin limitación de intentos & A07:2025, API2:2023, API4:2023 & Sí & 0{,}95 & A07:2025, API2:2023\\
+VAMPI-09 & Clave de firma JWT débil escrita en el código & A07:2025, API2:2023 & Sí & 0{,}71 & ---\\
+CRAPI-01 & Pedido consultable sin autenticación ni verificación de propietario & A01:2025, API1:2023 & Sí & 1{,}00 & A01:2025, API1:2023\\
+CRAPI-02 & Asignación masiva del estado del pedido (reembolso) & A08:2025, API3:2023 & Sí & 1{,}00 & A01:2025, API1:2023\\
+CRAPI-03 & Inyección SQL al aplicar un cupón & A05:2025 & Sí & 1{,}00 & A01:2025, A05:2025, API1:2023\\
+CRAPI-04 & SSRF y repeticiones ilimitadas en contactar mecánico & A01:2025, API4:2023, API7:2023 & Sí & 1{,}00 & A01:2025, API1:2023\\
+CRAPI-05 & BOLA en el reporte del mecánico & A01:2025, API1:2023 & No & --- & ---\\
+CRAPI-06 & Vista administrativa de usuarios sin verificación de rol & A01:2025, API5:2023 & No & --- & ---\\
+CRAPI-07 & BOLA en la ubicación del vehículo & A01:2025, API1:2023 & No & --- & ---\\
+CRAPI-08 & Verificación de OTP (v2) sin límite de intentos & A07:2025, API2:2023 & No & --- & ---\\
+CRAPI-09 & Eliminación de videos por endpoint administrativo accesible a usuarios & A01:2025, API5:2023 & No & --- & ---\\
+CRAPI-10 & Asignación masiva de parámetros de conversión del video & A08:2025, API3:2023 & Sí & 0{,}99 & A01:2025, API1:2023\\
+CRAPI-11 & Validación del JWT acepta algoritmos inseguros & A04:2025, API2:2023 & Sí & 0{,}99 & A04:2025, API2:2023\\
+CRAPI-12 & Clave del JWT obtenida de la URL jku del propio token & A04:2025, API2:2023 & Sí & 1{,}00 & A01:2025, A04:2025, API7:2023\\
+CRAPI-13 & Lectura del usuario del JWT sin verificar la firma & A04:2025, API2:2023 & Sí & 1{,}00 & A04:2025, API2:2023\\
+CRAPI-14 & Secretos y contraseñas en el docker-compose & A07:2025, API2:2023 & No & --- & ---\\
+DVWS-01 & Inyección SQL al guardar la passphrase & A05:2025 & Sí & 1{,}00 & A05:2025\\
+DVWS-02 & Inyección SQL al consultar la passphrase & A05:2025 & Sí & 1{,}00 & A05:2025, A10:2025, API8:2023\\
+DVWS-03 & Deserialización insegura (node-serialize) & A08:2025 & Sí & 1{,}00 & A08:2025, API2:2023\\
+DVWS-04 & Inyección de comandos en sysinfo & A05:2025 & Sí & 1{,}00 & A05:2025\\
+DVWS-05 & Inyección XPath & A05:2025 & Sí & 0{,}95 & A05:2025\\
+DVWS-06 & Inyección NoSQL en la búsqueda de notas & A05:2025 & Sí & 1{,}00 & A05:2025\\
+DVWS-07 & IDOR al leer una nota & A01:2025, API1:2023 & Sí & 1{,}00 & A01:2025, A10:2025\\
+DVWS-08 & XML bomb / XXE al importar notas & A02:2025, API4:2023 & Sí & 1{,}00 & ---\\
+DVWS-09 & JWT con algoritmo 'none' aceptado & A04:2025, API2:2023 & Sí & 1{,}00 & A04:2025, API2:2023\\
+DVWS-10 & CORS que refleja el origen con credenciales & A02:2025, API8:2023 & Sí & 0{,}97 & A02:2025, A07:2025, API8:2023\\
+DVWS-11 & Contaminación de prototipo en merge & A08:2025 & No & --- & ---\\
+DVWS-12 & Subida de archivos sin restricción & A06:2025 & Sí & 1{,}00 & A01:2025\\
+DVWS-13 & Path traversal en la descarga de archivos & A01:2025 & Sí & 1{,}00 & API2:2023\\
+DVWS-14 & Carga de YAML que ejecuta funciones & A08:2025, API10:2023 & Sí & 0{,}98 & A08:2025, A10:2025\\
+DVWS-15 & Path traversal en el reporte mensual & A01:2025 & Sí & 0{,}99 & A01:2025\\
+DVWS-16 & Redirección abierta en el logout & A01:2025 & Sí & 0{,}91 & A01:2025\\
+DVWS-17 & Asignación masiva en el registro de usuarios & A08:2025, API3:2023 & Sí & 1{,}00 & A08:2025, A10:2025\\
+DVWS-18 & Enumeración de usuarios y registro sin neutralizar en el login & A07:2025, API2:2023 & Sí & 1{,}00 & A04:2025, A07:2025, API2:2023\\
+DVWS-19 & Inyección LDAP & A05:2025 & Sí & 0{,}95 & A05:2025, A10:2025\\
+DVWS-20 & Exposición de datos del perfil según rol & A01:2025, API3:2023 & Sí & 0{,}99 & A01:2025, A10:2025\\
+DVWS-21 & Listado de usuarios con hashes de contraseña & A01:2025, API3:2023 & No & --- & ---\\
+REST-00 & Detalles de la tecnología expuestos en cabeceras HTTP & A02:2025, API8:2023 & No & --- & ---\\
+REST-01 & Eliminación de elementos del menú sin control de rol & A01:2025, API5:2023 & No & --- & ---\\
+REST-02 & IDOR en la actualización del perfil & A01:2025, API1:2023, API3:2023 & No & --- & ---\\
+REST-03 & Escalada de privilegios al actualizar roles & A01:2025, API5:2023 & No & --- & ---\\
+REST-04 & SSRF al descargar la imagen del menú & A01:2025, API7:2023 & No & --- & ---\\
+REST-05 & Ejecución remota de comandos en estadísticas de disco & A05:2025 & Sí & 0{,}88 & A05:2025\\
+VRP-01 & Deserialización con pickle & A08:2025 & Sí & 1{,}00 & A08:2025, A10:2025\\
+VRP-02 & SSTI con Jinja & A05:2025 & Sí & 1{,}00 & A10:2025, API8:2023\\
+VRP-03 & Inyección SQL con format & A05:2025 & Sí & 1{,}00 & A08:2025, A10:2025\\
+VRP-04 & XSS en etiqueta & A05:2025 & Sí & 1{,}00 & A10:2025, API8:2023\\
+VRP-05 & XSS en enlace & A05:2025 & Sí & 0{,}99 & A10:2025, API8:2023\\
+VRP-06 & XSS en atributo de evento & A05:2025 & Sí & 0{,}99 & A10:2025, API8:2023\\
+VRP-07 & XSS en bloque de código & A05:2025 & Sí & 0{,}99 & A10:2025, API8:2023\\
+VRP-08 & Inyección de plantillas del cliente (Vue) & A05:2025 & Sí & 0{,}99 & A05:2025, A10:2025, API8:2023\\
+VRP-09 & Inyección de plantillas del cliente (AngularJS) & A05:2025 & Sí & 1{,}00 & A05:2025, A10:2025, API8:2023\\
+VRP-10 & Inyección de comandos & A05:2025 & Sí & 0{,}99 & A05:2025\\
+VRP-11 & ReDoS & A06:2025, API4:2023 & Sí & 1{,}00 & API4:2023\\
+VRP-12 & Path traversal & A01:2025 & Sí & 1{,}00 & A01:2025\\
+VRP-13 & SSRF & A01:2025, API7:2023 & Sí & 1{,}00 & A01:2025, API7:2023\\
+VRP-14 & Inyección NoSQL & A05:2025 & Sí & 1{,}00 & A05:2025\\
+VRP-15 & XXE & A02:2025 & Sí & 1{,}00 & A02:2025\\
+VRP-16 & Deserialización con ObjectInputStream & A08:2025 & Sí & 1{,}00 & A08:2025, A10:2025\\
+DEMO-01 & BOLA: pedidos de cualquier usuario por id & A01:2025, API1:2023 & Sí & 0{,}59 & A01:2025\\
+DEMO-02 & Actualización de cualquier usuario por id con cuerpo arbitrario & A01:2025, API1:2023, API3:2023 & Sí & 0{,}79 & A01:2025, API1:2023, API3:2023, API5:2023\\
+DEMO-03 & Asignación masiva con Object.assign & A08:2025, API3:2023 & No & --- & ---\\
+DEMO-04 & Login sin limitación de intentos & A07:2025, API2:2023 & No & --- & ---\\
+DEMO-05 & JWT sin expiración y secreto fijo en el código & A07:2025, API2:2023 & Sí & 0{,}98 & A04:2025, A07:2025, API2:2023\\
+DEMO-06 & CORS que acepta cualquier origen con credenciales & A02:2025, API8:2023 & Sí & 0{,}96 & A02:2025, API8:2023\\
+DEMO-07 & Inyección SQL en la búsqueda de productos & A05:2025 & Sí & 0{,}99 & A05:2025\\
+DEMO-08 & Eliminación de productos sin control de rol & A01:2025, API5:2023 & No & --- & ---\\
+DEMO-09 & Contraseña de base de datos en application.yml & A07:2025, API2:2023 & Sí & 0{,}79 & A02:2025, A07:2025, API2:2023, API8:2023\\
+DEMO-10 & Actuator expuesto y detalles de salud públicos & A02:2025, API8:2023 & Sí & 0{,}98 & A02:2025, API8:2023\\
+DEMO-11 & Imagen base sin versión y contenedor como root & A03:2025 & Sí & 0{,}49 & A02:2025, A03:2025, API8:2023\\
+DEMO-12 & Dependencia sin versión fijada (LATEST) & A03:2025 & No & --- & ---\\
+DEMO-13 & Modo debug activo y CORS permisivo & A02:2025, API8:2023 & Sí & 0{,}99 & A02:2025, API8:2023\\
+DEMO-14 & Detalle de la excepción devuelto al cliente & A10:2025, API8:2023 & No & --- & ---\\
+DEMO-15 & BOLA: pedido de otro usuario por id & A01:2025, API1:2023 & Sí & 1{,}00 & A01:2025, API1:2023\\
+DEMO-16 & SSRF al importar un recibo desde una URL & A01:2025, API7:2023 & Sí & 0{,}90 & A01:2025\\
+DEMO-17 & Deserialización insegura con pickle & A08:2025 & Sí & 0{,}99 & A08:2025\\
+DEMO-18 & Dependencias sin versión fijada & A03:2025 & Sí & 0{,}43 & A03:2025\\
+DEMO-19 & Secretos en el docker-compose & A07:2025, API2:2023 & No & --- & ---\\
